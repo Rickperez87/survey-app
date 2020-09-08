@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import useFormState from "../custom-react-hooks/form-state-hook";
 import io from "socket.io-client";
 import "../styles/survey.css";
 
@@ -11,20 +12,19 @@ socket.on("connect", () => {
 });
 
 export default function Survey() {
-  const [message, setMessage] = useState("");
+  const [message, updateMessage, clearMessage] = useFormState("");
+  const [displaySurveyQuestion, setSurveyQuestion] = useState([]);
+
   useEffect(() => {
-    socket.on("chat-message", (message) => {
-      console.log(`incoming message: ${message}`);
+    socket.on("chat-message", (surveyQuestion) => {
+      console.log(`incoming message: ${surveyQuestion}`);
+      setSurveyQuestion([surveyQuestion]);
     });
   });
 
-  const handleChange = (e) => {
-    console.log(e.currentTarget.value);
-    setMessage(e.currentTarget.value);
-  };
   const submit = () => {
     socket.emit("text", message);
-    setMessage("");
+    clearMessage();
   };
   return (
     <div id="createQuestion">
@@ -33,7 +33,7 @@ export default function Survey() {
         type="text"
         id="text-message"
         value={message}
-        onChange={(e) => handleChange(e)}
+        onChange={updateMessage}
       ></input>
       <button
         onClick={() => {
@@ -42,6 +42,11 @@ export default function Survey() {
       >
         submit
       </button>
+      <ul className="displayMessage">
+        {displaySurveyQuestion.map((surveyQuestion) => (
+          <li>{surveyQuestion}</li>
+        ))}
+      </ul>
     </div>
   );
 }
