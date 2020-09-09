@@ -13,6 +13,9 @@ io.on("connect", (socket) => {
     console.log(message);
     socket.broadcast.emit("chat-message", message);
   });
+  socket.on("login", (login) => {
+    console.log(...login);
+  });
 });
 server.listen(PORT, () => {
   console.log(`Listening on ${PORT}`);
