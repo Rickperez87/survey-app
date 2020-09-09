@@ -1,7 +1,41 @@
 .createQuestion {
   display: flex;
   flex-direction: column;
+  width: 500px;
+  margin: 0 auto;
 }
 .hidden {
   display: none;
+}
+.login-container {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  margin: 0 auto;
+}
+input {
+  margin: 0.5rem;
+  padding: 1rem;
+}
+button {
+  align-self: center;
+  max-width: 350px;
+  background: cornflowerblue;
+  color: white;
+  padding: 1rem;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: large;
+  border: none;
+  cursor: pointer;
+}
+.displayQuestion {
+  padding: 1rem;
+  background: cornflowerblue;
+  color: white;
+  font-size: large;
+  font-weight: bold;
+  width: 500px;
+  list-style: none;
+  margin: 1rem auto;
 }
