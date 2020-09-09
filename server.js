@@ -14,7 +14,9 @@ io.on("connect", (socket) => {
     socket.broadcast.emit("chat-message", message);
   });
   socket.on("login", (login) => {
-    console.log(...login);
+    if (login[0] === "rick" && login[1] === "perez") {
+      socket.emit("confirmLogin", console.log("you are logged in Rick"));
+    }
   });
 });
 server.listen(PORT, () => {
