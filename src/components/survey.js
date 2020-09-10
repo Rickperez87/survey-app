@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import useFormState from "../custom-react-hooks/form-state-hook";
 import useToggle from "../custom-react-hooks/useToggle";
+import Login from "./login";
+import CreateQuestion from "./createQuestion";
 import io from "socket.io-client";
-import Admin from "./admin";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
 import "../styles/survey.css";
 
 const socket = io("http://localhost:4000", {
@@ -15,6 +18,10 @@ socket.on("connect", () => {
 
 export default function Survey() {
   const [message, updateMessage, clearMessage] = useFormState("");
+  const [answer1, updateAnswer1, clearAnswer1] = useFormState("");
+  const [answer2, updateAnswer2, clearAnswer2] = useFormState("");
+  const [answer3, updateAnswer3, clearAnswer3] = useFormState("");
+  const [answer4, updateAnswer4, clearAnswer4] = useFormState("");
   const [displaySurveyQuestion, setSurveyQuestion] = useState([]);
   const [loggedin, toggleLoggedin] = useToggle(false);
   const [questionDisplayed, toggleQuestionDisplayed] = useToggle(false);
@@ -33,36 +40,44 @@ export default function Survey() {
   });
 
   const submit = () => {
-    socket.emit("text", message);
+    socket.emit("text", [message, answer1, answer2, answer3, answer4]);
     clearMessage();
+    clearAnswer1();
+    clearAnswer2();
+    clearAnswer3();
+    clearAnswer4();
   };
   return (
     <div>
-      <div
-        className={loggedin || questionDisplayed ? "hidden" : "login-container"}
-      >
-        <h1 className={loggedin ? "hidden" : ""}>Admin Login</h1>
-        <Admin socket={socket} className={loggedin ? "hidden" : ""} />
-      </div>
-      <div
-        id="createQuestion"
-        className={loggedin ? "createQuestion" : "hidden"}
-      >
-        <h1>create a question:</h1>
-        <input
-          type="text"
-          id="text-message"
-          value={message}
-          onChange={updateMessage}
-        ></input>
-        <button
-          onClick={() => {
-            submit();
-          }}
-        >
-          submit
-        </button>
-      </div>
+      <Login
+        TextField={TextField}
+        socket={socket}
+        Button={Button}
+        loggedin={loggedin}
+        questionDisplayed={questionDisplayed}
+        className={loggedin ? "hidden" : ""}
+      />
+      <CreateQuestion
+        answer1={answer1}
+        updateAnswer1={updateAnswer1}
+        clearAnswer1={clearAnswer1}
+        answer2={answer2}
+        updateAnswer2={updateAnswer2}
+        clearAnswer2={clearAnswer2}
+        answer3={answer3}
+        updateAnswer3={updateAnswer3}
+        clearAnswer3={clearAnswer3}
+        answer4={answer4}
+        updateAnswer4={updateAnswer4}
+        clearAnswer4={clearAnswer4}
+        TextField={TextField}
+        Button={Button}
+        loggedin={loggedin}
+        message={message}
+        updateMessage={updateMessage}
+        handleSubmit={submit}
+      />
+      {/* extract display question component and set up array to show question and display possible answers as radio buttons */}
       <ul
         className={
           loggedin || !questionDisplayed ? "hidden" : "displayQuestion"
