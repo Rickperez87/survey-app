@@ -9,9 +9,9 @@ io.on("connect", (socket) => {
   console.log("Client connected");
   socket.on("disconnect", () => console.log("Client Disconnected"));
 
-  socket.on("text", (message) => {
-    console.log(message);
-    socket.broadcast.emit("chat-message", message);
+  socket.on("text", (text) => {
+    console.log(text);
+    socket.broadcast.emit("chat-message", text);
   });
   socket.on("login", (login) => {
     if (login[0] === "rick" && login[1] === "perez") {

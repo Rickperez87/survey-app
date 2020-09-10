@@ -3,9 +3,12 @@ import useFormState from "../custom-react-hooks/form-state-hook";
 import useToggle from "../custom-react-hooks/useToggle";
 import Login from "./login";
 import CreateQuestion from "./createQuestion";
+import DisplaySurveyQuestions from "./displaySurveyQuestions";
 import io from "socket.io-client";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
+import List from "@material-ui/core/List";
+import Checkbox from "@material-ui/core/Checkbox";
 import "../styles/survey.css";
 
 const socket = io("http://localhost:4000", {
@@ -29,7 +32,7 @@ export default function Survey() {
   useEffect(() => {
     socket.on("chat-message", (surveyQuestion) => {
       console.log(`incoming message: ${surveyQuestion}`);
-      setSurveyQuestion([surveyQuestion]);
+      setSurveyQuestion(surveyQuestion);
       toggleQuestionDisplayed();
       //toggle question will close out the on second time submitting question. What need to do is display results to all and that function toggle display question off. Then on next submit will toggle on.
     });
@@ -40,7 +43,8 @@ export default function Survey() {
   });
 
   const submit = () => {
-    socket.emit("text", [message, answer1, answer2, answer3, answer4]);
+    let text = [message, answer1, answer2, answer3, answer4];
+    socket.emit("text", text);
     clearMessage();
     clearAnswer1();
     clearAnswer2();
@@ -78,16 +82,13 @@ export default function Survey() {
         handleSubmit={submit}
       />
       {/* extract display question component and set up array to show question and display possible answers as radio buttons */}
-      <ul
-        className={
-          loggedin || !questionDisplayed ? "hidden" : "displayQuestion"
-        }
-      >
-        <h1>Survey Question:</h1>
-        {displaySurveyQuestion.map((surveyQuestion) => (
-          <li>{surveyQuestion}</li>
-        ))}
-      </ul>
+      <DisplaySurveyQuestions
+        List={List}
+        Checkbox={Checkbox}
+        loggedin={loggedin}
+        questionDisplayed={questionDisplayed}
+        displaySurveyQuestion={displaySurveyQuestion}
+      />
     </div>
   );
 }
