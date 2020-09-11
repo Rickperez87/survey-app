@@ -4,9 +4,15 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
+import Button from "@material-ui/core/Button";
 
 export default function DisplaySurveyQuestions(props) {
-  console.log(props.surveyQuestion, props.surveyAnswers);
+  const submitAnswer = () => {
+    console.log(`submitted ${props.radio}`);
+    props.socket.emit("submitAnswer", props.radio);
+    props.clearRadio();
+  };
+
   return (
     <div
       className={
@@ -33,6 +39,13 @@ export default function DisplaySurveyQuestions(props) {
           ))}
         </RadioGroup>
       </FormControl>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => submitAnswer()}
+      >
+        Submit
+      </Button>
     </div>
   );
 }

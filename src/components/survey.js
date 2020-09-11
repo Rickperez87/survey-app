@@ -7,10 +7,6 @@ import DisplaySurveyQuestions from "./displaySurveyQuestions";
 import io from "socket.io-client";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import Checkbox from "@material-ui/core/Checkbox";
 
 const socket = io("http://localhost:4000", {
   transports: ["websocket", "polling"],
@@ -27,6 +23,7 @@ export default function Survey() {
   const [answer3, updateAnswer3, clearAnswer3] = useFormState("");
   const [answer4, updateAnswer4, clearAnswer4] = useFormState("");
   const [surveyQuestion, setSurveyQuestion] = useState([]);
+  const [adminId, setAdminId] = useState("");
   const [surveyAnswers, setSurveyAnswers] = useState([]);
   const [loggedin, toggleLoggedin] = useToggle(false);
   const [questionDisplayed, toggleQuestionDisplayed] = useToggle(false);
@@ -41,10 +38,14 @@ export default function Survey() {
       toggleQuestionDisplayed();
       //toggle question will close out the on second time submitting question. What need to do is display results to all and that function toggle display question off. Then on next submit will toggle on.
     });
-    socket.on("confirmLogin", () => {
-      console.log("login successful");
+    socket.on("confirmLogin", (adminId) => {
+      console.log("login successful", adminId);
+      setAdminId(adminId);
       toggleLoggedin();
     });
+    socket.on("receiveAnswer", (ans) =>
+      console.log(`good job received ${ans}`)
+    );
   });
 
   const submit = () => {
@@ -88,6 +89,7 @@ export default function Survey() {
       />
       {/* extract display question component and set up array to show question and display possible answers as radio buttons */}
       <DisplaySurveyQuestions
+        socket={socket}
         loggedin={loggedin}
         questionDisplayed={questionDisplayed}
         surveyQuestion={surveyQuestion}
@@ -95,6 +97,7 @@ export default function Survey() {
         radio={radio}
         updateRadio={updateRadio}
         clearRadio={clearRadio}
+        adminId={adminId}
       />
     </div>
   );

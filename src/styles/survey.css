@@ -19,6 +19,9 @@ input {
 }
 
 .displayQuestion {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 500px;
   text-align: center;
   margin: 4rem auto;

@@ -3,6 +3,8 @@ const app = express();
 const server = require("http").createServer(app);
 const io = require("socket.io")(server);
 
+let adminId = "";
+
 const PORT = process.env.POR || 4000;
 
 io.on("connect", (socket) => {
@@ -15,8 +17,13 @@ io.on("connect", (socket) => {
   });
   socket.on("login", (login) => {
     if (login[0] === "rick" && login[1] === "perez") {
-      socket.emit("confirmLogin", console.log("you are logged in Rick"));
+      adminId = socket.client.id;
+      socket.emit("confirmLogin", adminId);
     }
+  });
+  socket.on("submitAnswer", (ans) => {
+    console.log(ans);
+    return io.to(adminId).emit("receiveAnswer", ans);
   });
 });
 server.listen(PORT, () => {
