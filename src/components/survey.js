@@ -8,8 +8,9 @@ import io from "socket.io-client";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
 import Checkbox from "@material-ui/core/Checkbox";
-import "../styles/survey.css";
 
 const socket = io("http://localhost:4000", {
   transports: ["websocket", "polling"],
@@ -25,14 +26,18 @@ export default function Survey() {
   const [answer2, updateAnswer2, clearAnswer2] = useFormState("");
   const [answer3, updateAnswer3, clearAnswer3] = useFormState("");
   const [answer4, updateAnswer4, clearAnswer4] = useFormState("");
-  const [displaySurveyQuestion, setSurveyQuestion] = useState([]);
+  const [surveyQuestion, setSurveyQuestion] = useState([]);
+  const [surveyAnswers, setSurveyAnswers] = useState([]);
   const [loggedin, toggleLoggedin] = useToggle(false);
   const [questionDisplayed, toggleQuestionDisplayed] = useToggle(false);
+  const [radio, updateRadio, clearRadio] = useFormState("");
 
   useEffect(() => {
     socket.on("chat-message", (surveyQuestion) => {
       console.log(`incoming message: ${surveyQuestion}`);
-      setSurveyQuestion(surveyQuestion);
+      setSurveyQuestion(surveyQuestion[0]);
+      surveyQuestion.shift();
+      setSurveyAnswers([...surveyQuestion]);
       toggleQuestionDisplayed();
       //toggle question will close out the on second time submitting question. What need to do is display results to all and that function toggle display question off. Then on next submit will toggle on.
     });
@@ -83,11 +88,13 @@ export default function Survey() {
       />
       {/* extract display question component and set up array to show question and display possible answers as radio buttons */}
       <DisplaySurveyQuestions
-        List={List}
-        Checkbox={Checkbox}
         loggedin={loggedin}
         questionDisplayed={questionDisplayed}
-        displaySurveyQuestion={displaySurveyQuestion}
+        surveyQuestion={surveyQuestion}
+        surveyAnswers={surveyAnswers}
+        radio={radio}
+        updateRadio={updateRadio}
+        clearRadio={clearRadio}
       />
     </div>
   );

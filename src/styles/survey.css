@@ -18,16 +18,8 @@ input {
   padding: 1rem;
 }
 
-MuiButton-containedPrimary {
-  background: cornflowerblue;
-}
 .displayQuestion {
-  padding: 1rem;
-  background: cornflowerblue;
-  color: white;
-  font-size: large;
-  font-weight: bold;
   width: 500px;
-  list-style: none;
-  margin: 1rem auto;
+  text-align: center;
+  margin: 4rem auto;
 }
