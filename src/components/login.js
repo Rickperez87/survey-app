@@ -1,5 +1,7 @@
 import React from "react";
 import useFormState from "../custom-react-hooks/form-state-hook";
+import Input from "@material-ui/core/Input";
+import Button from "@material-ui/core/Button";
 import "../styles/survey.css";
 
 function Login(props) {
@@ -19,21 +21,11 @@ function Login(props) {
       }
     >
       <h1 className={props.loggedin ? "hidden" : ""}>Host Login</h1>
-      <props.TextField
-        variant="outlined"
-        label="User"
-        value={user}
-        onChange={updateUser}
-      ></props.TextField>
-      <props.TextField
-        variant="outlined"
-        label="Password"
-        value={pass}
-        onChange={updatePass}
-      ></props.TextField>
-      <props.Button variant="contained" color="primary" onClick={() => login()}>
+      <Input placeholder="User" value={user} onChange={updateUser} />
+      <Input placeholder="Password" value={pass} onChange={updatePass} />
+      <Button variant="contained" color="primary" onClick={() => login()}>
         Login
-      </props.Button>
+      </Button>
     </div>
   );
 }

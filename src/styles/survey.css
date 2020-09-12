@@ -26,3 +26,8 @@ input {
   text-align: center;
   margin: 4rem auto;
 }
+.surveyResponse {
+  width: 500px;
+  margin: 0 auto;
+  text-align: center;
+}

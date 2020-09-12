@@ -7,12 +7,6 @@ import FormLabel from "@material-ui/core/FormLabel";
 import Button from "@material-ui/core/Button";
 
 export default function DisplaySurveyQuestions(props) {
-  const submitAnswer = () => {
-    console.log(`submitted ${props.radio}`);
-    props.socket.emit("submitAnswer", props.radio);
-    props.clearRadio();
-  };
-
   return (
     <div
       className={
@@ -42,11 +36,11 @@ export default function DisplaySurveyQuestions(props) {
       <Button
         variant="contained"
         color="primary"
-        onClick={() => submitAnswer()}
+        onClick={() => props.handleSubmitAnswer()}
       >
         Submit
       </Button>
     </div>
   );
 }
-//add submit button and it will emit to server which will send to surveyor and then can display to all brodcast showing breakdown.
+//server put receive answers and put in an array and display to admin who then can brodcast to all others.
