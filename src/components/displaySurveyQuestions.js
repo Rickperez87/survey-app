@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -7,40 +7,52 @@ import FormLabel from "@material-ui/core/FormLabel";
 import Button from "@material-ui/core/Button";
 
 export default function DisplaySurveyQuestions(props) {
+  const handleSubmit = () => {
+    props.toggleQuestionDisplayed();
+    props.handleSubmitAnswer();
+  };
   return (
-    <div
-      className={
-        props.loggedin || !props.questionDisplayed
-          ? "hidden"
-          : "displayQuestion"
-      }
-    >
-      <FormControl component="fieldset">
-        <FormLabel component="legend">{props.surveyQuestion}</FormLabel>
-        <RadioGroup
-          aria-label="Answers"
-          name="Answers"
-          value={props.radio}
-          onChange={props.updateRadio}
-        >
-          {props.surveyAnswers.map((answer, index) => (
-            <FormControlLabel
-              key={index}
-              value={answer}
-              control={<Radio />}
-              label={answer}
-            />
-          ))}
-        </RadioGroup>
-      </FormControl>
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() => props.handleSubmitAnswer()}
+    <Fragment>
+      <div
+        className={
+          !props.loggedin && props.questionDisplayed
+            ? "displayQuestion"
+            : "hidden"
+        }
       >
-        Submit
-      </Button>
-    </div>
+        <FormControl component="fieldset">
+          <FormLabel component="legend">{props.surveyQuestion}</FormLabel>
+          <RadioGroup
+            aria-label="Answers"
+            name="Answers"
+            value={props.radio}
+            onChange={props.updateRadio}
+          >
+            {props.surveyAnswers.map((answer, index) => (
+              <FormControlLabel
+                key={index}
+                value={answer}
+                control={<Radio />}
+                label={answer}
+              />
+            ))}
+          </RadioGroup>
+        </FormControl>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => handleSubmit()}
+        >
+          Submit
+        </Button>
+      </div>
+      <div
+        className={
+          props.awaitingAnswers && !props.questionDisplayed ? "" : "hidden"
+        }
+      >
+        <h1>awaiting answers...</h1>
+      </div>
+    </Fragment>
   );
 }
-//server put receive answers and put in an array and display to admin who then can brodcast to all others.

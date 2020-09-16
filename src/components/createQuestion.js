@@ -40,9 +40,7 @@ function CreateQuestion(props) {
       <Button
         variant="contained"
         color="primary"
-        onClick={() => {
-          props.handleSubmit();
-        }}
+        onClick={() => props.handleSubmit()}
       >
         Submit
       </Button>

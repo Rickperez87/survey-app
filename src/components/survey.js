@@ -17,6 +17,7 @@ socket.on("connect", () => {
 });
 
 export default function Survey() {
+  const [awaitingAnswers, toggleAwaitingAnswers] = useToggle(false);
   const [message, updateMessage, clearMessage] = useFormState("");
   const [answer1, updateAnswer1, clearAnswer1] = useFormState("");
   const [answer2, updateAnswer2, clearAnswer2] = useFormState("");
@@ -28,7 +29,6 @@ export default function Survey() {
   const [surveyAnswers, setSurveyAnswers] = useState([]);
   const [loggedin, toggleLoggedin] = useToggle(false);
   const [questionDisplayed, toggleQuestionDisplayed] = useToggle(false);
-  const [awaitingAnswers, toggleAwaitingAnswers] = useToggle(false);
   const [radio, updateRadio, clearRadio] = useFormState("");
 
   useEffect(() => {
@@ -40,7 +40,7 @@ export default function Survey() {
       toggleQuestionDisplayed();
       //toggle question will close out the on second time submitting question. What need to do is display results to all and that function toggle display question off. Then on next submit will toggle on.
     });
-  }, [socket.on("chat-message", () => {})]);
+  }, []);
   socket.on("confirmLogin", (adminId) => {
     console.log("login successful", adminId);
     setAdminId(adminId);
@@ -67,12 +67,12 @@ export default function Survey() {
     clearAnswer3();
     clearAnswer4();
     toggleAwaitingAnswers();
-    console.log(awaitingAnswers);
   };
 
   const closeSurvey = () => {
     console.log("survey responses", surveyResponses);
     toggleAwaitingAnswers();
+    toggleQuestionDisplayed();
   };
 
   return (
@@ -117,19 +117,22 @@ export default function Survey() {
         <SurveyResponses surveyResponses={surveyResponses} />
         {/* need to transmit survey responses on close survey to all. Then reset logic so we can ask the next question. */}
       </div>
-
-      <DisplaySurveyQuestions
-        socket={socket}
-        loggedin={loggedin}
-        questionDisplayed={questionDisplayed}
-        surveyQuestion={surveyQuestion}
-        surveyAnswers={surveyAnswers}
-        radio={radio}
-        updateRadio={updateRadio}
-        clearRadio={clearRadio}
-        adminId={adminId}
-        handleSubmitAnswer={submitAnswer}
-      />
+      {!awaitingAnswers && (
+        <DisplaySurveyQuestions
+          socket={socket}
+          loggedin={loggedin}
+          questionDisplayed={questionDisplayed}
+          toggleQuestionDisplayed={toggleQuestionDisplayed}
+          toggleAwaitingAnswers={toggleAwaitingAnswers}
+          surveyQuestion={surveyQuestion}
+          surveyAnswers={surveyAnswers}
+          radio={radio}
+          updateRadio={updateRadio}
+          clearRadio={clearRadio}
+          adminId={adminId}
+          handleSubmitAnswer={submitAnswer}
+        />
+      )}
     </div>
   );
 }
