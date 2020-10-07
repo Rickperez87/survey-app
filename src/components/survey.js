@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import useFormState from "../custom-react-hooks/form-state-hook";
 import useToggle from "../custom-react-hooks/useToggle";
+import Navbar from "../components/navbar";
 import Login from "./login";
 import CreateQuestion from "./createQuestion";
 import DisplaySurveyQuestions from "./displaySurveyQuestions";
 import SurveyResponses from "./surveyResponses";
 import io from "socket.io-client";
+import Card from "@material-ui/core/Card";
 import Button from "@material-ui/core/Button";
 
 const socket = io("http://localhost:4000", {
@@ -28,6 +30,7 @@ export default function Survey() {
   const [adminId, setAdminId] = useState("");
   const [surveyAnswers, setSurveyAnswers] = useState([]);
   const [loggedin, toggleLoggedin] = useToggle(false);
+  const [loginLink, toggleLoginLink] = useToggle(false);
   const [questionDisplayed, toggleQuestionDisplayed] = useToggle(false);
   const [radio, updateRadio, clearRadio] = useFormState("");
 
@@ -38,6 +41,8 @@ export default function Survey() {
       surveyQuestion.shift();
       setSurveyAnswers([...surveyQuestion]);
       toggleQuestionDisplayed();
+      toggleAwaitingAnswers();
+      //this is broadcasting on survey question creation. set this to toggleawaitinganswers also.
       //toggle question will close out the on second time submitting question. What need to do is display results to all and that function toggle display question off. Then on next submit will toggle on.
     });
   }, []);
@@ -73,16 +78,21 @@ export default function Survey() {
     console.log("survey responses", surveyResponses);
     toggleAwaitingAnswers();
     toggleQuestionDisplayed();
+    //add transmit survey answers socket method to send to all users...****************
   };
 
   return (
     <div>
-      <Login
-        socket={socket}
-        loggedin={loggedin}
-        questionDisplayed={questionDisplayed}
-        className={loggedin ? "hidden" : ""}
-      />
+      <Navbar toggleLoginLink={toggleLoginLink} />
+
+      {loginLink && (
+        <Login
+          socket={socket}
+          loggedin={loggedin}
+          questionDisplayed={questionDisplayed}
+          className={loggedin ? "hidden" : ""}
+        />
+      )}
       <div className={awaitingAnswers ? "hidden" : "createQuestionContainer"}>
         <CreateQuestion
           answer1={answer1}
@@ -103,7 +113,9 @@ export default function Survey() {
           handleSubmit={submit}
         />
       </div>
-      <div className={awaitingAnswers ? "awaitingAnswers" : "hidden"}>
+      <div
+        className={awaitingAnswers && loggedin ? "awaitingAnswers" : "hidden"}
+      >
         <h1>Awaiting Answers...</h1>
         <Button
           variant="contained"
@@ -113,26 +125,28 @@ export default function Survey() {
           Close Survey
         </Button>
       </div>
-      <div className={!awaitingAnswers ? "hidden" : "surveyResponse"}>
+      <Card className={!awaitingAnswers ? "hidden" : "surveyResponse"}>
         <SurveyResponses surveyResponses={surveyResponses} />
         {/* need to transmit survey responses on close survey to all. Then reset logic so we can ask the next question. */}
-      </div>
-      {!awaitingAnswers && (
-        <DisplaySurveyQuestions
-          socket={socket}
-          loggedin={loggedin}
-          questionDisplayed={questionDisplayed}
-          toggleQuestionDisplayed={toggleQuestionDisplayed}
-          toggleAwaitingAnswers={toggleAwaitingAnswers}
-          surveyQuestion={surveyQuestion}
-          surveyAnswers={surveyAnswers}
-          radio={radio}
-          updateRadio={updateRadio}
-          clearRadio={clearRadio}
-          adminId={adminId}
-          handleSubmitAnswer={submitAnswer}
-        />
-      )}
+      </Card>
+      <Card>
+        {questionDisplayed && (
+          <DisplaySurveyQuestions
+            socket={socket}
+            loggedin={loggedin}
+            questionDisplayed={questionDisplayed}
+            toggleQuestionDisplayed={toggleQuestionDisplayed}
+            toggleAwaitingAnswers={toggleAwaitingAnswers}
+            surveyQuestion={surveyQuestion}
+            surveyAnswers={surveyAnswers}
+            radio={radio}
+            updateRadio={updateRadio}
+            clearRadio={clearRadio}
+            adminId={adminId}
+            handleSubmitAnswer={submitAnswer}
+          />
+        )}
+      </Card>
     </div>
   );
 }

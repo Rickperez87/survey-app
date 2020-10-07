@@ -6,15 +6,11 @@ import ListItem from "@material-ui/core/ListItem";
 
 function SurveyResponses(props) {
   return (
-    <Card>
-      <CardContent>
-        <List>
-          {props.surveyResponses.map((ans, idx) => {
-            return <ListItem key={idx}>{ans}</ListItem>;
-          })}
-        </List>
-      </CardContent>
-    </Card>
+    <List>
+      {props.surveyResponses.map((ans, idx) => {
+        return <ListItem key={idx}>{ans}</ListItem>;
+      })}
+    </List>
   );
 }
 
