@@ -25,6 +25,12 @@ io.on("connect", (socket) => {
     console.log(ans);
     return io.to(adminId).emit("receiveAnswer", ans);
   });
+
+  socket.on("surveyResults", (results) => {
+    console.log(results);
+    socket.broadcast.emit("results", results);
+    return io.to(adminId).emit("results", results);
+  });
 });
 server.listen(PORT, () => {
   console.log(`Listening on ${PORT}`);

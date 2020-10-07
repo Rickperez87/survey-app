@@ -6,6 +6,7 @@ import Login from "./login";
 import CreateQuestion from "./createQuestion";
 import DisplaySurveyQuestions from "./displaySurveyQuestions";
 import SurveyResponses from "./surveyResponses";
+import SurveyResults from "./surveyResults";
 import io from "socket.io-client";
 import Card from "@material-ui/core/Card";
 import Button from "@material-ui/core/Button";
@@ -15,7 +16,7 @@ const socket = io("http://localhost:4000", {
 });
 
 socket.on("connect", () => {
-  console.log("rick is here");
+  console.log("Client Connected");
 });
 
 export default function Survey() {
@@ -27,6 +28,7 @@ export default function Survey() {
   const [answer4, updateAnswer4, clearAnswer4] = useFormState("");
   const [surveyQuestion, setSurveyQuestion] = useState([]);
   const [surveyResponses, setSurveyResponses] = useState([]);
+  const [surveyResults, setSurveyResults] = useState(false);
   const [adminId, setAdminId] = useState("");
   const [surveyAnswers, setSurveyAnswers] = useState([]);
   const [loggedin, toggleLoggedin] = useToggle(false);
@@ -62,6 +64,11 @@ export default function Survey() {
     let result = [...surveyResponses, ans];
     setSurveyResponses(result);
   });
+  socket.on("results", (results) => {
+    console.log("results", results);
+    setSurveyResults(results);
+    //transmits to all exept sender
+  });
 
   const submit = () => {
     let text = [message, answer1, answer2, answer3, answer4];
@@ -75,10 +82,9 @@ export default function Survey() {
   };
 
   const closeSurvey = () => {
-    console.log("survey responses", surveyResponses);
     toggleAwaitingAnswers();
     toggleQuestionDisplayed();
-    //add transmit survey answers socket method to send to all users...****************
+    socket.emit("surveyResults", surveyResponses);
   };
 
   return (
@@ -129,6 +135,12 @@ export default function Survey() {
         <SurveyResponses surveyResponses={surveyResponses} />
         {/* need to transmit survey responses on close survey to all. Then reset logic so we can ask the next question. */}
       </Card>
+
+      <Card>
+        <SurveyResults surveyResults={surveyResults} />
+        {/* need to transmit survey responses on close survey to all. Then reset logic so we can ask the next question. */}
+      </Card>
+
       <Card>
         {questionDisplayed && (
           <DisplaySurveyQuestions
