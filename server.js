@@ -11,9 +11,9 @@ io.on("connect", (socket) => {
   console.log("Client connected");
   socket.on("disconnect", () => console.log("Client Disconnected"));
 
-  socket.on("text", (text) => {
+  socket.on("sentQuestion", (text) => {
     console.log(text);
-    socket.broadcast.emit("chat-message", text);
+    socket.broadcast.emit("surveyQuestion", text);
   });
   socket.on("login", (login) => {
     if (login[0] === "rick" && login[1] === "perez") {

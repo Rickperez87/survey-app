@@ -37,7 +37,7 @@ export default function Survey() {
   const [radio, updateRadio, clearRadio] = useFormState("");
 
   useEffect(() => {
-    socket.on("chat-message", (surveyQuestion) => {
+    socket.on("surveyQuestion", (surveyQuestion) => {
       console.log(`incoming message: ${surveyQuestion}`);
       setSurveyQuestion(surveyQuestion[0]);
       surveyQuestion.shift();
@@ -47,7 +47,7 @@ export default function Survey() {
       //this is broadcasting on survey question creation. set this to toggleawaitinganswers also.
       //toggle question will close out the on second time submitting question. What need to do is display results to all and that function toggle display question off. Then on next submit will toggle on.
     });
-  }, []);
+  });
   socket.on("confirmLogin", (adminId) => {
     console.log("login successful", adminId);
     setAdminId(adminId);
@@ -57,6 +57,7 @@ export default function Survey() {
   const submitAnswer = () => {
     console.log(`submitted ${radio}`);
     socket.emit("submitAnswer", radio);
+    toggleAwaitingAnswers();
     clearRadio();
   };
 
@@ -72,7 +73,7 @@ export default function Survey() {
 
   const submit = () => {
     let text = [message, answer1, answer2, answer3, answer4];
-    socket.emit("text", text);
+    socket.emit("sentQuestion", text);
     clearMessage();
     clearAnswer1();
     clearAnswer2();
@@ -131,16 +132,6 @@ export default function Survey() {
           Close Survey
         </Button>
       </div>
-      <Card className={!awaitingAnswers ? "hidden" : "surveyResponse"}>
-        <SurveyResponses surveyResponses={surveyResponses} />
-        {/* need to transmit survey responses on close survey to all. Then reset logic so we can ask the next question. */}
-      </Card>
-
-      <Card>
-        <SurveyResults surveyResults={surveyResults} />
-        {/* need to transmit survey responses on close survey to all. Then reset logic so we can ask the next question. */}
-      </Card>
-
       <Card>
         {questionDisplayed && (
           <DisplaySurveyQuestions
@@ -159,6 +150,14 @@ export default function Survey() {
           />
         )}
       </Card>
+
+      <div className="surveyResponse">
+        <SurveyResponses surveyResponses={surveyResponses} />
+        {/* need to transmit survey responses on close survey to all. Then reset logic so we can ask the next question. */}
+      </div>
+
+      <SurveyResults surveyResults={surveyResults} />
+      {/* need to transmit survey responses on close survey to all. Then reset logic so we can ask the next question. */}
     </div>
   );
 }

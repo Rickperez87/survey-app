@@ -1,12 +1,19 @@
 import React from "react";
 
 function SurveyResponses(props) {
+  const { surveyResponses } = props;
   return (
-    <div>
-      {props.surveyResponses.map((ans, idx) => {
-        return <div key={idx}>{ans}</div>;
-      })}
-    </div>
+    surveyResponses && (
+      <div>
+        {surveyResponses.map((ans, idx) => {
+          return (
+            <div className="response" key={idx}>
+              {ans}
+            </div>
+          );
+        })}
+      </div>
+    )
   );
 }
 
