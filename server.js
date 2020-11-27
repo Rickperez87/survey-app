@@ -18,16 +18,14 @@ io.on("connect", (socket) => {
   socket.on("login", (login) => {
     if (login[0] === "rick" && login[1] === "perez") {
       adminId = socket.client.id;
-      socket.emit("confirmLogin", adminId);
+      return io.to(adminId).emit("confirmLogin", adminId);
     }
   });
   socket.on("submitAnswer", (ans) => {
-    console.log(ans);
     return io.to(adminId).emit("receiveAnswer", ans);
   });
 
   socket.on("surveyResults", (results) => {
-    console.log(results);
     socket.broadcast.emit("results", results);
     return io.to(adminId).emit("results", results);
   });

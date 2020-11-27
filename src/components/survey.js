@@ -36,18 +36,18 @@ export default function Survey() {
   const [questionDisplayed, toggleQuestionDisplayed] = useToggle(false);
   const [radio, updateRadio, clearRadio] = useFormState("");
 
-  useEffect(() => {
-    socket.on("surveyQuestion", (surveyQuestion) => {
-      console.log(`incoming message: ${surveyQuestion}`);
-      setSurveyQuestion(surveyQuestion[0]);
-      surveyQuestion.shift();
-      setSurveyAnswers([...surveyQuestion]);
-      toggleQuestionDisplayed();
-      toggleAwaitingAnswers();
-      //this is broadcasting on survey question creation. set this to toggleawaitinganswers also.
-      //toggle question will close out the on second time submitting question. What need to do is display results to all and that function toggle display question off. Then on next submit will toggle on.
-    });
+  socket.on("surveyQuestion", (surveyQuestion) => {
+    console.log(`incoming message: ${surveyQuestion}`);
+    setSurveyQuestion(surveyQuestion[0]);
+    surveyQuestion.shift();
+    setSurveyAnswers([...surveyQuestion]);
+    setSurveyResults(false);
+    toggleQuestionDisplayed();
+    toggleAwaitingAnswers();
+    //this is broadcasting on survey question creation. set this to toggleawaitinganswers also.
+    //toggle question will close out the on second time submitting question. What need to do is display results to all and that function toggle display question off. Then on next submit will toggle on.
   });
+
   socket.on("confirmLogin", (adminId) => {
     console.log("login successful", adminId);
     setAdminId(adminId);
@@ -59,19 +59,24 @@ export default function Survey() {
     socket.emit("submitAnswer", radio);
     toggleAwaitingAnswers();
     clearRadio();
+    setSurveyAnswers([]);
   };
 
   socket.on("receiveAnswer", (ans) => {
     let result = [...surveyResponses, ans];
     setSurveyResponses(result);
+    setSurveyAnswers([]);
   });
   socket.on("results", (results) => {
-    console.log("results", results);
     setSurveyResults(results);
+    setSurveyAnswers([]);
+    setSurveyQuestion([]);
+    setSurveyResponses([]);
     //transmits to all exept sender
   });
 
   const submit = () => {
+    setSurveyResults(false);
     let text = [message, answer1, answer2, answer3, answer4];
     socket.emit("sentQuestion", text);
     clearMessage();
@@ -83,9 +88,9 @@ export default function Survey() {
   };
 
   const closeSurvey = () => {
-    toggleAwaitingAnswers();
-    toggleQuestionDisplayed();
     socket.emit("surveyResults", surveyResponses);
+    toggleAwaitingAnswers();
+    setSurveyQuestion([]);
   };
 
   return (
@@ -104,16 +109,13 @@ export default function Survey() {
         <CreateQuestion
           answer1={answer1}
           updateAnswer1={updateAnswer1}
-          clearAnswer1={clearAnswer1}
           answer2={answer2}
           updateAnswer2={updateAnswer2}
-          clearAnswer2={clearAnswer2}
           answer3={answer3}
           updateAnswer3={updateAnswer3}
           clearAnswer3={clearAnswer3}
           answer4={answer4}
           updateAnswer4={updateAnswer4}
-          clearAnswer4={clearAnswer4}
           loggedin={loggedin}
           message={message}
           updateMessage={updateMessage}
@@ -153,11 +155,11 @@ export default function Survey() {
 
       <div className="surveyResponse">
         <SurveyResponses surveyResponses={surveyResponses} />
-        {/* need to transmit survey responses on close survey to all. Then reset logic so we can ask the next question. */}
       </div>
 
       <SurveyResults surveyResults={surveyResults} />
       {/* need to transmit survey responses on close survey to all. Then reset logic so we can ask the next question. */}
+      {/* make this into a dialog box? */}
     </div>
   );
 }
