@@ -3,12 +3,7 @@ import useFormState from "../custom-react-hooks/form-state-hook";
 import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
 //trying to make this work by updating addSurvey from survey app'
-function CreateQuestion({
-  loggedin,
-  socket,
-  setSurveyQuestion,
-  toggleAwaitingAnswers,
-}) {
+function CreateQuestion({ loggedin, socket, toggleAwaitingAnswers }) {
   const [surveyTitle, changeTitle, clearTitle] = useFormState("");
   const [answer1, changeAnswer1, clearAnswer1] = useFormState("");
   const [answer2, changeAnswer2, clearAnswer2] = useFormState("");
@@ -17,14 +12,15 @@ function CreateQuestion({
 
   const handleSubmit = function (e) {
     e.preventDefault();
-    let text = [surveyTitle, answer1, answer2, answer3, answer4];
-    setSurveyQuestion(text);
+    let title = surveyTitle;
+    let text = [answer1, answer2, answer3, answer4];
     clearTitle();
     clearAnswer1();
     clearAnswer2();
     clearAnswer3();
     clearAnswer4();
     socket.emit("sentQuestion", text);
+    socket.emit("sentTitle", title);
     toggleAwaitingAnswers();
   };
   return (
