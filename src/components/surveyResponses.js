@@ -5,7 +5,7 @@ function SurveyResponses(props) {
   return (
     surveyResponses && (
       <div>
-        {surveyResponses.map((ans, idx) => {
+        {surveyResponses.map(function (ans, idx) {
           return (
             <div className="response" key={idx}>
               {ans}

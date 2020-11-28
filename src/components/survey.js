@@ -15,17 +15,12 @@ const socket = io("http://localhost:4000", {
   transports: ["websocket", "polling"],
 });
 
-socket.on("connect", () => {
+socket.on("connect", function () {
   console.log("Client Connected");
 });
 
 export default function Survey() {
   const [awaitingAnswers, toggleAwaitingAnswers] = useToggle(false);
-  const [message, updateMessage, clearMessage] = useFormState("");
-  const [answer1, updateAnswer1, clearAnswer1] = useFormState("");
-  const [answer2, updateAnswer2, clearAnswer2] = useFormState("");
-  const [answer3, updateAnswer3, clearAnswer3] = useFormState("");
-  const [answer4, updateAnswer4, clearAnswer4] = useFormState("");
   const [surveyQuestion, setSurveyQuestion] = useState([]);
   const [surveyResponses, setSurveyResponses] = useState([]);
   const [surveyResults, setSurveyResults] = useState(false);
@@ -36,61 +31,64 @@ export default function Survey() {
   const [questionDisplayed, toggleQuestionDisplayed] = useToggle(false);
   const [radio, updateRadio, clearRadio] = useFormState("");
 
-  socket.on("surveyQuestion", (surveyQuestion) => {
-    console.log(`incoming message: ${surveyQuestion}`);
-    setSurveyQuestion(surveyQuestion[0]);
-    surveyQuestion.shift();
-    setSurveyAnswers([...surveyQuestion]);
-    setSurveyResults(false);
-    toggleQuestionDisplayed();
-    toggleAwaitingAnswers();
-    //this is broadcasting on survey question creation. set this to toggleawaitinganswers also.
-    //toggle question will close out the on second time submitting question. What need to do is display results to all and that function toggle display question off. Then on next submit will toggle on.
+  useEffect(function () {
+    socket.on(
+      "surveyQuestion",
+      function (surveyQuestion) {
+        console.log(`incoming message: ${surveyQuestion}`);
+        setSurveyQuestion(surveyQuestion[0]);
+        surveyQuestion.shift();
+        console.log({ surveyQuestion });
+        console.log({ surveyAnswers });
+        setSurveyAnswers([...surveyQuestion]);
+        setSurveyResults(false);
+        toggleQuestionDisplayed();
+        toggleAwaitingAnswers();
+        //this is broadcasting on survey question creation. set this to toggleawaitinganswers also.
+        //toggle question will close out the on second time submitting question. What need to do is display results to all and that function toggle display question off. Then on next submit will toggle on.
+      },
+      []
+    );
   });
 
-  socket.on("confirmLogin", (adminId) => {
+  socket.on("confirmLogin", function (adminId) {
     console.log("login successful", adminId);
     setAdminId(adminId);
     toggleLoggedin();
   });
 
-  const submitAnswer = () => {
+  const submitAnswer = function () {
     console.log(`submitted ${radio}`);
     socket.emit("submitAnswer", radio);
     toggleAwaitingAnswers();
     clearRadio();
-    setSurveyAnswers([]);
   };
 
-  socket.on("receiveAnswer", (ans) => {
+  socket.on("receiveAnswer", function (ans) {
     let result = [...surveyResponses, ans];
     setSurveyResponses(result);
     setSurveyAnswers([]);
   });
-  socket.on("results", (results) => {
+  socket.on("results", function (results) {
     setSurveyResults(results);
     setSurveyAnswers([]);
-    setSurveyQuestion([]);
     setSurveyResponses([]);
     //transmits to all exept sender
   });
 
-  const submit = () => {
-    setSurveyResults(false);
-    let text = [message, answer1, answer2, answer3, answer4];
-    socket.emit("sentQuestion", text);
-    clearMessage();
-    clearAnswer1();
-    clearAnswer2();
-    clearAnswer3();
-    clearAnswer4();
-    toggleAwaitingAnswers();
-  };
+  // const submit = function () {
+  // setSurveyResults(false);
+  // console.log(createSurveyQuestion);
+  // let text = [...createSurveyQuestion];
+  // console.log("checking if text is set", text);
+  // socket.emit("sentQuestion", text);
 
-  const closeSurvey = () => {
+  // toggleAwaitingAnswers();
+  // };
+
+  const closeSurvey = function () {
     socket.emit("surveyResults", surveyResponses);
     toggleAwaitingAnswers();
-    setSurveyQuestion([]);
   };
 
   return (
@@ -107,30 +105,17 @@ export default function Survey() {
       )}
       <div className={awaitingAnswers ? "hidden" : "createQuestionContainer"}>
         <CreateQuestion
-          answer1={answer1}
-          updateAnswer1={updateAnswer1}
-          answer2={answer2}
-          updateAnswer2={updateAnswer2}
-          answer3={answer3}
-          updateAnswer3={updateAnswer3}
-          clearAnswer3={clearAnswer3}
-          answer4={answer4}
-          updateAnswer4={updateAnswer4}
           loggedin={loggedin}
-          message={message}
-          updateMessage={updateMessage}
-          handleSubmit={submit}
+          setSurveyQuestion={setSurveyQuestion}
+          socket={socket}
+          toggleAwaitingAnswers={toggleAwaitingAnswers}
         />
       </div>
       <div
         className={awaitingAnswers && loggedin ? "awaitingAnswers" : "hidden"}
       >
         <h1>Awaiting Answers...</h1>
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={() => closeSurvey()}
-        >
+        <Button variant="contained" color="secondary" onClick={closeSurvey}>
           Close Survey
         </Button>
       </div>

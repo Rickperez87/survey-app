@@ -21,7 +21,7 @@ function Login(props) {
   const [user, updateUser, clearUser] = useFormState("");
   const [pass, updatePass, clearPass] = useFormState("");
 
-  const login = () => {
+  const login = function () {
     console.log(`submitted ${user}, ${pass}`);
     props.socket.emit("login", [user, pass]);
     clearUser();
@@ -36,11 +36,7 @@ function Login(props) {
       <h1 className={props.loggedin ? "hidden" : ""}>Host Login</h1>
       <Input placeholder="User" value={user} onChange={updateUser} />
       <Input placeholder="Password" value={pass} onChange={updatePass} />
-      <Button
-        className={classes.root}
-        variant="contained"
-        onClick={() => login()}
-      >
+      <Button className={classes.root} variant="contained" onClick={login}>
         Login
       </Button>
     </div>

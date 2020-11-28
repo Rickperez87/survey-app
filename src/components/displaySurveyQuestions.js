@@ -7,7 +7,7 @@ import FormLabel from "@material-ui/core/FormLabel";
 import Button from "@material-ui/core/Button";
 
 export default function DisplaySurveyQuestions(props) {
-  const handleSubmit = () => {
+  const handleSubmit = function () {
     props.toggleQuestionDisplayed();
     props.handleSubmitAnswer();
   };
@@ -28,21 +28,19 @@ export default function DisplaySurveyQuestions(props) {
             value={props.radio}
             onChange={props.updateRadio}
           >
-            {props.surveyAnswers.map((answer, index) => (
-              <FormControlLabel
-                key={index}
-                value={answer}
-                control={<Radio />}
-                label={answer}
-              />
-            ))}
+            {props.surveyAnswers.map(function (answer, index) {
+              return (
+                <FormControlLabel
+                  key={index}
+                  value={answer}
+                  control={<Radio />}
+                  label={answer}
+                />
+              );
+            })}
           </RadioGroup>
         </FormControl>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => handleSubmit()}
-        >
+        <Button variant="contained" color="primary" onClick={handleSubmit}>
           Submit
         </Button>
       </div>

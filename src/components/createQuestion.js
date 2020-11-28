@@ -1,47 +1,65 @@
 import React from "react";
+import useFormState from "../custom-react-hooks/form-state-hook";
 import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
-function CreateQuestion(props) {
+//trying to make this work by updating addSurvey from survey app'
+function CreateQuestion({
+  loggedin,
+  socket,
+  setSurveyQuestion,
+  toggleAwaitingAnswers,
+}) {
+  const [surveyTitle, changeTitle, clearTitle] = useFormState("");
+  const [answer1, changeAnswer1, clearAnswer1] = useFormState("");
+  const [answer2, changeAnswer2, clearAnswer2] = useFormState("");
+  const [answer3, changeAnswer3, clearAnswer3] = useFormState("");
+  const [answer4, changeAnswer4, clearAnswer4] = useFormState("");
+
+  const handleSubmit = function (e) {
+    e.preventDefault();
+    let text = [surveyTitle, answer1, answer2, answer3, answer4];
+    setSurveyQuestion(text);
+    clearTitle();
+    clearAnswer1();
+    clearAnswer2();
+    clearAnswer3();
+    clearAnswer4();
+    socket.emit("sentQuestion", text);
+    toggleAwaitingAnswers();
+  };
   return (
-    <div
-      id="createQuestion"
-      className={props.loggedin ? "createQuestion" : "hidden"}
-    >
+    <div id="createQuestion" className={loggedin ? "createQuestion" : "hidden"}>
       <Input
         placeholder="Survey Question"
         inputProps={{ "aria-label": "description" }}
-        value={props.message}
-        onChange={props.updateMessage}
+        value={surveyTitle}
+        onChange={changeTitle}
       />
       <Input
         placeholder="Answer-1"
         inputProps={{ "aria-label": "description" }}
-        value={props.answer1}
-        onChange={props.updateAnswer1}
+        value={answer1}
+        onChange={changeAnswer1}
       />
       <Input
         inputProps={{ "aria-label": "description" }}
         placeholder="Answer-2"
-        value={props.answer2}
-        onChange={props.updateAnswer2}
+        value={answer2}
+        onChange={changeAnswer2}
       />
       <Input
         inputProps={{ "aria-label": "description" }}
         placeholder="Answer-3"
-        value={props.answer3}
-        onChange={props.updateAnswer3}
+        value={answer3}
+        onChange={changeAnswer3}
       />
       <Input
         inputProps={{ "aria-label": "description" }}
         placeholder="Answer-4"
-        value={props.answer4}
-        onChange={props.updateAnswer4}
+        value={answer4}
+        onChange={changeAnswer4}
       />
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() => props.handleSubmit()}
-      >
+      <Button variant="contained" color="primary" onClick={handleSubmit}>
         Submit
       </Button>
     </div>
