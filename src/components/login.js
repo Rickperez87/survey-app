@@ -21,7 +21,6 @@ function Login({ classes, socket, toggleLoginLink }) {
   const [pass, updatePass, clearPass] = useFormState("");
 
   const login = function () {
-    console.log(`submitted ${user}, ${pass}`);
     socket.emit("login", [user, pass]);
     clearUser();
     clearPass();

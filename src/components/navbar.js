@@ -2,7 +2,6 @@ import React from "react";
 import "../styles/navbar.css";
 
 function Navbar({ handleClick }) {
-  console.log("render navbar");
   return (
     <div className="navbar">
       <div className="logo">Survey-App</div>

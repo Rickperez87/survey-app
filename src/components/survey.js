@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import useFormState from "../custom-react-hooks/form-state-hook";
 import useToggle from "../custom-react-hooks/useToggle";
 import Navbar from "../components/navbar";
@@ -28,24 +28,16 @@ export default function Survey() {
   const [questionDisplayed, toggleQuestionDisplayed] = useToggle(false);
   const [radio, updateRadio, clearRadio] = useFormState("");
 
-  let hostId = "";
   let title = useRef("");
   let questions = useRef("");
 
-  const updateLogin = function (id) {
-    toggleLoggedin();
-    hostId = id;
-  };
-
   useEffect(() => {
     socket.on("surveyQuestion", function (data) {
-      console.log(`incoming message: ${data}`);
       questions.current = data;
     });
   });
   useEffect(() => {
     socket.on("surveyTitle", function (incomingTitle) {
-      console.log(`incoming message: ${incomingTitle}`);
       title.current = incomingTitle;
       toggleQuestionDisplayed();
       toggleAwaitingAnswers();
@@ -53,13 +45,11 @@ export default function Survey() {
   });
   useEffect(() => {
     socket.on("confirmLogin", function (adminId) {
-      console.log("login successful", adminId);
-      updateLogin(adminId);
+      toggleLoggedin();
     });
   });
 
   const submitAnswer = function () {
-    console.log(`submitted ${radio}`);
     socket.emit("submitAnswer", radio);
     toggleAwaitingAnswers();
     clearRadio();
@@ -79,7 +69,6 @@ export default function Survey() {
     socket.emit("surveyResults", surveyResponses);
     toggleAwaitingAnswers();
   };
-  console.log(questions.current, questions, title.current, title);
   return (
     <div>
       <Navbar
@@ -88,15 +77,7 @@ export default function Survey() {
         }}
       />
 
-      {loginLink && (
-        <Login
-          socket={socket}
-          toggleLoginLink={toggleLoginLink}
-          loggedin={loggedin}
-          questionDisplayed={questionDisplayed}
-          className={loggedin ? "hidden" : ""}
-        />
-      )}
+      {loginLink && <Login socket={socket} toggleLoginLink={toggleLoginLink} />}
       <div className={awaitingAnswers ? "hidden" : "createQuestionContainer"}>
         <CreateQuestion
           loggedin={loggedin}
