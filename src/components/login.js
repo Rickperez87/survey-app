@@ -16,24 +16,20 @@ const styles = {
   },
 };
 
-function Login(props) {
-  const classes = props;
+function Login({ classes, socket, toggleLoginLink }) {
   const [user, updateUser, clearUser] = useFormState("");
   const [pass, updatePass, clearPass] = useFormState("");
 
   const login = function () {
     console.log(`submitted ${user}, ${pass}`);
-    props.socket.emit("login", [user, pass]);
+    socket.emit("login", [user, pass]);
     clearUser();
     clearPass();
+    toggleLoginLink();
   };
   return (
-    <div
-      className={
-        props.loggedin || props.questionDisplayed ? "hidden" : "login-container"
-      }
-    >
-      <h1 className={props.loggedin ? "hidden" : ""}>Host Login</h1>
+    <div className="login-container">
+      <h1>Host Login</h1>
       <Input placeholder="User" value={user} onChange={updateUser} />
       <Input placeholder="Password" value={pass} onChange={updatePass} />
       <Button className={classes.root} variant="contained" onClick={login}>

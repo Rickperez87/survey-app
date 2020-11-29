@@ -3,13 +3,13 @@ import useFormState from "../custom-react-hooks/form-state-hook";
 import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
 //trying to make this work by updating addSurvey from survey app'
-function CreateQuestion({ loggedin, socket, toggleAwaitingAnswers }) {
+const CreateQuestion = function (props) {
   const [surveyTitle, changeTitle, clearTitle] = useFormState("");
   const [answer1, changeAnswer1, clearAnswer1] = useFormState("");
   const [answer2, changeAnswer2, clearAnswer2] = useFormState("");
   const [answer3, changeAnswer3, clearAnswer3] = useFormState("");
   const [answer4, changeAnswer4, clearAnswer4] = useFormState("");
-
+  const { socket, toggleAwaitingAnswers } = props;
   const handleSubmit = function (e) {
     e.preventDefault();
     let title = surveyTitle;
@@ -24,7 +24,10 @@ function CreateQuestion({ loggedin, socket, toggleAwaitingAnswers }) {
     toggleAwaitingAnswers();
   };
   return (
-    <div id="createQuestion" className={loggedin ? "createQuestion" : "hidden"}>
+    <div
+      id="createQuestion"
+      className={props.loggedin ? "createQuestion" : "hidden"}
+    >
       <Input
         placeholder="Survey Question"
         inputProps={{ "aria-label": "description" }}
@@ -60,6 +63,6 @@ function CreateQuestion({ loggedin, socket, toggleAwaitingAnswers }) {
       </Button>
     </div>
   );
-}
+};
 
 export default CreateQuestion;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import useFormState from "../custom-react-hooks/form-state-hook";
 import useToggle from "../custom-react-hooks/useToggle";
 import Navbar from "../components/navbar";
@@ -20,28 +20,27 @@ socket.on("connect", function () {
 });
 
 export default function Survey() {
+  const [loggedin, toggleLoggedin] = useToggle(false);
   const [awaitingAnswers, toggleAwaitingAnswers] = useToggle(false);
-  const [surveyQuestion, setSurveyQuestion] = useState([]);
   const [surveyResponses, setSurveyResponses] = useState([]);
   const [surveyResults, setSurveyResults] = useState(false);
-  const [adminId, setAdminId] = useState("");
-  const [surveyAnswers, setSurveyAnswers] = useState([]);
-  const [loggedin, toggleLoggedin] = useToggle(false);
   const [loginLink, toggleLoginLink] = useToggle(false);
   const [questionDisplayed, toggleQuestionDisplayed] = useToggle(false);
   const [radio, updateRadio, clearRadio] = useFormState("");
 
+  let hostId = "";
   let title = useRef("");
   let questions = useRef("");
+
+  const updateLogin = function (id) {
+    toggleLoggedin();
+    hostId = id;
+  };
 
   useEffect(() => {
     socket.on("surveyQuestion", function (data) {
       console.log(`incoming message: ${data}`);
       questions.current = data;
-      // toggleQuestionDisplayed();
-      // toggleAwaitingAnswers();
-      //this is broadcasting on survey question creation. set this to toggleawaitinganswers also.
-      //toggle question will close out the on second time submitting question. What need to do is display results to all and that function toggle display question off. Then on next submit will toggle on.
     });
   });
   useEffect(() => {
@@ -50,14 +49,13 @@ export default function Survey() {
       title.current = incomingTitle;
       toggleQuestionDisplayed();
       toggleAwaitingAnswers();
-      //this is broadcasting on survey question creation. set this to toggleawaitinganswers also.
-      //toggle question will close out the on second time submitting question. What need to do is display results to all and that function toggle display question off. Then on next submit will toggle on.
     });
   });
-  socket.on("confirmLogin", function (adminId) {
-    console.log("login successful", adminId);
-    setAdminId(adminId);
-    toggleLoggedin();
+  useEffect(() => {
+    socket.on("confirmLogin", function (adminId) {
+      console.log("login successful", adminId);
+      updateLogin(adminId);
+    });
   });
 
   const submitAnswer = function () {
@@ -84,11 +82,16 @@ export default function Survey() {
   console.log(questions.current, questions, title.current, title);
   return (
     <div>
-      <Navbar toggleLoginLink={toggleLoginLink} />
+      <Navbar
+        handleClick={function () {
+          toggleLoginLink();
+        }}
+      />
 
       {loginLink && (
         <Login
           socket={socket}
+          toggleLoginLink={toggleLoginLink}
           loggedin={loggedin}
           questionDisplayed={questionDisplayed}
           className={loggedin ? "hidden" : ""}
