@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import useFormState from "../custom-react-hooks/form-state-hook";
 import useToggle from "../custom-react-hooks/useToggle";
 import Navbar from "../components/navbar";
@@ -31,27 +31,22 @@ export default function Survey() {
   let title = useRef("");
   let questions = useRef("");
 
-  useEffect(() => {
-    socket.on("surveyQuestion", function (data) {
-      questions.current = data;
-    });
+  socket.on("surveyQuestion", function (data) {
+    questions.current = data;
   });
-  useEffect(() => {
-    socket.on("surveyTitle", function (incomingTitle) {
-      title.current = incomingTitle;
-      toggleQuestionDisplayed();
-      toggleAwaitingAnswers();
-    });
+  socket.on("surveyTitle", function (incomingTitle) {
+    title.current = incomingTitle;
+    toggleQuestionDisplayed();
+    toggleAwaitingAnswers();
   });
-  useEffect(() => {
-    socket.on("confirmLogin", function (adminId) {
-      toggleLoggedin();
-    });
+  socket.on("confirmLogin", function (adminId) {
+    toggleLoggedin();
   });
 
   const submitAnswer = function () {
     socket.emit("submitAnswer", radio);
     toggleAwaitingAnswers();
+    toggleQuestionDisplayed();
     clearRadio();
   };
 
@@ -59,6 +54,7 @@ export default function Survey() {
     let result = [...surveyResponses, ans];
     setSurveyResponses(result);
   });
+
   socket.on("results", function (results) {
     setSurveyResults(results);
     setSurveyResponses([]);
@@ -94,12 +90,8 @@ export default function Survey() {
         </Button>
       </div>
       <Card>
-        {questionDisplayed && (
+        {questionDisplayed && !loggedin && (
           <DisplaySurveyQuestions
-            loggedin={loggedin}
-            questionDisplayed={questionDisplayed}
-            toggleQuestionDisplayed={toggleQuestionDisplayed}
-            toggleAwaitingAnswers={toggleAwaitingAnswers}
             title={title.current}
             questions={questions.current}
             radio={radio}
