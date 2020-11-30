@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import "../styles/navbar.css";
 
 function Navbar({ handleLogin }) {
@@ -13,4 +13,4 @@ function Navbar({ handleLogin }) {
   );
 }
 
-export default Navbar;
+export default memo(Navbar);

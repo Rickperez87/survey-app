@@ -41,7 +41,7 @@ export default function Survey() {
     });
 
     return () => {
-      socket.off("connect");
+      socket.off("confirmLogin");
     };
   }, []);
 
@@ -49,12 +49,18 @@ export default function Survey() {
     socket.on("surveyQuestion", function (data) {
       questions.current = data;
     });
+    return () => {
+      socket.off("surveyQuestion");
+    };
   }, []);
 
   socket.on("surveyTitle", function (incomingTitle) {
     title.current = incomingTitle;
     toggleQuestionDisplayed();
     toggleAwaitingAnswers();
+    return () => {
+      socket.off("surveyTitle");
+    };
   });
 
   const submitAnswer = function () {
@@ -67,6 +73,9 @@ export default function Survey() {
       let result = [...surveyResponses, ans];
       setSurveyResponses(result);
     });
+    return () => {
+      socket.off("receiveAnswer");
+    };
   }, []);
 
   useEffect(() => {
@@ -74,6 +83,9 @@ export default function Survey() {
       setSurveyResults(results);
       setSurveyResponses([]);
     });
+    return () => {
+      socket.off("results");
+    };
   }, []);
 
   return (
@@ -81,16 +93,16 @@ export default function Survey() {
       <Navbar handleLogin={showLogin} />
 
       {loginLink && <Login toggleLoginLink={toggleLoginLink} />}
-      <div className={awaitingAnswers ? "hidden" : "createQuestionContainer"}>
+
+      {loggedin && !awaitingAnswers && (
         <CreateQuestion
-          loggedin={loggedin}
+          className="createQuestionContainer"
           toggleAwaitingAnswers={toggleAwaitingAnswers}
         />
-      </div>
-
+      )}
       {awaitingAnswers && loggedin && (
         <AwaitingAnswers
-          className={"awaitingAnswers"}
+          className="awaitingAnswers"
           toggleAwaitingAnswers={toggleAwaitingAnswers}
           surveyResponses={surveyResponses}
         />

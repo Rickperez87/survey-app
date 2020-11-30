@@ -4,7 +4,7 @@ import useFormState from "../custom-react-hooks/form-state-hook";
 import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
 
-const CreateQuestion = function ({ toggleAwaitingAnswers, loggedin }) {
+const CreateQuestion = function ({ toggleAwaitingAnswers }) {
   const [surveyTitle, changeTitle, clearTitle] = useFormState("");
   const [answer1, changeAnswer1, clearAnswer1] = useFormState("");
   const [answer2, changeAnswer2, clearAnswer2] = useFormState("");
@@ -25,7 +25,7 @@ const CreateQuestion = function ({ toggleAwaitingAnswers, loggedin }) {
     toggleAwaitingAnswers();
   };
   return (
-    <div id="createQuestion" className={loggedin ? "createQuestion" : "hidden"}>
+    <div id="createQuestion" className={"createQuestion"}>
       <Input
         placeholder="Survey Question"
         inputProps={{ "aria-label": "description" }}
