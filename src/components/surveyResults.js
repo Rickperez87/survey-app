@@ -1,11 +1,15 @@
 import React from "react";
 
-function SurveyResults(props) {
+function SurveyResults({ surveyResults }) {
   return (
-    props.surveyResults && (
+    surveyResults && (
       <div className="container">
         <h1>Survey Results</h1>
-        <div className="surveyResults-container">{props.surveyResults}</div>
+        <div className="surveyResults-container">
+          {surveyResults.map((result) => {
+            return <div>{result}</div>;
+          })}
+        </div>
       </div>
     )
   );

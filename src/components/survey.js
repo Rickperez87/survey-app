@@ -73,19 +73,18 @@ export default function Survey() {
       let result = [...surveyResponses, ans];
       setSurveyResponses(result);
     });
-    return () => {
-      socket.off("receiveAnswer");
-    };
-  }, []);
+  }, [surveyResponses]);
+
+  const closeSurvey = function () {
+    socket.emit("surveyResults", surveyResponses);
+    toggleAwaitingAnswers();
+  };
 
   useEffect(() => {
     socket.on("results", function (results) {
       setSurveyResults(results);
       setSurveyResponses([]);
     });
-    return () => {
-      socket.off("results");
-    };
   }, []);
 
   return (
@@ -104,8 +103,7 @@ export default function Survey() {
       {awaitingAnswers && loggedin && (
         <AwaitingAnswers
           className="awaitingAnswers"
-          toggleAwaitingAnswers={toggleAwaitingAnswers}
-          surveyResponses={surveyResponses}
+          handleCloseSurvey={closeSurvey}
         />
       )}
 
