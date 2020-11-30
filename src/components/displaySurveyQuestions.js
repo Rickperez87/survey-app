@@ -1,4 +1,5 @@
 import React from "react";
+import socket from "../socketConfig";
 import useFormState from "../custom-react-hooks/form-state-hook";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
@@ -13,7 +14,8 @@ export default function DisplaySurveyQuestions(props) {
 
   const handleSubmit = function () {
     console.log("dsq", radio);
-    props.handleSubmitAnswer(radio);
+    socket.emit("submitAnswer", radio);
+    props.handleSubmitAnswer();
     clearRadio();
   };
 

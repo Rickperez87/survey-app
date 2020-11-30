@@ -8,11 +8,7 @@ import SurveyResponses from "./surveyResponses";
 import SurveyResults from "./surveyResults";
 import socket from "../socketConfig";
 import Card from "@material-ui/core/Card";
-import Button from "@material-ui/core/Button";
-
-socket.on("connect", function () {
-  console.log("Client Connected");
-});
+import AwaitingAnswers from "./awaitingAnswers";
 
 export default function Survey() {
   const [loginLink, toggleLoginLink] = useToggle(false);
@@ -25,6 +21,18 @@ export default function Survey() {
   let title = useRef("");
   let questions = useRef("");
 
+  function showLogin() {
+    toggleLoginLink();
+  }
+  socket.on("connect", function () {
+    console.log("Client Connected");
+  });
+
+  socket.on("confirmLogin", function () {
+    toggleLoggedin();
+    console.log("confirm login works");
+  });
+
   socket.on("surveyQuestion", function (data) {
     questions.current = data;
   });
@@ -35,15 +43,7 @@ export default function Survey() {
     toggleAwaitingAnswers();
   });
 
-  function showLogin() {
-    toggleLoginLink();
-  }
-  socket.on("confirmLogin", function (adminId) {
-    toggleLoggedin();
-  });
-
-  const submitAnswer = function (radio) {
-    socket.emit("submitAnswer", radio);
+  const submitAnswer = function () {
     toggleAwaitingAnswers();
     toggleQuestionDisplayed();
   };
@@ -52,11 +52,6 @@ export default function Survey() {
     let result = [...surveyResponses, ans];
     setSurveyResponses(result);
   });
-
-  const closeSurvey = function () {
-    socket.emit("surveyResults", surveyResponses);
-    toggleAwaitingAnswers();
-  };
 
   socket.on("results", function (results) {
     setSurveyResults(results);
@@ -74,14 +69,15 @@ export default function Survey() {
           toggleAwaitingAnswers={toggleAwaitingAnswers}
         />
       </div>
-      <div
-        className={awaitingAnswers && loggedin ? "awaitingAnswers" : "hidden"}
-      >
-        <h1>Awaiting Answers...</h1>
-        <Button variant="contained" color="secondary" onClick={closeSurvey}>
-          Close Survey
-        </Button>
-      </div>
+
+      {awaitingAnswers && loggedin && (
+        <AwaitingAnswers
+          className={"awaitingAnswers"}
+          toggleAwaitingAnswers={toggleAwaitingAnswers}
+          surveyResponses={surveyResponses}
+        />
+      )}
+
       <Card>
         {questionDisplayed && !loggedin && (
           <DisplaySurveyQuestions

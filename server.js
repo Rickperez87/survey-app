@@ -18,25 +18,30 @@ io.on("connect", function (socket) {
     console.log(text);
     socket.broadcast.emit("surveyQuestion", text);
   });
+
   socket.on("sentTitle", function (title) {
     console.log(title);
     socket.broadcast.emit("surveyTitle", title);
   });
+
   socket.on("login", function (login) {
     if (login[0] === "rick" && login[1] === "perez") {
       adminId = socket.client.id;
-      return io.to(adminId).emit("confirmLogin", adminId);
+      io.to(adminId).emit("confirmLogin", adminId);
     }
   });
+
   socket.on("submitAnswer", function (ans) {
-    return io.to(adminId).emit("receiveAnswer", ans);
+    console.log("fired submit answer", `admin ID: ${adminId}`);
+    io.to(adminId).emit("receiveAnswer", ans);
   });
 
   socket.on("surveyResults", function (results) {
     socket.broadcast.emit("results", results);
-    return io.to(adminId).emit("results", results);
+    io.to(adminId).emit("results", results);
   });
 });
+
 server.listen(PORT, function () {
   console.log(`Listening on ${PORT}`);
 });
