@@ -6,14 +6,10 @@ import CreateQuestion from "./createQuestion";
 import DisplaySurveyQuestions from "./displaySurveyQuestions";
 import SurveyResponses from "./surveyResponses";
 import SurveyResults from "./surveyResults";
-import io from "socket.io-client";
+import socket from "../socketConfig";
 import Card from "@material-ui/core/Card";
 import Button from "@material-ui/core/Button";
 
-const socket = io("http://localhost:4000", {
-  transports: ["websocket", "polling"],
-});
-//try messing with import {pure} and doing pure functional components export pure(component name)
 socket.on("connect", function () {
   console.log("Client Connected");
 });
@@ -39,6 +35,9 @@ export default function Survey() {
     toggleAwaitingAnswers();
   });
 
+  function showLogin() {
+    toggleLoginLink();
+  }
   socket.on("confirmLogin", function (adminId) {
     toggleLoggedin();
   });
@@ -66,17 +65,12 @@ export default function Survey() {
   });
   return (
     <div>
-      <Navbar
-        handleClick={function () {
-          toggleLoginLink();
-        }}
-      />
+      <Navbar handleLogin={showLogin} />
 
-      {loginLink && <Login socket={socket} toggleLoginLink={toggleLoginLink} />}
+      {loginLink && <Login toggleLoginLink={toggleLoginLink} />}
       <div className={awaitingAnswers ? "hidden" : "createQuestionContainer"}>
         <CreateQuestion
           loggedin={loggedin}
-          socket={socket}
           toggleAwaitingAnswers={toggleAwaitingAnswers}
         />
       </div>

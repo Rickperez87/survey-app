@@ -1,4 +1,5 @@
 import React from "react";
+import socket from "../socketConfig";
 import useFormState from "../custom-react-hooks/form-state-hook";
 import Input from "@material-ui/core/Input";
 import { withStyles } from "@material-ui/core/styles";
@@ -16,7 +17,7 @@ const styles = {
   },
 };
 
-function Login({ classes, socket, toggleLoginLink }) {
+function Login({ classes, toggleLoginLink }) {
   const [user, updateUser, clearUser] = useFormState("");
   const [pass, updatePass, clearPass] = useFormState("");
 

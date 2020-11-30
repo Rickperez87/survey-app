@@ -1,9 +1,10 @@
 import React from "react";
+import socket from "../socketConfig";
 import useFormState from "../custom-react-hooks/form-state-hook";
 import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
 
-const CreateQuestion = function ({ socket, toggleAwaitingAnswers, loggedin }) {
+const CreateQuestion = function ({ toggleAwaitingAnswers, loggedin }) {
   const [surveyTitle, changeTitle, clearTitle] = useFormState("");
   const [answer1, changeAnswer1, clearAnswer1] = useFormState("");
   const [answer2, changeAnswer2, clearAnswer2] = useFormState("");
