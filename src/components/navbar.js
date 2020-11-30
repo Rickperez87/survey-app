@@ -1,8 +1,7 @@
-import React, { memo } from "react";
+import React from "react";
 import "../styles/navbar.css";
 
 function Navbar({ handleLogin }) {
-  console.log("navbar");
   return (
     <div className="navbar">
       <div className="logo">Survey-App</div>
@@ -13,4 +12,4 @@ function Navbar({ handleLogin }) {
   );
 }
 
-export default memo(Navbar);
+export default Navbar;

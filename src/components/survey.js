@@ -9,6 +9,7 @@ import SurveyResults from "./surveyResults";
 import socket from "../socketConfig";
 import Card from "@material-ui/core/Card";
 import AwaitingAnswers from "./awaitingAnswers";
+
 //In the future: refactor to split admin socket from other user sockets. then can refactor the way things are laid out and use fewer toggles
 export default function Survey() {
   const [loginLink, toggleLoginLink] = useToggle(false);
@@ -37,7 +38,6 @@ export default function Survey() {
   useEffect(() => {
     socket.on("confirmLogin", function () {
       toggleLoggedin();
-      console.log("confirm login works");
     });
 
     return () => {
@@ -100,6 +100,7 @@ export default function Survey() {
           toggleAwaitingAnswers={toggleAwaitingAnswers}
         />
       )}
+
       {awaitingAnswers && loggedin && (
         <AwaitingAnswers
           className="awaitingAnswers"
@@ -117,10 +118,9 @@ export default function Survey() {
           />
         )}
       </Card>
+
       {/* //Refactor send survey responses as a ref instead of state? */}
-      <div className="surveyResponse">
-        <SurveyResponses surveyResponses={surveyResponses} />
-      </div>
+      <SurveyResponses surveyResponses={surveyResponses} />
 
       <SurveyResults surveyResults={surveyResults} />
       {/* make this into a dialog box? */}
