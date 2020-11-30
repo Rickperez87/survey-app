@@ -1,4 +1,4 @@
-import React from "react";
+import React, { pure } from "react";
 import "../styles/navbar.css";
 
 function Navbar({ handleClick }) {
@@ -12,4 +12,4 @@ function Navbar({ handleClick }) {
   );
 }
 
-export default Navbar;
+export default pure(Navbar);

@@ -1,4 +1,5 @@
 import React from "react";
+import useFormState from "../custom-react-hooks/form-state-hook";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -7,9 +8,15 @@ import FormLabel from "@material-ui/core/FormLabel";
 import Button from "@material-ui/core/Button";
 
 export default function DisplaySurveyQuestions(props) {
+  //fix this -> Pattern for passing radio through function to parent
+  const [radio, updateRadio, clearRadio] = useFormState("");
+
   const handleSubmit = function () {
-    props.handleSubmitAnswer();
+    console.log("dsq", radio);
+    props.handleSubmitAnswer(radio);
+    clearRadio();
   };
+
   return (
     <div>
       {/* refactor this to use radio and update radio in this component and extract through a passed down func */}
@@ -18,8 +25,8 @@ export default function DisplaySurveyQuestions(props) {
         <RadioGroup
           aria-label="Answers"
           name="Answers"
-          value={props.radio}
-          onChange={props.updateRadio}
+          value={radio}
+          onChange={updateRadio}
         >
           {props.questions.map(function (q, index) {
             return (

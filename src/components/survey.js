@@ -1,5 +1,4 @@
 import React, { useState, useRef } from "react";
-import useFormState from "../custom-react-hooks/form-state-hook";
 import useToggle from "../custom-react-hooks/useToggle";
 import Navbar from "../components/navbar";
 import Login from "./login";
@@ -14,19 +13,18 @@ import Button from "@material-ui/core/Button";
 const socket = io("http://localhost:4000", {
   transports: ["websocket", "polling"],
 });
-
+//try messing with import {pure} and doing pure functional components export pure(component name)
 socket.on("connect", function () {
   console.log("Client Connected");
 });
 
 export default function Survey() {
+  const [loginLink, toggleLoginLink] = useToggle(false);
   const [loggedin, toggleLoggedin] = useToggle(false);
   const [awaitingAnswers, toggleAwaitingAnswers] = useToggle(false);
+  const [questionDisplayed, toggleQuestionDisplayed] = useToggle(false);
   const [surveyResponses, setSurveyResponses] = useState([]);
   const [surveyResults, setSurveyResults] = useState(false);
-  const [loginLink, toggleLoginLink] = useToggle(false);
-  const [questionDisplayed, toggleQuestionDisplayed] = useToggle(false);
-  const [radio, updateRadio, clearRadio] = useFormState("");
 
   let title = useRef("");
   let questions = useRef("");
@@ -34,20 +32,21 @@ export default function Survey() {
   socket.on("surveyQuestion", function (data) {
     questions.current = data;
   });
+
   socket.on("surveyTitle", function (incomingTitle) {
     title.current = incomingTitle;
     toggleQuestionDisplayed();
     toggleAwaitingAnswers();
   });
+
   socket.on("confirmLogin", function (adminId) {
     toggleLoggedin();
   });
 
-  const submitAnswer = function () {
+  const submitAnswer = function (radio) {
     socket.emit("submitAnswer", radio);
     toggleAwaitingAnswers();
     toggleQuestionDisplayed();
-    clearRadio();
   };
 
   socket.on("receiveAnswer", function (ans) {
@@ -55,16 +54,16 @@ export default function Survey() {
     setSurveyResponses(result);
   });
 
+  const closeSurvey = function () {
+    socket.emit("surveyResults", surveyResponses);
+    toggleAwaitingAnswers();
+  };
+
   socket.on("results", function (results) {
     setSurveyResults(results);
     setSurveyResponses([]);
     //transmits to all exept sender
   });
-
-  const closeSurvey = function () {
-    socket.emit("surveyResults", surveyResponses);
-    toggleAwaitingAnswers();
-  };
   return (
     <div>
       <Navbar
@@ -94,20 +93,16 @@ export default function Survey() {
           <DisplaySurveyQuestions
             title={title.current}
             questions={questions.current}
-            radio={radio}
-            updateRadio={updateRadio}
-            clearRadio={clearRadio}
             handleSubmitAnswer={submitAnswer}
           />
         )}
       </Card>
-
+      {/* //Refactor send survey responses as a ref instead of state? */}
       <div className="surveyResponse">
         <SurveyResponses surveyResponses={surveyResponses} />
       </div>
 
       <SurveyResults surveyResults={surveyResults} />
-      {/* need to transmit survey responses on close survey to all. Then reset logic so we can ask the next question. */}
       {/* make this into a dialog box? */}
     </div>
   );
