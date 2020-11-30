@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import useToggle from "../custom-react-hooks/useToggle";
 import Navbar from "../components/navbar";
 import Login from "./login";
@@ -9,7 +9,7 @@ import SurveyResults from "./surveyResults";
 import socket from "../socketConfig";
 import Card from "@material-ui/core/Card";
 import AwaitingAnswers from "./awaitingAnswers";
-
+//In the future: refactor to split admin socket from other user sockets. then can refactor the way things are laid out and use fewer toggles
 export default function Survey() {
   const [loginLink, toggleLoginLink] = useToggle(false);
   const [loggedin, toggleLoggedin] = useToggle(false);
@@ -24,18 +24,32 @@ export default function Survey() {
   function showLogin() {
     toggleLoginLink();
   }
-  socket.on("connect", function () {
-    console.log("Client Connected");
-  });
+  useEffect(() => {
+    socket.on("connect", function () {
+      console.log("Client Connected");
+    });
 
-  socket.on("confirmLogin", function () {
-    toggleLoggedin();
-    console.log("confirm login works");
-  });
+    return () => {
+      socket.off("connect");
+    };
+  }, []);
 
-  socket.on("surveyQuestion", function (data) {
-    questions.current = data;
-  });
+  useEffect(() => {
+    socket.on("confirmLogin", function () {
+      toggleLoggedin();
+      console.log("confirm login works");
+    });
+
+    return () => {
+      socket.off("connect");
+    };
+  }, []);
+
+  useEffect(() => {
+    socket.on("surveyQuestion", function (data) {
+      questions.current = data;
+    });
+  }, []);
 
   socket.on("surveyTitle", function (incomingTitle) {
     title.current = incomingTitle;
@@ -48,16 +62,20 @@ export default function Survey() {
     toggleQuestionDisplayed();
   };
 
-  socket.on("receiveAnswer", function (ans) {
-    let result = [...surveyResponses, ans];
-    setSurveyResponses(result);
-  });
+  useEffect(() => {
+    socket.on("receiveAnswer", function (ans) {
+      let result = [...surveyResponses, ans];
+      setSurveyResponses(result);
+    });
+  }, []);
 
-  socket.on("results", function (results) {
-    setSurveyResults(results);
-    setSurveyResponses([]);
-    //transmits to all exept sender
-  });
+  useEffect(() => {
+    socket.on("results", function (results) {
+      setSurveyResults(results);
+      setSurveyResponses([]);
+    });
+  }, []);
+
   return (
     <div>
       <Navbar handleLogin={showLogin} />
