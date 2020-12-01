@@ -3,8 +3,24 @@ import socket from "../socketConfig";
 import useFormState from "../custom-react-hooks/form-state-hook";
 import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
+import Card from "@material-ui/core/Card";
+import { withStyles } from "@material-ui/core/styles";
 
-const CreateQuestion = function ({ toggleAwaitingAnswers }) {
+const styles = {
+  root: {
+    maxWidth: "500px",
+    display: "flex",
+    flexDirection: "column",
+    margin: "0 auto",
+    padding: "3rem",
+
+    "& Input": {
+      padding: "1rem 0",
+    },
+  },
+};
+
+const CreateQuestion = function ({ toggleAwaitingAnswers, classes }) {
   const [surveyTitle, changeTitle, clearTitle] = useFormState("");
   const [answer1, changeAnswer1, clearAnswer1] = useFormState("");
   const [answer2, changeAnswer2, clearAnswer2] = useFormState("");
@@ -25,7 +41,7 @@ const CreateQuestion = function ({ toggleAwaitingAnswers }) {
     toggleAwaitingAnswers();
   };
   return (
-    <div id="createQuestion" className={"createQuestion"}>
+    <Card id="createQuestion" className={classes.root}>
       <Input
         placeholder="Survey Question"
         inputProps={{ "aria-label": "description" }}
@@ -59,8 +75,8 @@ const CreateQuestion = function ({ toggleAwaitingAnswers }) {
       <Button variant="contained" color="primary" onClick={handleSubmit}>
         Submit
       </Button>
-    </div>
+    </Card>
   );
 };
 
-export default CreateQuestion;
+export default withStyles(styles)(CreateQuestion);
