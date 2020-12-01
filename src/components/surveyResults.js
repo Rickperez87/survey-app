@@ -11,7 +11,11 @@ function SurveyResults({ surveyResults, open, onClose }) {
         <DialogTitle>Survey Results</DialogTitle>
         <List className="surveyResults-container">
           {surveyResults.map((result, idx) => {
-            return <ListItem key={idx}>{result}</ListItem>;
+            return (
+              <ListItem
+                key={idx}
+              >{`${result.userName} answered - ${result.ans}`}</ListItem>
+            );
           })}
         </List>
       </Dialog>
