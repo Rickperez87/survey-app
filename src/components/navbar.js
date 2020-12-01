@@ -26,7 +26,7 @@ function Navbar({ userName, setUserName }) {
 
   return (
     <div className="navbar">
-      <div className="logo">Survey-App</div>
+      <div className="logo">Survey~RP</div>
       <div className="login-container" onClick={handleLoginOpen}>
         Host Login
       </div>
