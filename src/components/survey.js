@@ -81,6 +81,10 @@ export default function Survey() {
     toggleAwaitingAnswers();
     toggleResultsDialog();
   };
+  const cancelSurvey = function () {
+    toggleAwaitingAnswers();
+    setSurveyResponses([]);
+  };
 
   useEffect(() => {
     socket.on("results", function (results) {
@@ -109,6 +113,7 @@ export default function Survey() {
         <AwaitingAnswers
           className="awaitingAnswers"
           handleCloseSurvey={closeSurvey}
+          handleCancelSurvey={cancelSurvey}
         />
       )}
 
