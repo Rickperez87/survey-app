@@ -110,11 +110,10 @@ export default function Survey() {
         )}
       </Card>
 
-      {/* //Refactor send survey responses as a ref instead of state? */}
       <SurveyResponses surveyResponses={surveyResponses} />
 
+      {/* Make this a dialog */}
       <SurveyResults surveyResults={surveyResults} />
-      {/* make this into a dialog box? */}
     </div>
   );
 }
