@@ -8,9 +8,23 @@ import SurveyResults from "./surveyResults";
 import socket from "../socketConfig";
 import Card from "@material-ui/core/Card";
 import AwaitingAnswers from "./awaitingAnswers";
+import bg from "../styles/bg.svg";
+
+import { withStyles } from "@material-ui/core/styles";
+
+const styles = {
+  root: {
+    /* background by SVGBackgrounds.com */
+    backgroundColor: "#fcfcfc",
+    backgroundImage: `url(${bg})`,
+    height: "100vh",
+    overflow: "scroll",
+  },
+  loginContainer: {},
+};
 
 //In the future: refactor to split admin socket from other user sockets. then can refactor the way things are laid out and use fewer toggles
-export default function Survey() {
+function Survey({ classes }) {
   const [loggedin, toggleLoggedin] = useToggle(false);
   const [awaitingAnswers, toggleAwaitingAnswers] = useToggle(false);
   const [userName, setUserName] = useState(`user ${uniqueId()}`);
@@ -99,7 +113,8 @@ export default function Survey() {
   };
 
   return (
-    <div>
+    <div className={classes.root}>
+      {/* //fix nav bg color */}
       <Navbar userName={userName} setUserName={setUserName} />
 
       {loggedin && !awaitingAnswers && (
@@ -138,3 +153,4 @@ export default function Survey() {
     </div>
   );
 }
+export default withStyles(styles)(Survey);
