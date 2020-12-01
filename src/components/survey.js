@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import useToggle from "../custom-react-hooks/useToggle";
 import Navbar from "../components/navbar";
-import Login from "./login";
 import CreateQuestion from "./createQuestion";
 import DisplaySurveyQuestions from "./displaySurveyQuestions";
 import SurveyResponses from "./surveyResponses";
@@ -12,7 +11,6 @@ import AwaitingAnswers from "./awaitingAnswers";
 
 //In the future: refactor to split admin socket from other user sockets. then can refactor the way things are laid out and use fewer toggles
 export default function Survey() {
-  const [loginLink, toggleLoginLink] = useToggle(false);
   const [loggedin, toggleLoggedin] = useToggle(false);
   const [awaitingAnswers, toggleAwaitingAnswers] = useToggle(false);
   const [questionDisplayed, toggleQuestionDisplayed] = useToggle(false);
@@ -22,9 +20,6 @@ export default function Survey() {
   let title = useRef("");
   let questions = useRef("");
 
-  function showLogin() {
-    toggleLoginLink();
-  }
   useEffect(() => {
     socket.on("connect", function () {
       console.log("Client Connected");
@@ -89,9 +84,7 @@ export default function Survey() {
 
   return (
     <div>
-      <Navbar handleLogin={showLogin} />
-
-      {loginLink && <Login toggleLoginLink={toggleLoginLink} />}
+      <Navbar />
 
       {loggedin && !awaitingAnswers && (
         <CreateQuestion

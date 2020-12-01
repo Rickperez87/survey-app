@@ -20,10 +20,10 @@ export default function UserNameDialog({ setUserName, onClose, open }) {
     <div>
       <Dialog
         onClose={onClose}
-        aria-labelledby="simple-dialog-title"
+        aria-labelledby="Enter-Name-dialog-title"
         open={open}
       >
-        <DialogTitle id="simple-dialog-title">Enter Your Name</DialogTitle>
+        <DialogTitle id="Enter-Name-dialog-title">Enter Your Name</DialogTitle>
         <List>
           <ListItem>
             <Input

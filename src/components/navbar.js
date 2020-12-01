@@ -1,38 +1,49 @@
 import React, { useState } from "react";
+import Login from "./login";
 import UserNameDialog from "./userNameDialog";
 import "../styles/navbar.css";
 
-function Navbar({ handleLogin }) {
+function Navbar() {
   const uniqueId = function () {
     return Math.floor(Math.random() * 1000);
   };
   //add logic to check if user name is unique and to pool together all user names from clients
   const [userName, setUserName] = useState(`user ${uniqueId()}`);
-  const [open, setOpen] = useState(false);
+  const [openNameInput, setNameInputOpen] = useState(false);
+  const [openLogin, setLoginOpen] = useState(false);
 
-  const handleClickOpen = () => {
-    setOpen(true);
+  const handleLoginOpen = () => {
+    setLoginOpen(true);
   };
 
-  const handleClose = (value) => {
-    setOpen(false);
+  const handleLoginClose = (value) => {
+    setLoginOpen(false);
+  };
+
+  const handleInputNameOpen = () => {
+    setNameInputOpen(true);
+  };
+
+  const handleInputNameClose = (value) => {
+    setNameInputOpen(false);
   };
 
   return (
     <div className="navbar">
       <div className="logo">Survey-App</div>
-      <div className="login-container" onClick={handleLogin}>
+      <div className="login-container" onClick={handleLoginOpen}>
         Host Login
       </div>
+      <Login open={openLogin} onClose={handleLoginClose} />
       <div
         className="userName"
-        onClick={handleClickOpen}
+        onClick={handleInputNameOpen}
       >{`Name: ${userName}`}</div>
 
       <UserNameDialog
         setUserName={setUserName}
-        open={open}
-        onClose={handleClose}
+        open={openNameInput}
+        onClose={handleInputNameClose}
       />
     </div>
   );

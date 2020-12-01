@@ -1,23 +1,19 @@
 import React from "react";
 import socket from "../socketConfig";
 import useFormState from "../custom-react-hooks/form-state-hook";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Dialog from "@material-ui/core/Dialog";
 import Input from "@material-ui/core/Input";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import "../styles/survey.css";
 
 const styles = {
-  root: {
-    background: "grey",
-    fontWeight: "bold",
-    border: 0,
-    borderRadius: 3,
-    width: "30 px",
-    margin: "1 rem",
-  },
+  root: {},
+  loginContainer: {},
 };
 
-function Login({ classes, toggleLoginLink }) {
+function Login({ classes, onClose, open }) {
   const [user, updateUser, clearUser] = useFormState("");
   const [pass, updatePass, clearPass] = useFormState("");
 
@@ -25,17 +21,29 @@ function Login({ classes, toggleLoginLink }) {
     socket.emit("login", [user, pass]);
     clearUser();
     clearPass();
-    toggleLoginLink();
+    onClose();
   };
   return (
-    <div className="login-container">
-      <h1>Host Login</h1>
+    <Dialog
+      fullWidth="md"
+      maxWidth="md"
+      onClose={onClose}
+      aria-labelledby="login-dialog-title"
+      open={open}
+      className={classes.loginContainer}
+    >
+      <DialogTitle id="login-dialog-title">Host Login</DialogTitle>
       <Input placeholder="User" value={user} onChange={updateUser} />
       <Input placeholder="Password" value={pass} onChange={updatePass} />
-      <Button className={classes.root} variant="contained" onClick={login}>
+      <Button
+        color="primary"
+        className={classes.root}
+        variant="contained"
+        onClick={login}
+      >
         Login
       </Button>
-    </div>
+    </Dialog>
   );
 }
 
