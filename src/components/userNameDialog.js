@@ -28,6 +28,7 @@ export default function UserNameDialog({ setUserName, onClose, open }) {
             Enter Your Name
           </DialogContentText>
           <TextField
+            autoFocus
             fullWidth
             margin="dense"
             placeholder="Name"

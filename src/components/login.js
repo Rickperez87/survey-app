@@ -7,8 +7,8 @@ import TextField from "@material-ui/core/TextField";
 import DialogContent from "@material-ui/core/DialogContent";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
-import "../styles/survey.css";
 import DialogActions from "@material-ui/core/DialogActions";
+import "../styles/survey.css";
 
 const styles = {
   root: {},

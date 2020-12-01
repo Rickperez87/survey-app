@@ -14,6 +14,7 @@ export default function Survey() {
   const [loggedin, toggleLoggedin] = useToggle(false);
   const [awaitingAnswers, toggleAwaitingAnswers] = useToggle(false);
   const [questionDisplayed, toggleQuestionDisplayed] = useToggle(false);
+  const [ResultsDialogOpen, toggleResultsDialog] = useToggle(false);
   const [surveyResponses, setSurveyResponses] = useState([]);
   const [surveyResults, setSurveyResults] = useState(false);
 
@@ -73,14 +74,20 @@ export default function Survey() {
   const closeSurvey = function () {
     socket.emit("surveyResults", surveyResponses);
     toggleAwaitingAnswers();
+    toggleResultsDialog();
   };
 
   useEffect(() => {
     socket.on("results", function (results) {
       setSurveyResults(results);
       setSurveyResponses([]);
+      toggleResultsDialog();
     });
   }, []);
+
+  const handleCloseResults = function () {
+    toggleResultsDialog();
+  };
 
   return (
     <div>
@@ -113,7 +120,11 @@ export default function Survey() {
       <SurveyResponses surveyResponses={surveyResponses} />
 
       {/* Make this a dialog */}
-      <SurveyResults surveyResults={surveyResults} />
+      <SurveyResults
+        onClose={handleCloseResults}
+        open={ResultsDialogOpen}
+        surveyResults={surveyResults}
+      />
     </div>
   );
 }
