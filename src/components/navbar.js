@@ -3,12 +3,8 @@ import Login from "./login";
 import UserNameDialog from "./userNameDialog";
 import "../styles/navbar.css";
 
-function Navbar() {
-  const uniqueId = function () {
-    return Math.floor(Math.random() * 1000);
-  };
+function Navbar({ userName, setUserName }) {
   //add logic to check if user name is unique and to pool together all user names from clients
-  const [userName, setUserName] = useState(`user ${uniqueId()}`);
   const [openNameInput, setNameInputOpen] = useState(false);
   const [openLogin, setLoginOpen] = useState(false);
 

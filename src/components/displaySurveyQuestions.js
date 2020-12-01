@@ -12,12 +12,14 @@ export default function DisplaySurveyQuestions({
   title,
   questions,
   handleSubmitAnswer,
+  userName,
 }) {
   //fix this -> Pattern for passing radio through function to parent
   const [radio, updateRadio, clearRadio] = useFormState("");
 
   const handleSubmit = function () {
-    socket.emit("submitAnswer", radio);
+    let responseData = { userName, ans: radio };
+    socket.emit("submitAnswer", responseData);
     handleSubmitAnswer();
     clearRadio();
   };

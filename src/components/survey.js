@@ -13,6 +13,7 @@ import AwaitingAnswers from "./awaitingAnswers";
 export default function Survey() {
   const [loggedin, toggleLoggedin] = useToggle(false);
   const [awaitingAnswers, toggleAwaitingAnswers] = useToggle(false);
+  const [userName, setUserName] = useState(`user ${uniqueId()}`);
   const [questionDisplayed, toggleQuestionDisplayed] = useToggle(false);
   const [ResultsDialogOpen, toggleResultsDialog] = useToggle(false);
   const [surveyResponses, setSurveyResponses] = useState([]);
@@ -40,6 +41,10 @@ export default function Survey() {
       socket.off("confirmLogin");
     };
   }, []);
+
+  function uniqueId() {
+    return Math.floor(Math.random() * 1000);
+  }
 
   useEffect(() => {
     socket.on("surveyQuestion", function (data) {
@@ -91,7 +96,7 @@ export default function Survey() {
 
   return (
     <div>
-      <Navbar />
+      <Navbar userName={userName} setUserName={setUserName} />
 
       {loggedin && !awaitingAnswers && (
         <CreateQuestion
@@ -113,13 +118,13 @@ export default function Survey() {
             title={title.current}
             questions={questions.current}
             handleSubmitAnswer={submitAnswer}
+            userName={userName}
           />
         )}
       </Card>
 
       <SurveyResponses surveyResponses={surveyResponses} />
 
-      {/* Make this a dialog */}
       <SurveyResults
         onClose={handleCloseResults}
         open={ResultsDialogOpen}
