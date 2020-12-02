@@ -33,6 +33,10 @@ function Survey({ classes }) {
   const [surveyResponses, setSurveyResponses] = useState([]);
   const [surveyResults, setSurveyResults] = useState(false);
 
+  function uniqueId() {
+    return Math.floor(Math.random() * 1000);
+  }
+
   let title = useRef("");
   let questions = useRef("");
 
@@ -40,10 +44,7 @@ function Survey({ classes }) {
     socket.on("connect", function () {
       console.log("Client Connected");
     });
-
-    return () => {
-      socket.off("connect");
-    };
+    return () => socket.off("connect");
   }, []);
 
   useEffect(() => {
@@ -56,26 +57,18 @@ function Survey({ classes }) {
     };
   }, []);
 
-  function uniqueId() {
-    return Math.floor(Math.random() * 1000);
-  }
-
   useEffect(() => {
     socket.on("surveyQuestion", function (data) {
       questions.current = data;
     });
-    return () => {
-      socket.off("surveyQuestion");
-    };
+    return () => socket.off("surveyQuestion");
   }, []);
 
   socket.on("surveyTitle", function (incomingTitle) {
     title.current = incomingTitle;
     toggleQuestionDisplayed();
     toggleAwaitingAnswers();
-    return () => {
-      socket.off("surveyTitle");
-    };
+    return () => socket.off("surveyTitle");
   });
 
   const submitAnswer = function () {

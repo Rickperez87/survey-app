@@ -5,7 +5,7 @@ import "../styles/navbar.css";
 
 function Navbar({ userName, setUserName }) {
   //add logic to check if user name is unique and to pool together all user names from clients
-  const [openNameInput, setNameInputOpen] = useState(false);
+  const [openNameInput, setNameInputOpen] = useState(true);
   const [openLogin, setLoginOpen] = useState(false);
 
   const handleLoginOpen = () => {
