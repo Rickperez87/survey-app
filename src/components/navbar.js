@@ -1,9 +1,24 @@
 import React, { useState } from "react";
 import Login from "./login";
 import UserNameDialog from "./userNameDialog";
+import { withStyles } from "@material-ui/core/styles";
 import "../styles/navbar.css";
 
-function Navbar({ userName, setUserName }) {
+const styles = {
+  root: {
+    background: "rgba(104,119,202,.87)",
+    display: "flex",
+    alignItems: "center",
+    color: "#FAFAFA",
+    height: "2rem",
+    padding: "1rem",
+    fontWeight: "400",
+    fontSize: "16px",
+    fontFamily: "Poppins, sans-serif",
+  },
+};
+
+function Navbar({ classes, userName, setUserName }) {
   //add logic to check if user name is unique and to pool together all user names from clients
   const [openNameInput, setNameInputOpen] = useState(true);
   const [openLogin, setLoginOpen] = useState(false);
@@ -25,7 +40,7 @@ function Navbar({ userName, setUserName }) {
   };
 
   return (
-    <div className="navbar">
+    <div className={classes.root}>
       <div className="logo">Survey~RP</div>
       <div className="login-container" onClick={handleLoginOpen}>
         Host Login
@@ -45,4 +60,4 @@ function Navbar({ userName, setUserName }) {
   );
 }
 
-export default Navbar;
+export default withStyles(styles)(Navbar);
