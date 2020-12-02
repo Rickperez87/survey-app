@@ -1,19 +1,32 @@
 import React from "react";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import Card from "@material-ui/core/Card";
+import { withStyles } from "@material-ui/core/styles";
 
-function SurveyResponses({ surveyResponses }) {
+const styles = {
+  root: {
+    width: "500px",
+    margin: "1rem auto",
+    padding: "2rem",
+  },
+  list: {},
+};
+
+function SurveyResponses({ classes, surveyResponses }) {
   return (
-    surveyResponses && (
-      <div>
-        {surveyResponses.map(function (ans, idx) {
+    <Card className={classes.root}>
+      <List className={classes.list}>
+        {surveyResponses.map((response, idx) => {
           return (
-            <div className="response" key={idx}>
-              {`${ans.userName} answered -       ${ans.ans}`}
-            </div>
+            <ListItem className={classes.listItem} key={idx}>
+              {`${response.userName} answered -       ${response.ans}`}
+            </ListItem>
           );
         })}
-      </div>
-    )
+      </List>
+    </Card>
   );
 }
 
-export default SurveyResponses;
+export default withStyles(styles)(SurveyResponses);

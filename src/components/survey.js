@@ -136,7 +136,11 @@ function Survey({ classes }) {
         )}
       </Card>
 
-      <SurveyResponses surveyResponses={surveyResponses} />
+      {surveyResponses.length ? (
+        <SurveyResponses surveyResponses={surveyResponses} />
+      ) : (
+        ""
+      )}
 
       <SurveyResults
         onClose={handleCloseResults}
