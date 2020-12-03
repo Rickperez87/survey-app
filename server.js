@@ -4,7 +4,7 @@ const server = require("http").createServer(app);
 const io = require("socket.io")(server);
 
 let adminId = "";
-let userList = new Map();
+let userList = new Set();
 
 const PORT = process.env.POR || 4000;
 
@@ -35,10 +35,13 @@ io.on("connect", function (socket) {
   socket.on("newUser", function (userName) {
     let newUser = { userName, id: socket.client.id };
     if (!userList.has(newUser.userName)) {
-      userList.set(newUser.userName);
+      userList.add(newUser.userName);
       io.to(newUser.id).emit("uniqueUserName");
-    } else console.log("must be unique");
-    io.to(newUser.id).emit("duplicateUserName");
+    } else {
+      console.log("must be unique");
+      io.to(newUser.id).emit("duplicateUserName");
+    }
+    console.log(userList);
   });
 
   socket.on("submitAnswer", function (ans) {

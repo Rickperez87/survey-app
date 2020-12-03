@@ -23,14 +23,12 @@ export default function UserNameDialog({ setUserName, onClose, open }) {
       clearInputName();
       onClose();
     });
-    // return () => socket.off("uniqueUserName");
   }, [inputName]);
 
   useEffect(() => {
     socket.on("duplicateUserName", function () {
       setUserNameIsUnique(false);
     });
-    // return () => socket.off("duplicateUserName");
   }, [inputName]);
 
   return (
