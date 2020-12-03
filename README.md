@@ -6,6 +6,8 @@ Nov/20 - One issue i had to work through was using my useEffect for socket.on ev
 
 New Features -
 
-Add input for user name. Use user name to show who answered waht in survey results
+Add input for user name. Use user name to show who answered waht in survey results - completed 12/2
 
 Add ability to choose survey to be radio or open response text
+
+Allow dialogs to be submitted with enter keystroke.- completed 12/3

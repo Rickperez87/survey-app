@@ -38,30 +38,37 @@ export default function UserNameDialog({ setUserName, onClose, open }) {
         aria-labelledby="Enter-Name-dialog-title"
         open={open}
       >
-        <DialogContent>
-          <DialogContentText id="Enter-Name-dialog-title">
-            Enter Your Name
-          </DialogContentText>
-          <TextField
-            autoFocus
-            fullWidth
-            margin="dense"
-            placeholder="Name"
-            inputProps={{ "aria-label": "description" }}
-            value={inputName}
-            onChange={changeInputName}
-          />
-          {!userNameIsUnique && (
-            <DialogContentText color="secondary">
-              Name Must Be Unique!
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSubmit();
+          }}
+        >
+          <DialogContent>
+            <DialogContentText id="Enter-Name-dialog-title">
+              Enter Your Name
             </DialogContentText>
-          )}
-        </DialogContent>
-        <DialogActions>
-          <Button variant="contained" color="primary" onClick={handleSubmit}>
-            Submit
-          </Button>
-        </DialogActions>
+            <TextField
+              autoFocus
+              fullWidth
+              margin="dense"
+              placeholder="Name"
+              inputProps={{ "aria-label": "description" }}
+              value={inputName}
+              onChange={changeInputName}
+            />
+            {!userNameIsUnique && (
+              <DialogContentText color="secondary">
+                Name Must Be Unique!
+              </DialogContentText>
+            )}
+          </DialogContent>
+          <DialogActions>
+            <Button type="submit" variant="contained" color="primary">
+              Submit
+            </Button>
+          </DialogActions>
+        </form>
       </Dialog>
     </div>
   );
