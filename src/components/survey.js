@@ -89,9 +89,18 @@ function Survey({ classes }) {
     toggleResultsDialog();
   };
   const cancelSurvey = function () {
+    socket.emit("cancelSurveyResults");
     toggleAwaitingAnswers();
     setSurveyResponses([]);
   };
+  useEffect(() => {
+    socket.on("cancelSurveyResults", function () {
+      setSurveyResponses([]);
+      setSurveyResults(false);
+      toggleAwaitingAnswers();
+      toggleQuestionDisplayed();
+    });
+  }, [questionDisplayed]);
 
   useEffect(() => {
     socket.on("results", function (results) {

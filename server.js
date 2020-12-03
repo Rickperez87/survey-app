@@ -53,6 +53,11 @@ io.on("connect", function (socket) {
     socket.broadcast.emit("results", results);
     io.to(adminId).emit("results", results);
   });
+
+  socket.on("cancelSurveyResults", function () {
+    console.log("receieved cancelation, stop the presses!");
+    socket.broadcast.emit("cancelSurveyResults");
+  });
 });
 
 server.listen(PORT, function () {
