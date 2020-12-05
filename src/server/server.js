@@ -9,10 +9,10 @@ let userList = new Set();
 
 const PORT = process.env.PORT || 4000;
 
-app.use(express.static(path.resolve(__dirname, "/node_modules")));
+app.use(express.static(__dirname + "/node_modules"));
 
-app.get("/*", (req, res) => {
-  res.sendFile(path.resolve("build", "index.html"));
+app.get("/", (req, res) => {
+  res.sendFile(__dirname + "/index.html");
 });
 
 io.on("connect", function (socket) {
