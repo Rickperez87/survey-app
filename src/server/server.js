@@ -14,6 +14,10 @@ io.on("connect", function (socket) {
   console.log("Client connected");
 
   socket.on("disconnect", function () {
+    if (socket.client.id === adminId) {
+      userList.clear();
+      console.log("Admin Disconnected");
+    }
     console.log("Client Disconnected");
   });
 
