@@ -8,8 +8,13 @@ let adminId = "";
 let userList = new Set();
 
 const PORT = process.env.PORT || 4000;
+const publicPath = path.join(__dirname, "..", "public");
 
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(publicPath));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(publicPath, "index.html"));
+});
 
 io.on("connect", function (socket) {
   console.log("Client connected");
