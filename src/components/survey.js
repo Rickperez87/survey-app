@@ -20,7 +20,6 @@ const styles = {
     height: "100vh",
     overflow: "scroll",
   },
-  loginContainer: {},
 };
 
 //In the future: refactor to split admin socket from other user sockets. then can refactor the way things are laid out and use fewer toggles
