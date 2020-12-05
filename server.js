@@ -1,3 +1,4 @@
+const path = require("path");
 const express = require("express");
 const app = express();
 const server = require("http").createServer(app);
@@ -6,7 +7,9 @@ const io = require("socket.io")(server);
 let adminId = "";
 let userList = new Set();
 
-const PORT = process.env.POR || 4000;
+const PORT = process.env.PORT || 4000;
+
+app.use(express.static(path.join(__dirname, "public")));
 
 io.on("connect", function (socket) {
   console.log("Client connected");
@@ -16,12 +19,10 @@ io.on("connect", function (socket) {
   });
 
   socket.on("sentQuestion", function (text) {
-    console.log(text);
     socket.broadcast.emit("surveyQuestion", text);
   });
 
   socket.on("sentTitle", function (title) {
-    console.log(title);
     socket.broadcast.emit("surveyTitle", title);
   });
 
@@ -38,14 +39,11 @@ io.on("connect", function (socket) {
       userList.add(newUser.userName);
       io.to(newUser.id).emit("uniqueUserName");
     } else {
-      console.log("must be unique");
       io.to(newUser.id).emit("duplicateUserName");
     }
-    console.log(userList);
   });
 
   socket.on("submitAnswer", function (ans) {
-    console.log("fired submit answer", `admin ID: ${adminId}`);
     io.to(adminId).emit("receiveAnswer", ans);
   });
 
@@ -55,7 +53,6 @@ io.on("connect", function (socket) {
   });
 
   socket.on("cancelSurveyResults", function () {
-    console.log("receieved cancelation, stop the presses!");
     socket.broadcast.emit("cancelSurveyResults");
   });
 });
