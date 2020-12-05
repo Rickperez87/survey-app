@@ -8,12 +8,11 @@ let adminId = "";
 let userList = new Set();
 
 const PORT = process.env.PORT || 4000;
-const publicPath = path.join(__dirname, "build");
 
-app.use(express.static(publicPath));
+app.use(express.static(path.resolve(__dirname, "../react-ui/build")));
 
 app.get("/*", (req, res) => {
-  res.sendFile(path.join(publicPath, "build", "index.html"));
+  res.sendFile(path.join(publicPath, "..react-ui/build", "index.html"));
 });
 
 io.on("connect", function (socket) {
