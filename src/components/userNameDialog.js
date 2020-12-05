@@ -6,7 +6,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
 import DialogContent from "@material-ui/core/DialogContent";
 import TextField from "@material-ui/core/TextField";
-import socket from "../socketConfig";
+import socket from "../server/socketConfig";
 
 export default function UserNameDialog({ setUserName, onClose, open }) {
   const [inputName, changeInputName, clearInputName] = useFormState("");

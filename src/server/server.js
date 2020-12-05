@@ -2,17 +2,17 @@ const path = require("path");
 const express = require("express");
 const app = express();
 const server = require("http").createServer(app);
-const io = require("socket.io")(server);
+const io = (module.exports.io = require("socket.io")(server));
 
 let adminId = "";
 let userList = new Set();
 
 const PORT = process.env.PORT || 4000;
 
-app.use(express.static(path.resolve(__dirname, "../react-ui/build")));
+app.use(express.static(path.resolve(__dirname, "/node_modules")));
 
 app.get("/*", (req, res) => {
-  res.sendFile(path.join(publicPath, "..react-ui/build", "index.html"));
+  res.sendFile(path.resolve("build", "index.html"));
 });
 
 io.on("connect", function (socket) {

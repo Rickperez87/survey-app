@@ -1,5 +1,5 @@
 import React from "react";
-import socket from "../socketConfig";
+import socket from "../server/socketConfig";
 import useFormState from "../custom-react-hooks/form-state-hook";
 import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
