@@ -4,28 +4,34 @@ import { withStyles } from "@material-ui/core/styles";
 
 const styles = {
   root: { margin: ".5rem, auto" },
-  button: { marginRight: ".5rem" },
+  buttonGroup: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
 };
 
 function AwaitingAnswers({ classes, handleCloseSurvey, handleCancelSurvey }) {
   return (
     <div className={classes.root}>
       <h1>Awaiting Answers...</h1>
-      <Button
-        variant="contained"
-        classNames={classes.button}
-        color="primary"
-        onClick={handleCloseSurvey}
-      >
-        Show Survey Results
-      </Button>
-      <Button
-        variant="contained"
-        color="secondary"
-        onClick={handleCancelSurvey}
-      >
-        Cancel Showing Results
-      </Button>
+      <div className={classes.buttonGroup}>
+        <Button
+          variant="contained"
+          classNames={classes.button}
+          color="primary"
+          onClick={handleCloseSurvey}
+        >
+          Show Survey Results
+        </Button>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={handleCancelSurvey}
+        >
+          Cancel Showing Results
+        </Button>
+      </div>
     </div>
   );
 }
