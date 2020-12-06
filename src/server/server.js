@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const server = require("http").createServer(app);
 const io = (module.exports.io = require("socket.io")(server));
+require("dotenv").config();
 
 let adminId = "";
 let userList = new Set();

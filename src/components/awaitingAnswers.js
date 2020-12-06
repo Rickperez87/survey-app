@@ -3,11 +3,21 @@ import Button from "@material-ui/core/Button";
 import { withStyles } from "@material-ui/core/styles";
 
 const styles = {
-  root: { display: "flex", alignItems: "center", justifyContent: "center" },
-  buttonGroup: {
+  root: {
     display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  buttonGroup: {
+    minWidth: "500px",
+    display: "flex",
+    margin: ".5rem",
     alignItems: "center",
     justifyContent: "spaceAround",
+  },
+  button: {
+    marginRight: "1rem",
   },
 };
 
