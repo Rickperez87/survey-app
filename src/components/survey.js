@@ -31,6 +31,7 @@ function Survey({ classes }) {
   const [ResultsDialogOpen, toggleResultsDialog] = useToggle(false);
   const [surveyResponses, setSurveyResponses] = useState([]);
   const [surveyResults, setSurveyResults] = useState(false);
+  const [pastResults, setPastResults] = useState([]);
 
   function uniqueId() {
     return Math.floor(Math.random() * 1000);
@@ -104,6 +105,7 @@ function Survey({ classes }) {
   useEffect(() => {
     socket.on("results", function (results) {
       setSurveyResults(results);
+      setPastResults((pastResults) => [...pastResults, results]);
       setSurveyResponses([]);
       toggleResultsDialog();
     });

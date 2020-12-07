@@ -27,7 +27,7 @@ function Login({ classes, onClose, open }) {
   };
   return (
     <Dialog
-      fullWidth="sm"
+      fullWidth
       maxWidth="sm"
       onClose={onClose}
       aria-labelledby="login-dialog-title"

@@ -28,7 +28,7 @@ function AwaitingAnswers({ classes, handleCloseSurvey, handleCancelSurvey }) {
       <div className={classes.buttonGroup}>
         <Button
           variant="contained"
-          classNames={classes.button}
+          className={classes.button}
           color="primary"
           onClick={handleCloseSurvey}
         >
