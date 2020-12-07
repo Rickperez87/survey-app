@@ -30,12 +30,23 @@ io.on("connect", function (socket) {
     socket.broadcast.emit("surveyTitle", title);
   });
 
-  socket.on("login", function (login) {
-    if (login[0] === "rick" && login[1] === "perez") {
-      adminId = socket.client.id;
+  socket.on("login", function (input) {
+    if (isAdmin(input)) {
+      setAdminId(socket.client.id);
       io.to(adminId).emit("confirmLogin", adminId);
     }
   });
+
+  const isAdmin = (input) => {
+    if (input.userName === "rick" && input.password === "perez") {
+      return true;
+    } else return false;
+  };
+
+  const setAdminId = (id) => {
+    adminId = id;
+    return console.log(adminId);
+  };
 
   socket.on("newUser", function (userName) {
     let newUser = { userName, id: socket.client.id };

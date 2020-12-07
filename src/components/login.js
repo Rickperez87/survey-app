@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
 import socket from "../server/socketConfig";
-import useFormState from "../custom-react-hooks/form-state-hook";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Dialog from "@material-ui/core/Dialog";
 import TextField from "@material-ui/core/TextField";
@@ -16,15 +15,20 @@ const styles = {
 };
 
 function Login({ classes, onClose, open }) {
-  const [user, updateUser, clearUser] = useFormState("");
-  const [pass, updatePass, clearPass] = useFormState("");
+  const [input, setInput] = useState({
+    userName: "",
+    password: "",
+  });
 
-  const login = function () {
-    socket.emit("login", [user, pass]);
-    clearUser();
-    clearPass();
+  function updateInput(e) {
+    setInput({ ...input, [e.currentTarget.name]: e.currentTarget.value });
+  }
+  const handleLogin = function () {
+    socket.emit("login", input);
+    setInput({ userName: "", password: "" });
     onClose();
   };
+
   return (
     <Dialog
       fullWidth
@@ -41,16 +45,18 @@ function Login({ classes, onClose, open }) {
           margin="dense"
           fullWidth
           placeholder="User"
-          value={user}
-          onChange={updateUser}
+          name="userName"
+          value={input.userName}
+          onChange={updateInput}
         />
         <br />
         <TextField
           margin="dense"
           fullWidth
           placeholder="Password"
-          value={pass}
-          onChange={updatePass}
+          name="password"
+          value={input.password}
+          onChange={updateInput}
         />
       </DialogContent>
       <DialogActions>
@@ -58,7 +64,7 @@ function Login({ classes, onClose, open }) {
           color="primary"
           className={classes.root}
           variant="contained"
-          onClick={login}
+          onClick={handleLogin}
         >
           Login
         </Button>
