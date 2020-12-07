@@ -31,11 +31,6 @@ const CreateQuestion = function ({ toggleAwaitingAnswers, classes }) {
   const updateForm = (e) => {
     changeForm({ ...form, [e.target.name]: e.target.value });
   };
-  // const [surveyTitle, changeTitle, clearTitle] = useFormState("");
-  // const [answer1, changeAnswer1, clearAnswer1] = useFormState("");
-  // const [answer2, changeAnswer2, clearAnswer2] = useFormState("");
-  // const [answer3, changeAnswer3, clearAnswer3] = useFormState("");
-  // const [answer4, changeAnswer4, clearAnswer4] = useFormState("");
 
   const handleSubmit = function (e) {
     e.preventDefault();
@@ -48,11 +43,7 @@ const CreateQuestion = function ({ toggleAwaitingAnswers, classes }) {
       answer3: "",
       answer4: "",
     });
-    // clearTitle();
-    // clearAnswer1();
-    // clearAnswer2();
-    // clearAnswer3();
-    // clearAnswer4();
+
     socket.emit("sentQuestion", text);
     socket.emit("sentTitle", title);
     toggleAwaitingAnswers();
@@ -63,46 +54,36 @@ const CreateQuestion = function ({ toggleAwaitingAnswers, classes }) {
         placeholder="Survey Question"
         inputProps={{ "aria-label": "description" }}
         name="surveyTitle"
-        // value={surveyTitle}
         value={form.surveyTitle}
         onChange={updateForm}
-        // onChange={changeTitle}
       />
       <Input
         name="answer1"
         placeholder="Answer-1"
         inputProps={{ "aria-label": "description" }}
         value={form.answer1}
-        // value={answer1}
         onChange={updateForm}
-        // onChange={changeAnswer1}
       />
       <Input
         name="answer2"
         inputProps={{ "aria-label": "description" }}
         placeholder="Answer-2"
         value={form.answer2}
-        // value={answer2}
         onChange={updateForm}
-        // onChange={changeAnswer2}
       />
       <Input
         name="answer3"
         inputProps={{ "aria-label": "description" }}
         placeholder="Answer-3"
         value={form.answer3}
-        // value={answer3}
         onChange={updateForm}
-        // onChange={changeAnswer3}
       />
       <Input
         name="answer4"
         inputProps={{ "aria-label": "description" }}
         placeholder="Answer-4"
         value={form.answer4}
-        // value={answer4}
         onChange={updateForm}
-        // onChange={changeAnswer4}
       />
       <Button variant="contained" color="primary" onClick={handleSubmit}>
         Submit
