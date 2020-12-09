@@ -23,10 +23,7 @@ io.on("connect", function (socket) {
   });
 
   const isAdminId = (id) => {
-    if (id === adminId) {
-      return true;
-    }
-    false;
+    return id === adminId;
   };
 
   socket.on("sentQuestion", function (text) {
@@ -45,9 +42,7 @@ io.on("connect", function (socket) {
   });
 
   const isAdmin = (input) => {
-    if (input.userName === "rick" && input.password === "perez") {
-      return true;
-    } else return false;
+    return input.userName === "rick" && input.password === "perez";
   };
 
   const setAdminId = (id) => {
@@ -56,23 +51,22 @@ io.on("connect", function (socket) {
   };
 
   socket.on("newUser", function (userName) {
-    let user = createUser(userName);
-    if (isUniqueUser(userList, user)) {
-      userList.add(user.userName);
+    console.log(isUniqueUser(userList, userName), userList);
+    if (isUniqueUser(userList, userName)) {
+      let user = addUser(userName);
       io.to(user.id).emit("uniqueUserName");
     } else {
-      io.to(user.id).emit("duplicateUserName");
+      io.to(socket.client.id).emit("duplicateUserName");
     }
   });
 
-  function createUser(userName) {
-    let newUser = { userName, id: socket.client.id };
-    return newUser;
+  function isUniqueUser(userList, userName) {
+    return !userList.has(userName);
   }
-  function isUniqueUser(userList, user) {
-    if (userList.has(user.userName)) {
-      return false;
-    } else return true;
+  function addUser(userName) {
+    let user = { userName, id: socket.client.id };
+    userList.add(user.userName);
+    return user;
   }
 
   socket.on("submitAnswer", function (ans) {
