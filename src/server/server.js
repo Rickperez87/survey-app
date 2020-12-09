@@ -15,12 +15,19 @@ io.on("connect", function (socket) {
   console.log("Client connected");
 
   socket.on("disconnect", function () {
-    if (socket.client.id === adminId) {
+    if (isAdminId(socket.client.id)) {
       userList.clear();
       console.log("Admin Disconnected");
     }
     console.log("Client Disconnected");
   });
+
+  const isAdminId = (id) => {
+    if (id === adminId) {
+      return true;
+    }
+    false;
+  };
 
   socket.on("sentQuestion", function (text) {
     socket.broadcast.emit("surveyQuestion", text);
@@ -49,14 +56,24 @@ io.on("connect", function (socket) {
   };
 
   socket.on("newUser", function (userName) {
-    let newUser = { userName, id: socket.client.id };
-    if (!userList.has(newUser.userName)) {
-      userList.add(newUser.userName);
-      io.to(newUser.id).emit("uniqueUserName");
+    let user = createUser(userName);
+    if (isUniqueUser(userList, user)) {
+      userList.add(user.userName);
+      io.to(user.id).emit("uniqueUserName");
     } else {
-      io.to(newUser.id).emit("duplicateUserName");
+      io.to(user.id).emit("duplicateUserName");
     }
   });
+
+  function createUser(userName) {
+    let newUser = { userName, id: socket.client.id };
+    return newUser;
+  }
+  function isUniqueUser(userList, user) {
+    if (userList.has(user.userName)) {
+      return false;
+    } else return true;
+  }
 
   socket.on("submitAnswer", function (ans) {
     io.to(adminId).emit("receiveAnswer", ans);
