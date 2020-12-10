@@ -32,10 +32,17 @@ function Survey({ classes }) {
   const [surveyResponses, setSurveyResponses] = useState([]);
   const [surveyResults, setSurveyResults] = useState(false);
   const [pastResults, setPastResults] = useState([]);
-
   function uniqueId() {
     return Math.floor(Math.random() * 1000);
   }
+
+  let surveyData = {
+    surveyId: "",
+    surveyQuestion: { surveyTitle: "", q1: "", q2: "", q3: "", q4: "" },
+    surveyResults: { userName: "", ans: "" },
+  };
+
+  const [data, setData] = useState(surveyData);
 
   let title = useRef("");
   let questions = useRef("");
@@ -124,8 +131,8 @@ function Survey({ classes }) {
         <CreateQuestion
           className="createQuestionContainer"
           toggleAwaitingAnswers={toggleAwaitingAnswers}
-          setPastResults={setPastResults}
-          pastResults={pastResults}
+          data={data}
+          setData={setData}
         />
       )}
 
