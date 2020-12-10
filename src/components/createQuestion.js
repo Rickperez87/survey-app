@@ -19,7 +19,12 @@ const styles = {
   },
 };
 
-const CreateQuestion = function ({ toggleAwaitingAnswers, classes }) {
+const CreateQuestion = function ({
+  toggleAwaitingAnswers,
+  classes,
+  setPastResults,
+  pastResults,
+}) {
   const [form, changeForm] = useState({
     surveyTitle: "",
     answer1: "",
@@ -43,7 +48,7 @@ const CreateQuestion = function ({ toggleAwaitingAnswers, classes }) {
       answer3: "",
       answer4: "",
     });
-
+    setPastResults((pastResults) => [...pastResults, { title }]);
     socket.emit("sentQuestion", text);
     socket.emit("sentTitle", title);
     toggleAwaitingAnswers();

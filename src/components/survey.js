@@ -104,8 +104,9 @@ function Survey({ classes }) {
 
   useEffect(() => {
     socket.on("results", function (results) {
+      console.log("results", results);
       setSurveyResults(results);
-      setPastResults((pastResults) => [...pastResults, results]);
+      setPastResults((pastResults) => [...pastResults, ...results]);
       setSurveyResponses([]);
       toggleResultsDialog();
     });
@@ -114,16 +115,17 @@ function Survey({ classes }) {
   const handleCloseResults = function () {
     toggleResultsDialog();
   };
-
+  console.log("pastresutls", pastResults);
   return (
     <div className={classes.root}>
-      {/* //fix nav bg color */}
       <Navbar userName={userName} setUserName={setUserName} />
 
       {loggedin && !awaitingAnswers && (
         <CreateQuestion
           className="createQuestionContainer"
           toggleAwaitingAnswers={toggleAwaitingAnswers}
+          setPastResults={setPastResults}
+          pastResults={pastResults}
         />
       )}
 
@@ -157,6 +159,18 @@ function Survey({ classes }) {
         open={ResultsDialogOpen}
         surveyResults={surveyResults}
       />
+      <div>
+        <ul>
+          {pastResults.map((item, idx) => {
+            return (
+              <div>
+                <h3>{`${item.title}`}</h3>
+                <li key={idx}> {`${item.userName} : ${item.ans}`} </li>
+              </div>
+            );
+          })}
+        </ul>
+      </div>
     </div>
   );
 }
