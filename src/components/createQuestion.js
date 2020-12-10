@@ -18,41 +18,56 @@ const styles = {
     },
   },
 };
-
+//plug in the new data to replace the old way and reconfigure the emits...
 const CreateQuestion = function ({
   toggleAwaitingAnswers,
   classes,
-  setPastResults,
-  pastResults,
+  setData,
+  data,
+  uId,
 }) {
   const [form, changeForm] = useState({
     surveyTitle: "",
-    answer1: "",
-    answer2: "",
-    answer3: "",
-    answer4: "",
+    q1: "",
+    q2: "",
+    q3: "",
+    q4: "",
   });
 
   const updateForm = (e) => {
     changeForm({ ...form, [e.target.name]: e.target.value });
+    setData({
+      ...data,
+      surveyQuestion: {
+        ...data.surveyQuestion,
+        [e.target.name]: e.target.value,
+      },
+    });
   };
 
   const handleSubmit = function (e) {
     e.preventDefault();
     let title = form.surveyTitle;
-    let text = [form.answer1, form.answer2, form.answer3, form.answer4];
+    let text = [form.q1, form.q2, form.q3, form.q4];
     changeForm({
       surveyTitle: "",
-      answer1: "",
-      answer2: "",
-      answer3: "",
-      answer4: "",
+      q1: "",
+      q2: "",
+      q3: "",
+      q4: "",
     });
-    setPastResults((pastResults) => [...pastResults, { title }]);
+
+    setData({
+      ...data,
+      surveyId: `aa${uId()}bb`,
+    });
+
     socket.emit("sentQuestion", text);
     socket.emit("sentTitle", title);
     toggleAwaitingAnswers();
   };
+
+  console.log(data);
   return (
     <Card id="createQuestion" className={classes.root}>
       <Input
@@ -63,31 +78,31 @@ const CreateQuestion = function ({
         onChange={updateForm}
       />
       <Input
-        name="answer1"
+        name="q1"
         placeholder="Answer-1"
         inputProps={{ "aria-label": "description" }}
-        value={form.answer1}
+        value={form.q1}
         onChange={updateForm}
       />
       <Input
-        name="answer2"
+        name="q2"
         inputProps={{ "aria-label": "description" }}
         placeholder="Answer-2"
-        value={form.answer2}
+        value={form.q2}
         onChange={updateForm}
       />
       <Input
-        name="answer3"
+        name="q3"
         inputProps={{ "aria-label": "description" }}
         placeholder="Answer-3"
-        value={form.answer3}
+        value={form.q3}
         onChange={updateForm}
       />
       <Input
-        name="answer4"
+        name="q4"
         inputProps={{ "aria-label": "description" }}
         placeholder="Answer-4"
-        value={form.answer4}
+        value={form.q4}
         onChange={updateForm}
       />
       <Button variant="contained" color="primary" onClick={handleSubmit}>
