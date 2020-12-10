@@ -24,6 +24,7 @@ const CreateQuestion = function ({
   classes,
   setData,
   data,
+  uId,
 }) {
   const [form, changeForm] = useState({
     surveyTitle: "",
@@ -54,6 +55,11 @@ const CreateQuestion = function ({
       q2: "",
       q3: "",
       q4: "",
+    });
+
+    setData({
+      ...data,
+      surveyId: `aa${uId()}bb`,
     });
 
     socket.emit("sentQuestion", text);
