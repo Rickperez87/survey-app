@@ -18,7 +18,7 @@ const styles = {
     },
   },
 };
-//plug in the new data to replace the old way and reconfigure the emits...
+
 const CreateQuestion = function ({
   toggleAwaitingAnswers,
   classes,
@@ -61,13 +61,12 @@ const CreateQuestion = function ({
       ...data,
       surveyId: `aa${uId()}bb`,
     });
-
-    socket.emit("sentQuestion", text);
+    console.log("data", { data });
+    socket.emit("sentQuestion", data);
     socket.emit("sentTitle", title);
     toggleAwaitingAnswers();
   };
 
-  console.log(data);
   return (
     <Card id="createQuestion" className={classes.root}>
       <Input

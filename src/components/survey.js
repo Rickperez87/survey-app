@@ -44,8 +44,7 @@ function Survey({ classes }) {
 
   const [data, setData] = useState(surveyData);
 
-  let title = useRef("");
-  let questions = useRef("");
+  let surveyFormData = useRef("");
 
   useEffect(() => {
     socket.on("connect", function () {
@@ -66,17 +65,14 @@ function Survey({ classes }) {
 
   useEffect(() => {
     socket.on("surveyQuestion", function (data) {
-      questions.current = data;
+      const { surveyQuestion } = data;
+      surveyFormData.current = surveyQuestion;
+      setData({ ...data });
+      toggleQuestionDisplayed();
+      toggleAwaitingAnswers();
     });
     return () => socket.off("surveyQuestion");
   }, []);
-
-  socket.on("surveyTitle", function (incomingTitle) {
-    title.current = incomingTitle;
-    toggleQuestionDisplayed();
-    toggleAwaitingAnswers();
-    return () => socket.off("surveyTitle");
-  });
 
   const submitAnswer = function () {
     toggleAwaitingAnswers();
@@ -148,8 +144,7 @@ function Survey({ classes }) {
       <Card>
         {questionDisplayed && !loggedin && (
           <DisplaySurveyQuestions
-            title={title.current}
-            questions={questions.current}
+            formData={surveyFormData.current}
             handleSubmitAnswer={submitAnswer}
             userName={userName}
           />
