@@ -15,7 +15,6 @@ const styles = {
 
 function SurveyResponses({ classes, data }) {
   const { surveyResults } = data;
-  console.log(data);
   return (
     <Card className={classes.root}>
       <List className={classes.list}>

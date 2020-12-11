@@ -85,25 +85,21 @@ function Survey({ classes }) {
         ...data,
         surveyResults: [...data.surveyResults, ans],
       });
-      let result = [...surveyResponses, ans];
-      setSurveyResponses(result);
-      console.log("check data receive answers", data);
     });
-  }, [surveyResponses, data]);
+  }, [data]);
 
   const closeSurvey = function () {
-    socket.emit("surveyResults", surveyResponses);
+    const { surveyResults } = data;
+    socket.emit("surveyResults", surveyResults);
     toggleAwaitingAnswers();
     toggleResultsDialog();
   };
   const cancelSurvey = function () {
     socket.emit("cancelSurveyResults");
     toggleAwaitingAnswers();
-    setSurveyResponses([]);
   };
   useEffect(() => {
     socket.on("cancelSurveyResults", function () {
-      setSurveyResponses([]);
       setSurveyResults(false);
       toggleAwaitingAnswers();
       toggleQuestionDisplayed();
@@ -114,16 +110,21 @@ function Survey({ classes }) {
     socket.on("results", function (results) {
       console.log("results", results);
       setSurveyResults(results);
-      setPastResults((pastResults) => [...pastResults, ...results]);
-      setSurveyResponses([]);
+      setData({
+        ...data,
+        surveyResults: [...data.surveyResults, results],
+      });
       toggleResultsDialog();
     });
   }, []);
 
   const handleCloseResults = function () {
     toggleResultsDialog();
+    //save all data and reset values
   };
-  console.log("pastresutls", pastResults);
+  useEffect(() => {
+    console.log("pastresutls", pastResults);
+  }, [pastResults]);
   return (
     <div className={classes.root}>
       <Navbar userName={userName} setUserName={setUserName} />
@@ -156,7 +157,7 @@ function Survey({ classes }) {
         )}
       </Card>
 
-      {surveyResponses.length ? <SurveyResponses data={data} /> : ""}
+      {data.surveyResults.length ? <SurveyResponses data={data} /> : ""}
 
       <SurveyResults
         onClose={handleCloseResults}
