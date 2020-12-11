@@ -30,10 +30,6 @@ io.on("connect", function (socket) {
     socket.broadcast.emit("surveyQuestion", data);
   });
 
-  // socket.on("sentTitle", function (title) {
-  //   socket.broadcast.emit("surveyTitle", title);
-  // });
-
   socket.on("login", function (input) {
     if (isAdmin(input)) {
       setAdminId(socket.client.id);

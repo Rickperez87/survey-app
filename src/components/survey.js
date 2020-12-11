@@ -39,7 +39,7 @@ function Survey({ classes }) {
   let surveyData = {
     surveyId: "",
     surveyQuestion: { surveyTitle: "", q1: "", q2: "", q3: "", q4: "" },
-    surveyResults: { userName: "", ans: "" },
+    surveyResults: [],
   };
 
   const [data, setData] = useState(surveyData);
@@ -81,10 +81,15 @@ function Survey({ classes }) {
 
   useEffect(() => {
     socket.on("receiveAnswer", function (ans) {
+      setData({
+        ...data,
+        surveyResults: [...data.surveyResults, ans],
+      });
       let result = [...surveyResponses, ans];
       setSurveyResponses(result);
+      console.log("check data receive answers", data);
     });
-  }, [surveyResponses]);
+  }, [surveyResponses, data]);
 
   const closeSurvey = function () {
     socket.emit("surveyResults", surveyResponses);
@@ -151,11 +156,7 @@ function Survey({ classes }) {
         )}
       </Card>
 
-      {surveyResponses.length ? (
-        <SurveyResponses surveyResponses={surveyResponses} />
-      ) : (
-        ""
-      )}
+      {surveyResponses.length ? <SurveyResponses data={data} /> : ""}
 
       <SurveyResults
         onClose={handleCloseResults}

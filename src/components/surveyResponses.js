@@ -13,11 +13,13 @@ const styles = {
   list: {},
 };
 
-function SurveyResponses({ classes, surveyResponses }) {
+function SurveyResponses({ classes, data }) {
+  const { surveyResults } = data;
+  console.log(data);
   return (
     <Card className={classes.root}>
       <List className={classes.list}>
-        {surveyResponses.map((response, idx) => {
+        {surveyResults.map((response, idx) => {
           return (
             <ListItem className={classes.listItem} key={idx}>
               {`${response.userName} answered -       ${response.ans}`}
