@@ -20,8 +20,7 @@ const styles = {
   },
 };
 function DisplaySurveyQuestions({
-  title,
-  questions,
+  formData,
   handleSubmitAnswer,
   userName,
   classes,
@@ -29,6 +28,8 @@ function DisplaySurveyQuestions({
   //fix this -> Pattern for passing radio through function to parent
   const [radio, updateRadio, clearRadio] = useFormState("");
 
+  const questionValues = Object.values(formData);
+  const title = questionValues.shift();
   const handleSubmit = function () {
     let responseData = { userName, ans: radio };
     socket.emit("submitAnswer", responseData);
@@ -47,7 +48,7 @@ function DisplaySurveyQuestions({
           value={radio}
           onChange={updateRadio}
         >
-          {questions.map(function (q, index) {
+          {questionValues.map(function (q, index) {
             return (
               <FormControlLabel
                 key={index}

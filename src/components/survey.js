@@ -29,23 +29,21 @@ function Survey({ classes }) {
   const [userName, setUserName] = useState(`user ${uniqueId()}`);
   const [questionDisplayed, toggleQuestionDisplayed] = useToggle(false);
   const [ResultsDialogOpen, toggleResultsDialog] = useToggle(false);
-  const [surveyResponses, setSurveyResponses] = useState([]);
   const [surveyResults, setSurveyResults] = useState(false);
-  const [pastResults, setPastResults] = useState([]);
+  const [storeData, setStoreData] = useState([]);
   function uniqueId() {
     return Math.floor(Math.random() * 1000);
   }
 
-  let surveyData = {
+  let dataSchema = {
     surveyId: "",
     surveyQuestion: { surveyTitle: "", q1: "", q2: "", q3: "", q4: "" },
-    surveyResults: { userName: "", ans: "" },
+    surveyResults: [],
   };
 
-  const [data, setData] = useState(surveyData);
+  const [data, setData] = useState(dataSchema);
 
-  let title = useRef("");
-  let questions = useRef("");
+  let surveyFormData = useRef("");
 
   useEffect(() => {
     socket.on("connect", function () {
@@ -66,17 +64,18 @@ function Survey({ classes }) {
 
   useEffect(() => {
     socket.on("surveyQuestion", function (data) {
-      questions.current = data;
+      const { surveyQuestion } = data;
+      surveyFormData.current = surveyQuestion;
+      setData({
+        ...data,
+        surveyQuestion: { ...data.surveyQuestion },
+        surveyResults: [...data.surveyResults],
+      });
+      toggleQuestionDisplayed();
+      toggleAwaitingAnswers();
     });
     return () => socket.off("surveyQuestion");
   }, []);
-
-  socket.on("surveyTitle", function (incomingTitle) {
-    title.current = incomingTitle;
-    toggleQuestionDisplayed();
-    toggleAwaitingAnswers();
-    return () => socket.off("surveyTitle");
-  });
 
   const submitAnswer = function () {
     toggleAwaitingAnswers();
@@ -85,24 +84,30 @@ function Survey({ classes }) {
 
   useEffect(() => {
     socket.on("receiveAnswer", function (ans) {
-      let result = [...surveyResponses, ans];
-      setSurveyResponses(result);
+      setData((data) => ({
+        ...data,
+        surveyQuestion: { ...data.surveyQuestion },
+        surveyResults: [...data.surveyResults, ans],
+      }));
     });
-  }, [surveyResponses]);
+  }, []);
 
   const closeSurvey = function () {
-    socket.emit("surveyResults", surveyResponses);
-    toggleAwaitingAnswers();
+    //save all data and reset values
+    setStoreData([...storeData, data]);
+    setData(dataSchema);
+
+    const { surveyResults } = data;
+    socket.emit("surveyResults", surveyResults);
+
     toggleResultsDialog();
   };
   const cancelSurvey = function () {
     socket.emit("cancelSurveyResults");
     toggleAwaitingAnswers();
-    setSurveyResponses([]);
   };
   useEffect(() => {
     socket.on("cancelSurveyResults", function () {
-      setSurveyResponses([]);
       setSurveyResults(false);
       toggleAwaitingAnswers();
       toggleQuestionDisplayed();
@@ -110,19 +115,26 @@ function Survey({ classes }) {
   }, [questionDisplayed]);
 
   useEffect(() => {
-    socket.on("results", function (results) {
-      console.log("results", results);
-      setSurveyResults(results);
-      setPastResults((pastResults) => [...pastResults, ...results]);
-      setSurveyResponses([]);
+    socket.on("results", function (resp) {
+      // console.log("results", resp);
+      setSurveyResults(resp);
+      // setData((data) => ({
+      //   ...data,
+      //   surveyQuestion: { ...data.surveyQuestion },
+      //   surveyResults: [...data.surveyResults, resp],
+      // }));
       toggleResultsDialog();
     });
   }, []);
 
   const handleCloseResults = function () {
     toggleResultsDialog();
+    toggleAwaitingAnswers();
   };
-  console.log("pastresutls", pastResults);
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
+
   return (
     <div className={classes.root}>
       <Navbar userName={userName} setUserName={setUserName} />
@@ -148,19 +160,14 @@ function Survey({ classes }) {
       <Card>
         {questionDisplayed && !loggedin && (
           <DisplaySurveyQuestions
-            title={title.current}
-            questions={questions.current}
+            formData={surveyFormData.current}
             handleSubmitAnswer={submitAnswer}
             userName={userName}
           />
         )}
       </Card>
 
-      {surveyResponses.length ? (
-        <SurveyResponses surveyResponses={surveyResponses} />
-      ) : (
-        ""
-      )}
+      {data.surveyResults.length ? <SurveyResponses data={data} /> : ""}
 
       <SurveyResults
         onClose={handleCloseResults}
@@ -169,14 +176,14 @@ function Survey({ classes }) {
       />
       <div>
         <ul>
-          {pastResults.map((item, idx) => {
+          {/* {storeData.map((item, idx) => {
             return (
               <div>
                 <h3>{`${item.title}`}</h3>
                 <li key={idx}> {`${item.userName} : ${item.ans}`} </li>
               </div>
             );
-          })}
+          })} */}
         </ul>
       </div>
     </div>

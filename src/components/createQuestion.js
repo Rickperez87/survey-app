@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import socket from "../server/socketConfig";
 import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
@@ -18,7 +18,7 @@ const styles = {
     },
   },
 };
-//plug in the new data to replace the old way and reconfigure the emits...
+
 const CreateQuestion = function ({
   toggleAwaitingAnswers,
   classes,
@@ -34,6 +34,13 @@ const CreateQuestion = function ({
     q4: "",
   });
 
+  useEffect(() => {
+    setData((data) => ({
+      ...data,
+      surveyId: `aa${uId()}bb`,
+    }));
+  }, []);
+
   const updateForm = (e) => {
     changeForm({ ...form, [e.target.name]: e.target.value });
     setData({
@@ -47,8 +54,7 @@ const CreateQuestion = function ({
 
   const handleSubmit = function (e) {
     e.preventDefault();
-    let title = form.surveyTitle;
-    let text = [form.q1, form.q2, form.q3, form.q4];
+
     changeForm({
       surveyTitle: "",
       q1: "",
@@ -57,17 +63,10 @@ const CreateQuestion = function ({
       q4: "",
     });
 
-    setData({
-      ...data,
-      surveyId: `aa${uId()}bb`,
-    });
-
-    socket.emit("sentQuestion", text);
-    socket.emit("sentTitle", title);
+    socket.emit("sentQuestion", data);
     toggleAwaitingAnswers();
   };
 
-  console.log(data);
   return (
     <Card id="createQuestion" className={classes.root}>
       <Input

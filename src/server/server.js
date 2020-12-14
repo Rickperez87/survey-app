@@ -26,12 +26,9 @@ io.on("connect", function (socket) {
     return id === adminId;
   };
 
-  socket.on("sentQuestion", function (text) {
-    socket.broadcast.emit("surveyQuestion", text);
-  });
-
-  socket.on("sentTitle", function (title) {
-    socket.broadcast.emit("surveyTitle", title);
+  socket.on("sentQuestion", function (data) {
+    console.log("data", data);
+    socket.broadcast.emit("surveyQuestion", data);
   });
 
   socket.on("login", function (input) {
