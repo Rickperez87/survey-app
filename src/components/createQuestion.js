@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import socket from "../server/socketConfig";
 import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
@@ -34,6 +34,13 @@ const CreateQuestion = function ({
     q4: "",
   });
 
+  useEffect(() => {
+    setData((data) => ({
+      ...data,
+      surveyId: `aa${uId()}bb`,
+    }));
+  }, []);
+
   const updateForm = (e) => {
     changeForm({ ...form, [e.target.name]: e.target.value });
     setData({
@@ -47,8 +54,7 @@ const CreateQuestion = function ({
 
   const handleSubmit = function (e) {
     e.preventDefault();
-    let title = form.surveyTitle;
-    let text = [form.q1, form.q2, form.q3, form.q4];
+
     changeForm({
       surveyTitle: "",
       q1: "",
@@ -57,13 +63,7 @@ const CreateQuestion = function ({
       q4: "",
     });
 
-    setData({
-      ...data,
-      surveyId: `aa${uId()}bb`,
-    });
-    console.log("data", { data });
     socket.emit("sentQuestion", data);
-    socket.emit("sentTitle", title);
     toggleAwaitingAnswers();
   };
 

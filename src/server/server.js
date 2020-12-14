@@ -27,6 +27,7 @@ io.on("connect", function (socket) {
   };
 
   socket.on("sentQuestion", function (data) {
+    console.log("data", data);
     socket.broadcast.emit("surveyQuestion", data);
   });
 

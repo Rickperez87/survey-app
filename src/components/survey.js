@@ -29,20 +29,19 @@ function Survey({ classes }) {
   const [userName, setUserName] = useState(`user ${uniqueId()}`);
   const [questionDisplayed, toggleQuestionDisplayed] = useToggle(false);
   const [ResultsDialogOpen, toggleResultsDialog] = useToggle(false);
-  const [surveyResponses, setSurveyResponses] = useState([]);
   const [surveyResults, setSurveyResults] = useState(false);
-  const [pastResults, setPastResults] = useState([]);
+  const [storeData, setStoreData] = useState([]);
   function uniqueId() {
     return Math.floor(Math.random() * 1000);
   }
 
-  let surveyData = {
+  let dataSchema = {
     surveyId: "",
     surveyQuestion: { surveyTitle: "", q1: "", q2: "", q3: "", q4: "" },
     surveyResults: [],
   };
 
-  const [data, setData] = useState(surveyData);
+  const [data, setData] = useState(dataSchema);
 
   let surveyFormData = useRef("");
 
@@ -67,7 +66,11 @@ function Survey({ classes }) {
     socket.on("surveyQuestion", function (data) {
       const { surveyQuestion } = data;
       surveyFormData.current = surveyQuestion;
-      setData({ ...data });
+      setData({
+        ...data,
+        surveyQuestion: { ...data.surveyQuestion },
+        surveyResults: [...data.surveyResults],
+      });
       toggleQuestionDisplayed();
       toggleAwaitingAnswers();
     });
@@ -81,17 +84,22 @@ function Survey({ classes }) {
 
   useEffect(() => {
     socket.on("receiveAnswer", function (ans) {
-      setData({
+      setData((data) => ({
         ...data,
+        surveyQuestion: { ...data.surveyQuestion },
         surveyResults: [...data.surveyResults, ans],
-      });
+      }));
     });
-  }, [data]);
+  }, []);
 
   const closeSurvey = function () {
+    //save all data and reset values
+    setStoreData([...storeData, data]);
+    setData(dataSchema);
+
     const { surveyResults } = data;
     socket.emit("surveyResults", surveyResults);
-    toggleAwaitingAnswers();
+
     toggleResultsDialog();
   };
   const cancelSurvey = function () {
@@ -107,24 +115,26 @@ function Survey({ classes }) {
   }, [questionDisplayed]);
 
   useEffect(() => {
-    socket.on("results", function (results) {
-      console.log("results", results);
-      setSurveyResults(results);
-      setData({
-        ...data,
-        surveyResults: [...data.surveyResults, results],
-      });
+    socket.on("results", function (resp) {
+      // console.log("results", resp);
+      setSurveyResults(resp);
+      // setData((data) => ({
+      //   ...data,
+      //   surveyQuestion: { ...data.surveyQuestion },
+      //   surveyResults: [...data.surveyResults, resp],
+      // }));
       toggleResultsDialog();
     });
   }, []);
 
   const handleCloseResults = function () {
     toggleResultsDialog();
-    //save all data and reset values
+    toggleAwaitingAnswers();
   };
   useEffect(() => {
-    console.log("pastresutls", pastResults);
-  }, [pastResults]);
+    console.log(data);
+  }, [data]);
+
   return (
     <div className={classes.root}>
       <Navbar userName={userName} setUserName={setUserName} />
@@ -166,14 +176,14 @@ function Survey({ classes }) {
       />
       <div>
         <ul>
-          {pastResults.map((item, idx) => {
+          {/* {storeData.map((item, idx) => {
             return (
               <div>
                 <h3>{`${item.title}`}</h3>
                 <li key={idx}> {`${item.userName} : ${item.ans}`} </li>
               </div>
             );
-          })}
+          })} */}
         </ul>
       </div>
     </div>
