@@ -5,6 +5,7 @@ import CreateQuestion from "./createQuestion";
 import DisplaySurveyQuestions from "./displaySurveyQuestions";
 import SurveyResponses from "./surveyResponses";
 import SurveyResults from "./surveyResults";
+import PastResults from "./pastResults";
 import socket from "../server/socketConfig";
 import Card from "@material-ui/core/Card";
 import AwaitingAnswers from "./awaitingAnswers";
@@ -116,13 +117,8 @@ function Survey({ classes }) {
 
   useEffect(() => {
     socket.on("results", function (resp) {
-      // console.log("results", resp);
       setSurveyResults(resp);
-      // setData((data) => ({
-      //   ...data,
-      //   surveyQuestion: { ...data.surveyQuestion },
-      //   surveyResults: [...data.surveyResults, resp],
-      // }));
+
       toggleResultsDialog();
     });
   }, []);
@@ -174,18 +170,7 @@ function Survey({ classes }) {
         open={ResultsDialogOpen}
         surveyResults={surveyResults}
       />
-      <div>
-        <ul>
-          {/* {storeData.map((item, idx) => {
-            return (
-              <div>
-                <h3>{`${item.title}`}</h3>
-                <li key={idx}> {`${item.userName} : ${item.ans}`} </li>
-              </div>
-            );
-          })} */}
-        </ul>
-      </div>
+      {loggedin && <PastResults data={storeData} />}
     </div>
   );
 }
