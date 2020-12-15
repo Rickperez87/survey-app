@@ -10,13 +10,21 @@ const styles = {
     margin: "1rem auto",
     padding: "2rem",
   },
-  list: {},
+  title: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
 };
 
 function SurveyResponses({ classes, data }) {
-  const { surveyResults } = data;
+  const {
+    surveyResults,
+    surveyQuestion: { surveyTitle },
+  } = data;
   return (
     <Card className={classes.root}>
+      <h3 className={classes.title}>{surveyTitle}</h3>
       <List className={classes.list}>
         {surveyResults.map((response, idx) => {
           return (
