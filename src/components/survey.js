@@ -131,6 +131,9 @@ function Survey({ classes }) {
     console.log(data);
   }, [data]);
 
+  const {
+    surveyQuestion: { surveyTitle },
+  } = data;
   return (
     <div className={classes.root}>
       <Navbar userName={userName} setUserName={setUserName} />
@@ -169,6 +172,7 @@ function Survey({ classes }) {
         onClose={handleCloseResults}
         open={ResultsDialogOpen}
         surveyResults={surveyResults}
+        surveyTitle={surveyTitle}
       />
       {loggedin && <PastResults data={storeData} />}
     </div>
