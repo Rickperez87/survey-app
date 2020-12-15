@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import socket from "../server/socketConfig";
 import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
@@ -26,14 +26,6 @@ const CreateQuestion = function ({
   data,
   uId,
 }) {
-  const [form, changeForm] = useState({
-    surveyTitle: "",
-    q1: "",
-    q2: "",
-    q3: "",
-    q4: "",
-  });
-
   useEffect(() => {
     setData((data) => ({
       ...data,
@@ -42,7 +34,6 @@ const CreateQuestion = function ({
   }, []);
 
   const updateForm = (e) => {
-    changeForm({ ...form, [e.target.name]: e.target.value });
     setData({
       ...data,
       surveyQuestion: {
@@ -55,53 +46,46 @@ const CreateQuestion = function ({
   const handleSubmit = function (e) {
     e.preventDefault();
 
-    changeForm({
-      surveyTitle: "",
-      q1: "",
-      q2: "",
-      q3: "",
-      q4: "",
-    });
-
     socket.emit("sentQuestion", data);
     toggleAwaitingAnswers();
   };
 
+  const { surveyTitle, q1, q2, q3, q4 } = data;
   return (
     <Card id="createQuestion" className={classes.root}>
       <Input
         placeholder="Survey Question"
         inputProps={{ "aria-label": "description" }}
         name="surveyTitle"
-        value={form.surveyTitle}
+        value={surveyTitle}
         onChange={updateForm}
       />
       <Input
         name="q1"
         placeholder="Answer-1"
         inputProps={{ "aria-label": "description" }}
-        value={form.q1}
+        value={q1}
         onChange={updateForm}
       />
       <Input
         name="q2"
         inputProps={{ "aria-label": "description" }}
         placeholder="Answer-2"
-        value={form.q2}
+        value={q2}
         onChange={updateForm}
       />
       <Input
         name="q3"
         inputProps={{ "aria-label": "description" }}
         placeholder="Answer-3"
-        value={form.q3}
+        value={q3}
         onChange={updateForm}
       />
       <Input
         name="q4"
         inputProps={{ "aria-label": "description" }}
         placeholder="Answer-4"
-        value={form.q4}
+        value={q4}
         onChange={updateForm}
       />
       <Button variant="contained" color="primary" onClick={handleSubmit}>
