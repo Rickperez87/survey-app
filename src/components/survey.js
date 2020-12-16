@@ -6,6 +6,7 @@ import DisplaySurveyQuestions from "./displaySurveyQuestions";
 import SurveyResponses from "./surveyResponses";
 import SurveyResults from "./surveyResults";
 import PastResults from "./pastResults";
+import DrawerData from "./drawer";
 import socket from "../server/socketConfig";
 import Card from "@material-ui/core/Card";
 import AwaitingAnswers from "./awaitingAnswers";
@@ -137,7 +138,7 @@ function Survey({ classes }) {
   return (
     <div className={classes.root}>
       <Navbar userName={userName} setUserName={setUserName} />
-
+      {loggedin && <DrawerData />}
       {loggedin && !awaitingAnswers && (
         <CreateQuestion
           className="createQuestionContainer"
