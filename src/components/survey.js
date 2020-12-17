@@ -137,8 +137,8 @@ function Survey({ classes }) {
   } = data;
   return (
     <div className={classes.root}>
-      <Navbar userName={userName} setUserName={setUserName} />
-      {loggedin && <DrawerData />}
+      {/* <Navbar userName={userName} setUserName={setUserName} /> */}
+      <DrawerData userName={userName} setUserName={setUserName} />}
       {loggedin && !awaitingAnswers && (
         <CreateQuestion
           className="createQuestionContainer"
@@ -148,7 +148,6 @@ function Survey({ classes }) {
           uId={uniqueId}
         />
       )}
-
       {awaitingAnswers && loggedin && (
         <AwaitingAnswers
           className="awaitingAnswers"
@@ -156,7 +155,6 @@ function Survey({ classes }) {
           handleCancelSurvey={cancelSurvey}
         />
       )}
-
       <Card>
         {questionDisplayed && !loggedin && (
           <DisplaySurveyQuestions
@@ -166,9 +164,7 @@ function Survey({ classes }) {
           />
         )}
       </Card>
-
       {data.surveyResults.length ? <SurveyResponses data={data} /> : ""}
-
       <SurveyResults
         onClose={handleCloseResults}
         open={ResultsDialogOpen}

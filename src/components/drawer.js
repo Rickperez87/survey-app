@@ -17,6 +17,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
+import Navbar from "./navbar";
 
 const drawerWidth = 240;
 
@@ -77,7 +78,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function DrawerData() {
+export default function DrawerData({ userName, setUserName }) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -109,9 +110,7 @@ export default function DrawerData() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
-            Persistent drawer
-          </Typography>
+          <Navbar userName={userName} setUserName={setUserName} />
         </Toolbar>
       </AppBar>
 

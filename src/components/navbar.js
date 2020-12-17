@@ -6,7 +6,7 @@ import "../styles/navbar.css";
 
 const styles = {
   root: {
-    background: "rgba(104,119,202,.87)",
+    background: "rgba(63,81,181,.87)",
     display: "flex",
     alignItems: "center",
     color: "#FAFAFA",
