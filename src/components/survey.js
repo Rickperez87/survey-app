@@ -138,7 +138,11 @@ function Survey({ classes }) {
   return (
     <div className={classes.root}>
       {/* <Navbar userName={userName} setUserName={setUserName} /> */}
-      <DrawerData userName={userName} setUserName={setUserName} />}
+      <DrawerData
+        userName={userName}
+        setUserName={setUserName}
+        data={storeData}
+      />
       {loggedin && !awaitingAnswers && (
         <CreateQuestion
           className="createQuestionContainer"
@@ -171,7 +175,6 @@ function Survey({ classes }) {
         surveyResults={surveyResults}
         surveyTitle={surveyTitle}
       />
-      {loggedin && <PastResults data={storeData} />}
     </div>
   );
 }

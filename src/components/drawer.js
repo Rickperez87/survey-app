@@ -78,7 +78,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function DrawerData({ userName, setUserName }) {
+export default function DrawerData({ userName, setUserName, data }) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -134,26 +134,24 @@ export default function DrawerData({ userName, setUserName }) {
         </div>
         <Divider />
         <List>
-          {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
+          {data.map((data) => {
+            return (
+              <div key={data.surveyId}>
+                <h3>{`${data.surveyQuestion.surveyTitle} :: ${data.surveyId}`}</h3>
+                {data.surveyResults.map((survey, idx) => {
+                  return (
+                    <ListItem button key={idx}>
+                      <ListItemText
+                        primary={`${survey.userName}: ${survey.ans}`}
+                      />
+                    </ListItem>
+                  );
+                })}
+              </div>
+            );
+          })}
         </List>
         <Divider />
-        <List>
-          {["All mail", "Trash", "Spam"].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
       </Drawer>
     </div>
   );
