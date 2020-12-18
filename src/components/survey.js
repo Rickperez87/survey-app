@@ -1,14 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
 import useToggle from "../custom-react-hooks/useToggle";
-import Navbar from "../components/navbar";
 import CreateQuestion from "./createQuestion";
 import DisplaySurveyQuestions from "./displaySurveyQuestions";
 import SurveyResponses from "./surveyResponses";
 import SurveyResults from "./surveyResults";
-import PastResults from "./pastResults";
 import DrawerData from "./drawer";
 import socket from "../server/socketConfig";
-import Card from "@material-ui/core/Card";
 import AwaitingAnswers from "./awaitingAnswers";
 import bg from "../styles/bg.svg";
 
@@ -137,7 +134,6 @@ function Survey({ classes }) {
   } = data;
   return (
     <div className={classes.root}>
-      {/* <Navbar userName={userName} setUserName={setUserName} /> */}
       <DrawerData
         userName={userName}
         setUserName={setUserName}
@@ -159,15 +155,13 @@ function Survey({ classes }) {
           handleCancelSurvey={cancelSurvey}
         />
       )}
-      <Card>
-        {questionDisplayed && !loggedin && (
-          <DisplaySurveyQuestions
-            formData={surveyFormData.current}
-            handleSubmitAnswer={submitAnswer}
-            userName={userName}
-          />
-        )}
-      </Card>
+      {questionDisplayed && !loggedin && (
+        <DisplaySurveyQuestions
+          formData={surveyFormData.current}
+          handleSubmitAnswer={submitAnswer}
+          userName={userName}
+        />
+      )}
       {data.surveyResults.length ? <SurveyResponses data={data} /> : ""}
       <SurveyResults
         onClose={handleCloseResults}

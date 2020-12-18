@@ -7,6 +7,7 @@ import "../styles/navbar.css";
 const styles = {
   root: {
     background: "rgba(63,81,181,.87)",
+    width: "100%",
     display: "flex",
     alignItems: "center",
     color: "#FAFAFA",
@@ -15,11 +16,12 @@ const styles = {
     fontWeight: "400",
     fontSize: "16px",
     fontFamily: "Poppins, sans-serif",
+    justifyContent: "center",
   },
+  userName: { justifySelf: "flex-end" },
 };
 
 function Navbar({ classes, userName, setUserName }) {
-  //add logic to check if user name is unique and to pool together all user names from clients
   const [openNameInput, setNameInputOpen] = useState(true);
   const [openLogin, setLoginOpen] = useState(false);
 
@@ -47,7 +49,7 @@ function Navbar({ classes, userName, setUserName }) {
       </div>
       <Login open={openLogin} onClose={handleLoginClose} />
       <div
-        className="userName"
+        className={classes.userName}
         onClick={handleInputNameOpen}
       >{`Name: ${userName}`}</div>
 

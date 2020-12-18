@@ -15,7 +15,7 @@ const styles = {
     maxWidth: "500px",
     display: "flex",
     flexDirection: "column",
-    margin: "0 auto",
+    margin: "5rem auto",
     padding: "3rem",
   },
 };
@@ -25,7 +25,6 @@ function DisplaySurveyQuestions({
   userName,
   classes,
 }) {
-  //fix this -> Pattern for passing radio through function to parent
   const [radio, updateRadio, clearRadio] = useFormState("");
 
   const questionValues = Object.values(formData);
@@ -39,7 +38,6 @@ function DisplaySurveyQuestions({
 
   return (
     <Card className={classes.root}>
-      {/* refactor this to use radio and update radio in this component and extract through a passed down func */}
       <FormControl component="fieldset">
         <FormLabel component="legend">{title}</FormLabel>
         <RadioGroup

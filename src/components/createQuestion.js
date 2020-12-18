@@ -10,7 +10,7 @@ const styles = {
     maxWidth: "500px",
     display: "flex",
     flexDirection: "column",
-    margin: "0 auto",
+    margin: "5rem auto",
     padding: "3rem",
 
     "& Input": {

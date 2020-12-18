@@ -6,17 +6,13 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import List from "@material-ui/core/List";
-import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
 import Navbar from "./navbar";
 
 const drawerWidth = 240;
@@ -76,6 +72,12 @@ const useStyles = makeStyles((theme) => ({
     }),
     marginLeft: 0,
   },
+  dataRoot: {
+    display: "flex",
+    flexDirection: " column",
+    alignItems: "center",
+    justifyContent: "space-evenly",
+  },
 }));
 
 export default function DrawerData({ userName, setUserName, data }) {
@@ -133,25 +135,27 @@ export default function DrawerData({ userName, setUserName, data }) {
           </IconButton>
         </div>
         <Divider />
-        <List>
+        <List className={classes.dataRoot}>
           {data.map((data) => {
             return (
               <div key={data.surveyId}>
-                <h3>{`${data.surveyQuestion.surveyTitle} :: ${data.surveyId}`}</h3>
+                <h3
+                  className={classes.surveyTitle}
+                >{`${data.surveyQuestion.surveyTitle}`}</h3>
                 {data.surveyResults.map((survey, idx) => {
                   return (
-                    <ListItem button key={idx}>
+                    <ListItem className={classes.dataItems} button key={idx}>
                       <ListItemText
                         primary={`${survey.userName}: ${survey.ans}`}
                       />
                     </ListItem>
                   );
                 })}
+                <Divider />
               </div>
             );
           })}
         </List>
-        <Divider />
       </Drawer>
     </div>
   );
