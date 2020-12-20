@@ -37,6 +37,7 @@ function Survey({ classes }) {
   let dataSchema = {
     surveyId: "",
     surveyQuestion: { surveyTitle: "", q1: "", q2: "", q3: "", q4: "" },
+    surveyFRQuestion: { response: "" },
     surveyResults: [],
   };
 
