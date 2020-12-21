@@ -29,7 +29,7 @@ function SurveyResponses({ classes, data }) {
         {surveyResults.map((response, idx) => {
           return (
             <ListItem className={classes.listItem} key={idx}>
-              {`${response.userName} answered -       ${response.ans}`}
+              {`${response.userName} answered -       ${response.response}`}
             </ListItem>
           );
         })}

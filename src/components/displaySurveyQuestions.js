@@ -30,7 +30,7 @@ function DisplaySurveyQuestions({
   const questionValues = Object.values(formData);
   const title = questionValues.shift();
   const handleSubmit = function () {
-    let responseData = { userName, ans: radio };
+    let responseData = { userName, response: radio };
     socket.emit("submitAnswer", responseData);
     handleSubmitAnswer();
     clearRadio();

@@ -146,7 +146,7 @@ export default function DrawerData({ userName, setUserName, data }) {
                   return (
                     <ListItem className={classes.dataItems} button key={idx}>
                       <ListItemText
-                        primary={`${survey.userName}: ${survey.ans}`}
+                        primary={`${survey.userName}: ${survey.response}`}
                       />
                     </ListItem>
                   );

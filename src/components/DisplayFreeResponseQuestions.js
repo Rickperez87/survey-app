@@ -1,9 +1,5 @@
 import React from "react";
 import socket from "../server/socketConfig";
-import useFormState from "../custom-react-hooks/form-state-hook";
-import Radio from "@material-ui/core/Radio";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 import Button from "@material-ui/core/Button";
@@ -22,20 +18,32 @@ const styles = {
   },
 };
 function DisplayFRQuestions({
-  formData,
+  data,
+  setData,
   handleSubmitAnswer,
   userName,
   classes,
 }) {
-  const [radio, updateRadio, clearRadio] = useFormState("");
-
-  const questionValues = Object.values(formData);
+  const {
+    surveyFRQuestion: { response },
+    surveyQuestion,
+  } = data;
+  const questionValues = Object.values(surveyQuestion);
   const title = questionValues.shift();
   const handleSubmit = function () {
-    let responseData = { userName, ans: radio };
+    let responseData = { userName, response };
+    console.log(response);
     socket.emit("submitAnswer", responseData);
     handleSubmitAnswer();
-    clearRadio();
+  };
+  const updateForm = (e) => {
+    setData({
+      ...data,
+      surveyFRQuestion: {
+        ...data.surveyFRQuestion,
+        [e.target.name]: e.target.value,
+      },
+    });
   };
 
   return (
@@ -45,8 +53,8 @@ function DisplayFRQuestions({
         <Input
           placeholder="Response"
           inputProps={{ "aria-label": "description" }}
-          name="Response"
-          value={surveyTitle}
+          name="response"
+          value={response}
           onChange={updateForm}
         />
       </FormControl>

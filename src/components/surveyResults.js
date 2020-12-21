@@ -15,7 +15,7 @@ function SurveyResults({ surveyResults, surveyTitle, open, onClose }) {
             return (
               <ListItem
                 key={idx}
-              >{`${result.userName} answered - ${result.ans}`}</ListItem>
+              >{`${result.userName} answered - ${result.response}`}</ListItem>
             );
           })}
         </List>

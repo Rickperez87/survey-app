@@ -27,7 +27,6 @@ io.on("connect", function (socket) {
   };
 
   socket.on("sentQuestion", function (data) {
-    console.log("data", data);
     socket.broadcast.emit("surveyQuestion", data);
   });
 
@@ -67,6 +66,7 @@ io.on("connect", function (socket) {
   }
 
   socket.on("submitAnswer", function (ans) {
+    console.log("ans", ans);
     io.to(adminId).emit("receiveAnswer", ans);
   });
 

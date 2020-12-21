@@ -5,6 +5,7 @@ import DisplaySurveyQuestions from "./displaySurveyQuestions";
 import SurveyResponses from "./surveyResponses";
 import SurveyResults from "./surveyResults";
 import DrawerData from "./drawer";
+import DisplayFRQuestions from "./DisplayFreeResponseQuestions";
 import socket from "../server/socketConfig";
 import AwaitingAnswers from "./awaitingAnswers";
 import bg from "../styles/bg.svg";
@@ -159,6 +160,15 @@ function Survey({ classes }) {
       {questionDisplayed && !loggedin && (
         <DisplaySurveyQuestions
           formData={surveyFormData.current}
+          handleSubmitAnswer={submitAnswer}
+          userName={userName}
+        />
+      )}
+      {questionDisplayed && !loggedin && (
+        <DisplayFRQuestions
+          // formData={surveyFormData.current}
+          data={data}
+          setData={setData}
           handleSubmitAnswer={submitAnswer}
           userName={userName}
         />
