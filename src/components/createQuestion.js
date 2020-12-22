@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import Switch from "./switch";
 import socket from "../server/socketConfig";
 import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
@@ -33,6 +34,11 @@ const CreateQuestion = function ({
     }));
   }, []);
 
+  let surveyType;
+  const getSurveyType = (surveyTyp) => {
+    surveyType = surveyTyp;
+  };
+
   const updateForm = (e) => {
     setData({
       ...data,
@@ -50,9 +56,13 @@ const CreateQuestion = function ({
     toggleAwaitingAnswers();
   };
 
+  console.log(surveyType);
+
   const { surveyTitle, q1, q2, q3, q4 } = data;
   return (
     <Card id="createQuestion" className={classes.root}>
+      <Switch getSurvey={getSurveyType} />
+
       <Input
         placeholder="Survey Question"
         inputProps={{ "aria-label": "description" }}

@@ -28,6 +28,7 @@ function Survey({ classes }) {
   const [awaitingAnswers, toggleAwaitingAnswers] = useToggle(false);
   const [userName, setUserName] = useState(`user ${uniqueId()}`);
   const [questionDisplayed, toggleQuestionDisplayed] = useToggle(false);
+  const [surveyType, setSurveyType] = useState("multiChoice");
   const [ResultsDialogOpen, toggleResultsDialog] = useToggle(false);
   const [surveyResults, setSurveyResults] = useState(false);
   const [storeData, setStoreData] = useState([]);
@@ -157,14 +158,14 @@ function Survey({ classes }) {
           handleCancelSurvey={cancelSurvey}
         />
       )}
-      {questionDisplayed && !loggedin && (
+      {questionDisplayed && !loggedin && surveyType === "multiChoice" && (
         <DisplaySurveyQuestions
           formData={surveyFormData.current}
           handleSubmitAnswer={submitAnswer}
           userName={userName}
         />
       )}
-      {questionDisplayed && !loggedin && (
+      {questionDisplayed && !loggedin && surveyType === "freeResponse" && (
         <DisplayFRQuestions
           // formData={surveyFormData.current}
           data={data}
