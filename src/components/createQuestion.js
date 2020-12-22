@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
-import Switch from "./switch";
 import socket from "../server/socketConfig";
 import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import { withStyles } from "@material-ui/core/styles";
-import { Checkbox } from "@material-ui/core";
 
 const styles = {
   root: {
@@ -20,7 +18,7 @@ const styles = {
     },
   },
 };
-let surveyType;
+let surveyTyp;
 const CreateQuestion = function ({
   toggleAwaitingAnswers,
   classes,
@@ -36,7 +34,8 @@ const CreateQuestion = function ({
   }, []);
 
   const getSurveyType = (e) => {
-    surveyType = e.target.checked ? "freeResponse" : "multiChoice";
+    surveyTyp = e.target.checked ? "freeResponse" : "multiChoice";
+    console.log(e.target.checked, surveyTyp);
   };
   const updateForm = (e) => {
     setData({
@@ -50,8 +49,8 @@ const CreateQuestion = function ({
 
   const handleSubmit = function (e) {
     e.preventDefault();
-    console.log(surveyType);
-    socket.emit("sentQuestion", { data, surveyType });
+    console.log(surveyTyp);
+    socket.emit("sentQuestion", { data, surveyTyp });
     toggleAwaitingAnswers();
   };
 

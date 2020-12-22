@@ -26,9 +26,9 @@ io.on("connect", function (socket) {
     return id === adminId;
   };
 
-  socket.on("sentQuestion", function ({ data, surveyType }) {
-    console.log(surveyType);
-    socket.broadcast.emit("surveyQuestion", { data, surveyType });
+  socket.on("sentQuestion", function ({ data, surveyTyp }) {
+    console.log(surveyTyp);
+    socket.broadcast.emit("surveyQuestion", { data, surveyTyp });
   });
 
   socket.on("login", function (input) {

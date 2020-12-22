@@ -28,6 +28,7 @@ function Survey({ classes }) {
   const [awaitingAnswers, toggleAwaitingAnswers] = useToggle(false);
   const [userName, setUserName] = useState(`user ${uniqueId()}`);
   const [questionDisplayed, toggleQuestionDisplayed] = useToggle(false);
+  const [surveyType, setSurveyType] = useState(false);
   const [ResultsDialogOpen, toggleResultsDialog] = useToggle(false);
   const [surveyResults, setSurveyResults] = useState(false);
   const [storeData, setStoreData] = useState([]);
@@ -43,7 +44,6 @@ function Survey({ classes }) {
   };
 
   const [data, setData] = useState(dataSchema);
-  let surveyType;
   let surveyFormData = useRef("");
 
   useEffect(() => {
@@ -64,7 +64,7 @@ function Survey({ classes }) {
   }, []);
 
   useEffect(() => {
-    socket.on("surveyQuestion", function ({ data, surveyType }) {
+    socket.on("surveyQuestion", function ({ data, surveyTyp }) {
       const { surveyQuestion } = data;
       surveyFormData.current = surveyQuestion;
       setData({
@@ -72,9 +72,10 @@ function Survey({ classes }) {
         surveyQuestion: { ...data.surveyQuestion },
         surveyResults: [...data.surveyResults],
       });
-      surveyType = surveyType;
+      setSurveyType(surveyTyp);
       toggleQuestionDisplayed();
       toggleAwaitingAnswers();
+      console.log(surveyTyp);
     });
     return () => socket.off("surveyQuestion");
   }, []);
@@ -158,22 +159,27 @@ function Survey({ classes }) {
           handleCancelSurvey={cancelSurvey}
         />
       )}
-      {questionDisplayed && !loggedin && surveyType === "multiChoice" && (
-        <DisplaySurveyQuestions
-          formData={surveyFormData.current}
-          handleSubmitAnswer={submitAnswer}
-          userName={userName}
-        />
-      )}
-      {questionDisplayed && !loggedin && surveyType === "freeResponse" && (
-        <DisplayFRQuestions
-          // formData={surveyFormData.current}
-          data={data}
-          setData={setData}
-          handleSubmitAnswer={submitAnswer}
-          userName={userName}
-        />
-      )}
+
+      {console.log("163", surveyType)}
+      {surveyType === "multiChoice"
+        ? questionDisplayed &&
+          !loggedin && (
+            <DisplaySurveyQuestions
+              formData={surveyFormData.current}
+              handleSubmitAnswer={submitAnswer}
+              userName={userName}
+            />
+          )
+        : questionDisplayed &&
+          !loggedin && (
+            <DisplayFRQuestions
+              // formData={surveyFormData.current}
+              data={data}
+              setData={setData}
+              handleSubmitAnswer={submitAnswer}
+              userName={userName}
+            />
+          )}
       {data.surveyResults.length ? <SurveyResponses data={data} /> : ""}
       <SurveyResults
         onClose={handleCloseResults}
