@@ -28,7 +28,6 @@ function Survey({ classes }) {
   const [awaitingAnswers, toggleAwaitingAnswers] = useToggle(false);
   const [userName, setUserName] = useState(`user ${uniqueId()}`);
   const [questionDisplayed, toggleQuestionDisplayed] = useToggle(false);
-  const [surveyType, setSurveyType] = useState("multiChoice");
   const [ResultsDialogOpen, toggleResultsDialog] = useToggle(false);
   const [surveyResults, setSurveyResults] = useState(false);
   const [storeData, setStoreData] = useState([]);
@@ -44,7 +43,7 @@ function Survey({ classes }) {
   };
 
   const [data, setData] = useState(dataSchema);
-
+  let surveyType;
   let surveyFormData = useRef("");
 
   useEffect(() => {
@@ -65,7 +64,7 @@ function Survey({ classes }) {
   }, []);
 
   useEffect(() => {
-    socket.on("surveyQuestion", function (data) {
+    socket.on("surveyQuestion", function ({ data, surveyType }) {
       const { surveyQuestion } = data;
       surveyFormData.current = surveyQuestion;
       setData({
@@ -73,6 +72,7 @@ function Survey({ classes }) {
         surveyQuestion: { ...data.surveyQuestion },
         surveyResults: [...data.surveyResults],
       });
+      surveyType = surveyType;
       toggleQuestionDisplayed();
       toggleAwaitingAnswers();
     });

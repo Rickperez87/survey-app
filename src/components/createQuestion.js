@@ -5,6 +5,7 @@ import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import { withStyles } from "@material-ui/core/styles";
+import { Checkbox } from "@material-ui/core";
 
 const styles = {
   root: {
@@ -19,7 +20,7 @@ const styles = {
     },
   },
 };
-
+let surveyType;
 const CreateQuestion = function ({
   toggleAwaitingAnswers,
   classes,
@@ -34,11 +35,9 @@ const CreateQuestion = function ({
     }));
   }, []);
 
-  let surveyType;
-  const getSurveyType = (surveyTyp) => {
-    surveyType = surveyTyp;
+  const getSurveyType = (e) => {
+    surveyType = e.target.checked ? "freeResponse" : "multiChoice";
   };
-
   const updateForm = (e) => {
     setData({
       ...data,
@@ -51,17 +50,23 @@ const CreateQuestion = function ({
 
   const handleSubmit = function (e) {
     e.preventDefault();
-
-    socket.emit("sentQuestion", data);
+    console.log(surveyType);
+    socket.emit("sentQuestion", { data, surveyType });
     toggleAwaitingAnswers();
   };
-
-  console.log(surveyType);
 
   const { surveyTitle, q1, q2, q3, q4 } = data;
   return (
     <Card id="createQuestion" className={classes.root}>
-      <Switch getSurvey={getSurveyType} />
+      <div>
+        <input
+          type="checkbox"
+          onClick={(e) => getSurveyType(e)}
+          id="freeResponse"
+          name="freeResponse"
+        />
+        <label for="freeResponse">Free Response</label>
+      </div>
 
       <Input
         placeholder="Survey Question"
