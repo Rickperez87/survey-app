@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Login from "./login";
 import UserNameDialog from "./userNameDialog";
 import { withStyles } from "@material-ui/core/styles";
+import userIcon from "../styles/userNameIcon.svg";
 import "../styles/navbar.css";
 
 const styles = {
@@ -17,6 +18,9 @@ const styles = {
     fontSize: "16px",
     fontFamily: "Poppins, sans-serif",
     justifyContent: "center",
+  },
+  userIcon: {
+    marginRight: "1rem",
   },
   userName: { justifySelf: "flex-end" },
 };
@@ -48,6 +52,7 @@ function Navbar({ classes, userName, setUserName }) {
         Host Login
       </div>
       <Login open={openLogin} onClose={handleLoginClose} />
+      <img className={classes.userIcon} src={userIcon}></img>
       <div
         className={classes.userName}
         onClick={handleInputNameOpen}

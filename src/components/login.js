@@ -10,8 +10,26 @@ import DialogActions from "@material-ui/core/DialogActions";
 import "../styles/survey.css";
 
 const styles = {
-  root: {},
-  loginContainer: {},
+  root: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
+  },
+  input: {
+    alignText: "center",
+  },
+  button: {
+    width: "98%",
+  },
+  title: {
+    textAlign: "center",
+  },
+  paper: {
+    minWidth: "20vw",
+    maxWidth: "40vw",
+  },
 };
 
 function Login({ classes, onClose, open }) {
@@ -31,38 +49,40 @@ function Login({ classes, onClose, open }) {
 
   return (
     <Dialog
-      fullWidth
-      maxWidth="sm"
       onClose={onClose}
       aria-labelledby="login-dialog-title"
       open={open}
-      className={classes.loginContainer}
+      classes={{ paper: classes.paper }}
     >
-      <DialogTitle id="login-dialog-title">Host Login</DialogTitle>
-      <DialogContent>
+      <DialogTitle className={classes.title} id="login-dialog-title">
+        Host Login
+      </DialogTitle>
+      <DialogContent className={classes.root}>
         <TextField
+          fullWidth={true}
           autoFocus
           margin="dense"
-          fullWidth
           placeholder="User"
           name="userName"
           value={input.userName}
           onChange={updateInput}
+          classes={{ input: classes.input }}
         />
         <br />
         <TextField
+          fullWidth={true}
           margin="dense"
-          fullWidth
           placeholder="Password"
           name="password"
           value={input.password}
           onChange={updateInput}
+          classes={{ input: classes.input }}
         />
       </DialogContent>
       <DialogActions>
         <Button
+          className={classes.button}
           color="primary"
-          className={classes.root}
           variant="contained"
           onClick={handleLogin}
         >
