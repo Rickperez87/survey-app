@@ -4,11 +4,32 @@ import Dialog from "@material-ui/core/Dialog";
 import useFormState from "../custom-react-hooks/form-state-hook";
 import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
+import { withStyles } from "@material-ui/core/styles";
 import DialogContent from "@material-ui/core/DialogContent";
 import TextField from "@material-ui/core/TextField";
 import socket from "../server/socketConfig";
 
-export default function UserNameDialog({ setUserName, onClose, open }) {
+const styles = {
+  root: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
+  },
+  input: {
+    alignText: "center",
+  },
+  button: {
+    width: "98%",
+  },
+  paper: {
+    minWidth: "20vw",
+    maxWidth: "40vw",
+  },
+};
+
+function UserNameDialog({ classes, setUserName, onClose, open }) {
   const [inputName, changeInputName, clearInputName] = useFormState("");
   const [userNameIsUnique, setUserNameIsUnique] = useState(true);
 
@@ -37,6 +58,7 @@ export default function UserNameDialog({ setUserName, onClose, open }) {
         onClose={onClose}
         aria-labelledby="Enter-Name-dialog-title"
         open={open}
+        classes={{ paper: classes.paper }}
       >
         <form
           onSubmit={(e) => {
@@ -44,7 +66,7 @@ export default function UserNameDialog({ setUserName, onClose, open }) {
             handleSubmit();
           }}
         >
-          <DialogContent>
+          <DialogContent className={classes.root}>
             <DialogContentText id="Enter-Name-dialog-title">
               Enter Your Name
             </DialogContentText>
@@ -64,7 +86,12 @@ export default function UserNameDialog({ setUserName, onClose, open }) {
             )}
           </DialogContent>
           <DialogActions>
-            <Button type="submit" variant="contained" color="primary">
+            <Button
+              className={classes.button}
+              type="submit"
+              variant="contained"
+              color="primary"
+            >
               Submit
             </Button>
           </DialogActions>
@@ -73,3 +100,4 @@ export default function UserNameDialog({ setUserName, onClose, open }) {
     </div>
   );
 }
+export default withStyles(styles)(UserNameDialog);

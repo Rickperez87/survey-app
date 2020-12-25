@@ -48,7 +48,6 @@ io.on("connect", function (socket) {
   };
 
   socket.on("newUser", function (userName) {
-    console.log(isUniqueUser(userList, userName), userList);
     if (isUniqueUser(userList, userName)) {
       let user = addUser(userName);
       io.to(user.id).emit("uniqueUserName");
@@ -67,7 +66,6 @@ io.on("connect", function (socket) {
   }
 
   socket.on("submitAnswer", function (ans) {
-    console.log("ans", ans);
     io.to(adminId).emit("receiveAnswer", ans);
   });
 

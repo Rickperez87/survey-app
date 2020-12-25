@@ -18,7 +18,7 @@ const styles = {
     },
   },
 };
-let surveyTyp;
+let surveyTyp = "multiChoice";
 const CreateQuestion = function ({
   toggleAwaitingAnswers,
   classes,
