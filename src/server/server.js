@@ -57,9 +57,11 @@ io.on("connect", function (socket) {
   });
 
   function isUniqueUser(userList, userName) {
+    userName = userName.slice().toLowerCase();
     return !userList.has(userName);
   }
   function addUser(userName) {
+    userName = userName.slice().toLowerCase();
     let user = { userName, id: socket.client.id };
     userList.add(user.userName);
     return user;

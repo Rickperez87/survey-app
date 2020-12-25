@@ -33,14 +33,22 @@ function UserNameDialog({ classes, setUserName, onClose, open }) {
   const [inputName, changeInputName, clearInputName] = useFormState("");
   const [userNameIsUnique, setUserNameIsUnique] = useState(true);
 
+  const capitalizeFirstLetter = (str) => {
+    if (str.length > 3) {
+      str = str.slice().toLowerCase();
+      return str[0].toUpperCase() + str.slice(1);
+    }
+  };
+
   const handleSubmit = () => {
     socket.emit("newUser", inputName);
   };
 
   useEffect(() => {
+    console.log(inputName);
     socket.on("uniqueUserName", function () {
       setUserNameIsUnique(true);
-      setUserName(inputName);
+      setUserName(capitalizeFirstLetter(inputName));
       clearInputName();
       onClose();
     });
