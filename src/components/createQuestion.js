@@ -17,6 +17,9 @@ const styles = {
       padding: "1rem 0",
     },
   },
+  submitButton: {
+    marginTop: "1rem",
+  },
 };
 let surveyTyp = "multiChoice";
 const CreateQuestion = function ({
@@ -102,7 +105,12 @@ const CreateQuestion = function ({
         value={q4}
         onChange={updateForm}
       />
-      <Button variant="contained" color="primary" onClick={handleSubmit}>
+      <Button
+        className={classes.submitButton}
+        variant="contained"
+        color="primary"
+        onClick={handleSubmit}
+      >
         Submit
       </Button>
     </Card>
