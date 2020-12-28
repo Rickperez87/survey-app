@@ -75,7 +75,6 @@ function Survey({ classes }) {
       setSurveyType(surveyTyp);
       toggleQuestionDisplayed();
       toggleAwaitingAnswers();
-      console.log(surveyTyp);
     });
     return () => socket.off("surveyQuestion");
   }, []);
@@ -129,9 +128,7 @@ function Survey({ classes }) {
     toggleResultsDialog();
     toggleAwaitingAnswers();
   };
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+  useEffect(() => {}, [data]);
 
   const {
     surveyQuestion: { surveyTitle },
@@ -160,7 +157,6 @@ function Survey({ classes }) {
         />
       )}
 
-      {console.log("163", surveyType)}
       {surveyType === "multiChoice"
         ? questionDisplayed &&
           !loggedin && (

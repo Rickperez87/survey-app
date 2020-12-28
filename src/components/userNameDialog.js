@@ -34,10 +34,10 @@ function UserNameDialog({ classes, setUserName, onClose, open }) {
   const [userNameIsUnique, setUserNameIsUnique] = useState(true);
 
   const capitalizeFirstLetter = (str) => {
-    if (str.length > 3) {
+    if (str.length > 2) {
       str = str.slice().toLowerCase();
       return str[0].toUpperCase() + str.slice(1);
-    }
+    } else return str;
   };
 
   const handleSubmit = () => {
@@ -45,10 +45,10 @@ function UserNameDialog({ classes, setUserName, onClose, open }) {
   };
 
   useEffect(() => {
-    console.log(inputName);
+    console.log(capitalizeFirstLetter(inputName));
     socket.on("uniqueUserName", function () {
       setUserNameIsUnique(true);
-      setUserName(capitalizeFirstLetter(inputName));
+      setUserName(() => capitalizeFirstLetter(inputName));
       clearInputName();
       onClose();
     });
