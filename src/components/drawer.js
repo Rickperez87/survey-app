@@ -15,11 +15,12 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Navbar from "./navbar";
 
-const drawerWidth = 240;
+const drawerWidth = 400;
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
+    width: "100%",
   },
   appBar: {
     transition: theme.transitions.create(["margin", "width"], {
@@ -77,6 +78,21 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: " column",
     alignItems: "center",
     justifyContent: "space-evenly",
+  },
+  surveyBox: {
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  surveyTitle: {
+    textTransform: "capitalize",
+  },
+  dataItems: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
 }));
 
@@ -138,24 +154,26 @@ export default function DrawerData({ userName, setUserName, data }) {
         <List className={classes.dataRoot}>
           {data.map((data) => {
             return (
-              <div key={data.surveyId}>
+              <div className={classes.surveyBox}>
                 <h3
+                  key={data.surveyId}
                   className={classes.surveyTitle}
                 >{`${data.surveyQuestion.surveyTitle}`}</h3>
                 {data.surveyResults.map((survey, idx) => {
                   return (
-                    <ListItem className={classes.dataItems} button key={idx}>
+                    <ListItem key={idx}>
                       <ListItemText
+                        className={classes.dataItems}
                         primary={`${survey.userName}: ${survey.response}`}
                       />
                     </ListItem>
                   );
                 })}
-                <Divider />
               </div>
             );
           })}
         </List>
+        <Divider />
       </Drawer>
     </div>
   );
