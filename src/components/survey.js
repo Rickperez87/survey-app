@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import useToggle from "../custom-react-hooks/useToggle";
 import CreateQuestion from "./createQuestion";
+import CreateSurvey from "./createSurvey";
 import DisplaySurveyQuestions from "./displaySurveyQuestions";
 import SurveyResponses from "./surveyResponses";
 import SurveyResults from "./surveyResults";
@@ -38,6 +39,7 @@ function Survey({ classes }) {
 
   let dataSchema = {
     surveyId: "",
+    createQuestion: [],
     surveyQuestion: { surveyTitle: "", q1: "", q2: "", q3: "", q4: "" },
     surveyFRQuestion: { response: "" },
     surveyResults: [],
@@ -140,8 +142,17 @@ function Survey({ classes }) {
         setUserName={setUserName}
         data={storeData}
       />
-      {loggedin && !awaitingAnswers && (
+      {/* {loggedin && !awaitingAnswers && (
         <CreateQuestion
+          className="createQuestionContainer"
+          toggleAwaitingAnswers={toggleAwaitingAnswers}
+          data={data}
+          setData={setData}
+          uId={uniqueId}
+        />
+      )} */}
+      {loggedin && !awaitingAnswers && (
+        <CreateSurvey
           className="createQuestionContainer"
           toggleAwaitingAnswers={toggleAwaitingAnswers}
           data={data}

@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import socket from "../server/socketConfig";
 import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
 import Card from "@material-ui/core/Card";
 import CreateQuestionForm from "./CreateQuestionForm";
 import { withStyles } from "@material-ui/core/styles";
@@ -51,13 +53,20 @@ const CreateQuestion = function ({
     });
   };
 
+  const addQuestion = (question) => {
+    setData({
+      ...data,
+      createQuestion: [...data.createQuestion, question],
+    });
+  };
+
   const handleSubmit = function (e) {
     e.preventDefault();
     socket.emit("sentQuestion", { data, surveyTyp });
     toggleAwaitingAnswers();
   };
 
-  const { surveyTitle, q1, q2, q3, q4 } = data;
+  const { createQuestion, surveyTitle } = data;
   return (
     <Card id="createQuestion" className={classes.root}>
       <div>
@@ -77,34 +86,18 @@ const CreateQuestion = function ({
         value={surveyTitle}
         onChange={updateForm}
       />
-      <Input
-        name="q1"
-        placeholder="Multi-Choice Answer-1"
-        inputProps={{ "aria-label": "Add Multi-Choice Answer1" }}
-        value={q1}
-        onChange={updateForm}
-      />
-      <Input
-        name="q2"
-        inputProps={{ "aria-label": "Add Multi-Choice Answer2" }}
-        placeholder="Multi-Choice Answer-2"
-        value={q2}
-        onChange={updateForm}
-      />
-      <Input
-        name="q3"
-        inputProps={{ "aria-label": "Add Multi-Choice Answer3" }}
-        placeholder="Multi-Choice Answer-3"
-        value={q3}
-        onChange={updateForm}
-      />
-      <Input
-        name="q4"
-        inputProps={{ "aria-label": "Add Multi-Choice Answer4" }}
-        placeholder="Multi-Choice Answer-4"
-        value={q4}
-        onChange={updateForm}
-      />
+      <CreateQuestionForm addQuestion={addQuestion} />
+
+      <List className={classes.list}>
+        {createQuestion.map((question, idx) => {
+          return (
+            <ListItem className={classes.listItem} key={idx}>
+              {`${question}`}
+            </ListItem>
+          );
+        })}
+      </List>
+
       <Button
         className={classes.submitButton}
         inputProps={{ "aria-label": "Submit Survey Form Button" }}

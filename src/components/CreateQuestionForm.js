@@ -1,20 +1,29 @@
 import React from "react";
 import useFormState from "../custom-react-hooks/form-state-hook";
 import TextField from "@material-ui/core/TextField";
+import Paper from "@material-ui/core/Paper";
 
-function CreateQuestionForm(props) {
+function CreateQuestionForm({ addQuestion }) {
   const [val, setVal, clear] = useFormState("");
 
   return (
-    <div>
-      <TextField
-        name="input"
-        placeholder="Add New Multi-Choice Response"
-        inputProps={{ "aria-label": "Add Multi-Choice Response " }}
-        value={val}
-        onChange={setVal}
-      />
-    </div>
+    <Paper>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          addQuestion(val);
+          clear();
+        }}
+      >
+        <TextField
+          name="input"
+          placeholder="Add New Multi-Choice Response"
+          inputProps={{ "aria-label": "Add Multi-Choice Response " }}
+          value={val}
+          onChange={setVal}
+        />
+      </form>
+    </Paper>
   );
 }
 
