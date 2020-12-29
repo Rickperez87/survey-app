@@ -3,6 +3,7 @@ import socket from "../server/socketConfig";
 import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
+import Divider from "@material-ui/core/Divider";
 import QuestionItem from "./questionItem";
 import Card from "@material-ui/core/Card";
 import { v4 as uuid } from "uuid";
@@ -22,6 +23,9 @@ const styles = {
     },
   },
   submitButton: {
+    marginTop: "1rem",
+  },
+  list: {
     marginTop: "1rem",
   },
 };
@@ -69,6 +73,17 @@ const CreateQuestion = function ({
       createQuestion: updatedQuestionList,
     });
   };
+  const editQuestion = (questionId, newQuestion) => {
+    const updatedQuestionList = data.createQuestion.map((question) =>
+      question.id === questionId
+        ? { ...question, question: newQuestion }
+        : question
+    );
+    setData({
+      ...data,
+      createQuestion: updatedQuestionList,
+    });
+  };
 
   const handleSubmit = function (e) {
     e.preventDefault();
@@ -90,8 +105,8 @@ const CreateQuestion = function ({
       </div>
 
       <Input
-        placeholder="Survey Question"
-        inputProps={{ "aria-label": "Survey Title" }}
+        placeholder="Add Your Question"
+        inputProps={{ "aria-label": "Survey Question" }}
         name="surveyTitle"
         value={surveyTitle}
         onChange={updateForm}
@@ -101,13 +116,17 @@ const CreateQuestion = function ({
       <List className={classes.list}>
         {createQuestion.map((question) => {
           return (
-            <QuestionItem
-              className={classes.listItem}
-              question={question.question}
-              id={question.id}
-              removeQuestion={removeQuestion}
-              key={question.id}
-            ></QuestionItem>
+            <>
+              <Divider />
+              <QuestionItem
+                className={classes.listItem}
+                question={question.question}
+                id={question.id}
+                removeQuestion={removeQuestion}
+                editQuestion={editQuestion}
+                key={question.id}
+              ></QuestionItem>
+            </>
           );
         })}
       </List>

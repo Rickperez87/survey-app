@@ -17,7 +17,7 @@ function CreateQuestionForm({ addQuestion }) {
       >
         <TextField
           name="input"
-          placeholder="Add New Multi-Choice Response"
+          placeholder="Add Multi-Choice Response"
           inputProps={{ "aria-label": "Add Multi-Choice Response " }}
           value={val}
           onChange={setVal}
