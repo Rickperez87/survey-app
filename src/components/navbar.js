@@ -3,7 +3,6 @@ import Login from "./login";
 import UserNameDialog from "./userNameDialog";
 import { withStyles } from "@material-ui/core/styles";
 import userIcon from "../styles/userNameIcon.svg";
-import "../styles/navbar.css";
 
 const styles = {
   root: {
@@ -11,18 +10,33 @@ const styles = {
     width: "100%",
     display: "flex",
     alignItems: "center",
+    justifyContent: "space-between",
     color: "#FAFAFA",
     height: "2rem",
     padding: "1rem",
     fontWeight: "400",
     fontSize: "16px",
     fontFamily: "Poppins, sans-serif",
-    justifyContent: "center",
   },
   userIcon: {
     marginRight: "1rem",
   },
-  userName: { justifySelf: "flex-end" },
+  userName: {
+    justifySelf: "flex-end",
+    "&:hover": {
+      cursor: "pointer",
+    },
+  },
+  logo: {
+    fontWeight: "bold",
+
+    "@media (max-width:575px)": { display: "none" },
+  },
+  loginContainer: {
+    "&:hover": {
+      cursor: "pointer",
+    },
+  },
 };
 
 function Navbar({ classes, userName, setUserName }) {
@@ -47,22 +61,22 @@ function Navbar({ classes, userName, setUserName }) {
 
   return (
     <div className={classes.root}>
-      <div className="logo">Survey~RP</div>
-      <div className="login-container" onClick={handleLoginOpen}>
+      <div className={classes.logo}>Survey~RP</div>
+      <div className={classes.loginContainer} onClick={handleLoginOpen}>
         Host Login
       </div>
       <Login open={openLogin} onClose={handleLoginClose} />
-      <img className={classes.userIcon} src={userIcon}></img>
-      <div
-        className={classes.userName}
-        onClick={handleInputNameOpen}
-      >{`Name: ${userName}`}</div>
-
-      <UserNameDialog
-        setUserName={setUserName}
-        open={openNameInput}
-        onClose={handleInputNameClose}
-      />
+      <div>
+        <div className={classes.userName} onClick={handleInputNameOpen}>
+          <img className={classes.userIcon} src={userIcon}></img>
+          {`Name: ${userName}`}
+        </div>
+        <UserNameDialog
+          setUserName={setUserName}
+          open={openNameInput}
+          onClose={handleInputNameClose}
+        />
+      </div>
     </div>
   );
 }

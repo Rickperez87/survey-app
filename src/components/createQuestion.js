@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import socket from "../server/socketConfig";
 import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
@@ -52,7 +52,6 @@ const CreateQuestion = function ({
 
   const handleSubmit = function (e) {
     e.preventDefault();
-    console.log(surveyTyp);
     socket.emit("sentQuestion", { data, surveyTyp });
     toggleAwaitingAnswers();
   };

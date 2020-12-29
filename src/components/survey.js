@@ -26,7 +26,7 @@ const styles = {
 function Survey({ classes }) {
   const [loggedin, toggleLoggedin] = useToggle(false);
   const [awaitingAnswers, toggleAwaitingAnswers] = useToggle(false);
-  const [userName, setUserName] = useState(`user ${uniqueId()}`);
+  const [userName, setUserName] = useState(`User ${uniqueId()}`);
   const [questionDisplayed, toggleQuestionDisplayed] = useToggle(false);
   const [surveyType, setSurveyType] = useState(false);
   const [ResultsDialogOpen, toggleResultsDialog] = useToggle(false);
