@@ -3,7 +3,7 @@ import socket from "../server/socketConfig";
 import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
+import QuestionItem from "./questionItem";
 import Card from "@material-ui/core/Card";
 import CreateQuestionForm from "./CreateQuestionForm";
 import { withStyles } from "@material-ui/core/styles";
@@ -91,9 +91,11 @@ const CreateQuestion = function ({
       <List className={classes.list}>
         {createQuestion.map((question, idx) => {
           return (
-            <ListItem className={classes.listItem} key={idx}>
-              {`${question}`}
-            </ListItem>
+            <QuestionItem
+              className={classes.listItem}
+              question={question}
+              key={idx}
+            ></QuestionItem>
           );
         })}
       </List>
