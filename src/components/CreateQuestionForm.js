@@ -21,6 +21,7 @@ function CreateQuestionForm({ addQuestion }) {
           inputProps={{ "aria-label": "Add Multi-Choice Response " }}
           value={val}
           onChange={setVal}
+          fullWidth={true}
         />
       </form>
     </Paper>

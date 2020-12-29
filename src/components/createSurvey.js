@@ -5,6 +5,7 @@ import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
 import QuestionItem from "./questionItem";
 import Card from "@material-ui/core/Card";
+import { v4 as uuid } from "uuid";
 import CreateQuestionForm from "./CreateQuestionForm";
 import { withStyles } from "@material-ui/core/styles";
 
@@ -56,7 +57,16 @@ const CreateQuestion = function ({
   const addQuestion = (question) => {
     setData({
       ...data,
-      createQuestion: [...data.createQuestion, question],
+      createQuestion: [...data.createQuestion, { id: uuid(), question }],
+    });
+  };
+  const removeQuestion = (id) => {
+    const updatedQuestionList = data.createQuestion.filter(
+      (question) => question.id !== id
+    );
+    setData({
+      ...data,
+      createQuestion: updatedQuestionList,
     });
   };
 
@@ -89,12 +99,14 @@ const CreateQuestion = function ({
       <CreateQuestionForm addQuestion={addQuestion} />
 
       <List className={classes.list}>
-        {createQuestion.map((question, idx) => {
+        {createQuestion.map((question) => {
           return (
             <QuestionItem
               className={classes.listItem}
-              question={question}
-              key={idx}
+              question={question.question}
+              id={question.id}
+              removeQuestion={removeQuestion}
+              key={question.id}
             ></QuestionItem>
           );
         })}
