@@ -71,41 +71,42 @@ const CreateQuestion = function ({
 
       <Input
         placeholder="Survey Question"
-        inputProps={{ "aria-label": "description" }}
+        inputProps={{ "aria-label": "Survey Title" }}
         name="surveyTitle"
         value={surveyTitle}
         onChange={updateForm}
       />
       <Input
         name="q1"
-        placeholder="Answer-1"
-        inputProps={{ "aria-label": "description" }}
+        placeholder="Multi-Choice Answer-1"
+        inputProps={{ "aria-label": "Add Multi-Choice Answer1" }}
         value={q1}
         onChange={updateForm}
       />
       <Input
         name="q2"
-        inputProps={{ "aria-label": "description" }}
-        placeholder="Answer-2"
+        inputProps={{ "aria-label": "Add Multi-Choice Answer2" }}
+        placeholder="Multi-Choice Answer-2"
         value={q2}
         onChange={updateForm}
       />
       <Input
         name="q3"
-        inputProps={{ "aria-label": "description" }}
-        placeholder="Answer-3"
+        inputProps={{ "aria-label": "Add Multi-Choice Answer3" }}
+        placeholder="Multi-Choice Answer-3"
         value={q3}
         onChange={updateForm}
       />
       <Input
         name="q4"
-        inputProps={{ "aria-label": "description" }}
-        placeholder="Answer-4"
+        inputProps={{ "aria-label": "Add Multi-Choice Answer4" }}
+        placeholder="Multi-Choice Answer-4"
         value={q4}
         onChange={updateForm}
       />
       <Button
         className={classes.submitButton}
+        inputProps={{ "aria-label": "Submit Survey Form Button" }}
         variant="contained"
         color="primary"
         onClick={handleSubmit}
