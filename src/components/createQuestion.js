@@ -3,6 +3,7 @@ import socket from "../server/socketConfig";
 import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
+import CreateQuestionForm from "./CreateQuestionForm";
 import { withStyles } from "@material-ui/core/styles";
 
 const styles = {
@@ -113,6 +114,7 @@ const CreateQuestion = function ({
       >
         Submit
       </Button>
+      <CreateQuestionForm />
     </Card>
   );
 };
