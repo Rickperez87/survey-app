@@ -71,6 +71,7 @@ function Survey({ classes }) {
       surveyFormData.current = surveyQuestion;
       setData({
         ...data,
+        createQuestion: [...data.createQuestion],
         surveyQuestion: { ...data.surveyQuestion },
         surveyResults: [...data.surveyResults],
       });
@@ -167,7 +168,7 @@ function Survey({ classes }) {
           handleCancelSurvey={cancelSurvey}
         />
       )}
-
+      {/* new implementation for display survey using data from createQuestion array and display. In the future implement survey type with a toggle */}
       {surveyType === "multiChoice"
         ? questionDisplayed &&
           !loggedin && (

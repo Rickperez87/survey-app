@@ -48,15 +48,17 @@ const CreateQuestion = function ({
     surveyTyp = e.target.checked ? "freeResponse" : "multiChoice";
     console.log(e.target.checked, surveyTyp);
   };
-  const updateForm = (e) => {
-    setData({
-      ...data,
-      surveyQuestion: {
-        ...data.surveyQuestion,
-        [e.target.name]: e.target.value,
-      },
-    });
-  };
+
+  //old implementation hide for now
+  // const updateForm = (e) => {
+  //   setData({
+  //     ...data,
+  //     surveyQuestion: {
+  //       ...data.surveyQuestion,
+  //       [e.target.name]: e.target.value,
+  //     },
+  //   });
+  // };
 
   const addQuestion = (question) => {
     setData({
@@ -85,6 +87,13 @@ const CreateQuestion = function ({
     });
   };
 
+  //old way of just 4 questions hard coded
+  // const handleSubmit = function (e) {
+  //   e.preventDefault();
+  //   socket.emit("sentQuestion", { data, surveyTyp });
+  //   toggleAwaitingAnswers();
+  // };
+  //New Implementation work in progress..
   const handleSubmit = function (e) {
     e.preventDefault();
     socket.emit("sentQuestion", { data, surveyTyp });
@@ -109,7 +118,7 @@ const CreateQuestion = function ({
         inputProps={{ "aria-label": "Survey Question" }}
         name="surveyTitle"
         value={surveyTitle}
-        onChange={updateForm}
+        // onChange={updateForm}
       />
       <CreateQuestionForm addQuestion={addQuestion} />
 
