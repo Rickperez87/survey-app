@@ -147,7 +147,7 @@ const CreateQuestion = function ({
         color="primary"
         onClick={handleSubmit}
       >
-        Submit
+        Display Survey
       </Button>
     </Card>
   );
