@@ -60,10 +60,13 @@ const CreateQuestion = function ({
   //   });
   // };
 
-  const addQuestion = (question) => {
+  const addQuestion = (question, isFreeResponse) => {
     setData({
       ...data,
-      createQuestion: [...data.createQuestion, { id: uuid(), question }],
+      createQuestion: [
+        ...data.createQuestion,
+        { id: uuid(), question, isFreeResponse },
+      ],
     });
   };
   const removeQuestion = (id) => {

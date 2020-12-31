@@ -11,3 +11,8 @@ Add input for user name. Use user name to show who answered waht in survey resul
 Add ability to choose survey to be radio or open response text
 
 Allow dialogs to be submitted with enter keystroke.- completed 12/3
+
+12/31 - restrucred how i create survey and display. I can add and delete and update survey questions now.
+in the question item object add a boolean to hold if it's free response quesiton. THis will then display with an input for user to answer. By default it will be a radio multiple chioce response.
+
+I also need redo the display to use the new array of added question items.
