@@ -22,32 +22,33 @@ const useStyles = makeStyles((theme) => ({
 function CreateQuestionForm({ addQuestion }) {
   const classes = useStyles();
   const [val, setVal, clear] = useFormState("");
-  const [isFreeResponse, toggle] = useToggle(false);
+  const [isFreeResponse, toggleisFreeResponse] = useToggle(false);
+  const [checked, toggleCheck] = useToggle(false);
 
-  const clearToggle = () => {
-    if (isFreeResponse) toggle();
-  };
-  const uncheck = (i) => {
-    let ref = "check";
-    refs[ref].checked = !refs[ref].checked;
-  };
   const handleSubmit = (e) => {
     e.preventDefault();
     addQuestion(val, isFreeResponse);
     clear();
     clearToggle();
-    unCheck(i);
   };
-
+  const clearToggle = () => {
+    if (checked) toggleCheck();
+    if (isFreeResponse) toggleisFreeResponse();
+  };
   return (
     // <Paper>
     <form
       className={classes.form}
       onSubmit={(e) => {
         handleSubmit(e);
+        clearToggle();
       }}
     >
-      <Checkbox onChange={toggle} ref={"check"}>
+      <Checkbox
+        onChange={toggleisFreeResponse}
+        checked={checked}
+        onClick={toggleCheck}
+      >
         Free Response{" "}
       </Checkbox>
       <InputBase
