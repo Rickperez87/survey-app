@@ -1,12 +1,10 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import useToggle from "../custom-react-hooks/useToggle";
-import CreateQuestion from "./createQuestion";
 import CreateSurvey from "./createSurvey";
 import DisplaySurveyQuestions from "./displaySurveyQuestions";
 import SurveyResponses from "./surveyResponses";
 import SurveyResults from "./surveyResults";
 import DrawerData from "./drawer";
-import DisplayFRQuestions from "./DisplayFreeResponseQuestions";
 import socket from "../server/socketConfig";
 import AwaitingAnswers from "./awaitingAnswers";
 import bg from "../styles/bg.svg";
@@ -29,7 +27,6 @@ function Survey({ classes }) {
   const [awaitingAnswers, toggleAwaitingAnswers] = useToggle(false);
   const [userName, setUserName] = useState(`User ${uniqueId()}`);
   const [questionDisplayed, toggleQuestionDisplayed] = useToggle(false);
-  const [surveyType, setSurveyType] = useState(false);
   const [ResultsDialogOpen, toggleResultsDialog] = useToggle(false);
   const [surveyResults, setSurveyResults] = useState(false);
   const [storeData, setStoreData] = useState([]);
@@ -40,13 +37,12 @@ function Survey({ classes }) {
   let dataSchema = {
     surveyId: "",
     createQuestion: [],
-    surveyQuestion: { surveyTitle: "", q1: "", q2: "", q3: "", q4: "" },
-    surveyFRQuestion: { response: "" },
+    surveyQuestion: { surveyTitle: "" },
+    surveyFRQuestion: {},
     surveyResults: [],
   };
 
   const [data, setData] = useState(dataSchema);
-  let surveyFormData = useRef("");
 
   useEffect(() => {
     socket.on("connect", function () {
@@ -138,15 +134,7 @@ function Survey({ classes }) {
         setUserName={setUserName}
         data={storeData}
       />
-      {/* {loggedin && !awaitingAnswers && (
-        <CreateQuestion
-          className="createQuestionContainer"
-          toggleAwaitingAnswers={toggleAwaitingAnswers}
-          data={data}
-          setData={setData}
-          uId={uniqueId}
-        />
-      )} */}
+
       {loggedin && !awaitingAnswers && (
         <CreateSurvey
           className="createQuestionContainer"
@@ -165,7 +153,8 @@ function Survey({ classes }) {
       )}
       {questionDisplayed && !loggedin && (
         <DisplaySurveyQuestions
-          formData={data}
+          data={data}
+          setData={setData}
           handleSubmitAnswer={submitAnswer}
           userName={userName}
         />

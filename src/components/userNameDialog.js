@@ -6,7 +6,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
 import { withStyles } from "@material-ui/core/styles";
 import DialogContent from "@material-ui/core/DialogContent";
-import TextField from "@material-ui/core/TextField";
+import Input from "@material-ui/core/Input";
 import socket from "../server/socketConfig";
 
 const styles = {
@@ -78,13 +78,14 @@ function UserNameDialog({ classes, setUserName, onClose, open }) {
             <DialogContentText id="Enter-Name-dialog-title">
               Enter Your Name
             </DialogContentText>
-            <TextField
+            <Input
               autoFocus
               fullWidth
               margin="dense"
               placeholder="Name"
               inputProps={{ "aria-label": "description" }}
               value={inputName}
+              disableUnderline
               onChange={changeInputName}
             />
             {!userNameIsUnique && (

@@ -8,6 +8,8 @@ import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
+import Input from "@material-ui/core/Input";
+import Divider from "@material-ui/core/Divider";
 import { withStyles } from "@material-ui/core/styles";
 
 const styles = {
@@ -20,15 +22,28 @@ const styles = {
   },
 };
 function DisplaySurveyQuestions({
-  formData,
+  data,
+  setData,
   handleSubmitAnswer,
   userName,
   classes,
 }) {
   const [radio, updateRadio, clearRadio] = useFormState("");
 
-  const title = formData.surveyQuestion.surveyTitle;
-  const questionsArray = formData.createQuestion;
+  const title = data.surveyQuestion.surveyTitle;
+  const questionsArray = data.createQuestion;
+  const { surveyFRQuestion } = data;
+
+  const updateForm = (e) => {
+    setData({
+      ...data,
+      surveyFRQuestion: {
+        ...data.surveyFRQuestion,
+        [e.target.name]: e.target.value,
+      },
+    });
+  };
+
   const handleSubmit = function () {
     let responseData = { userName, response: radio };
     socket.emit("submitAnswer", responseData);
@@ -55,6 +70,27 @@ function DisplaySurveyQuestions({
                   control={<Radio />}
                   label={arr.question}
                 />
+              );
+            } else {
+              return (
+                <>
+                  <FormControlLabel
+                    key={arr.id}
+                    value={arr.question}
+                    control={<Radio />}
+                    label={arr.question}
+                  />
+                  <Input
+                    placeholder="Response"
+                    inputProps={{ "aria-label": "description" }}
+                    name={`response ${arr.id}`}
+                    value={surveyFRQuestion[`response ${arr.id}`]}
+                    disabled={!(radio === arr.question)}
+                    onChange={updateForm}
+                    disableUnderline
+                  />
+                  <Divider />
+                </>
               );
             }
           })}

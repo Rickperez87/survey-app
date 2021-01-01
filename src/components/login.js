@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import socket from "../server/socketConfig";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Dialog from "@material-ui/core/Dialog";
-import TextField from "@material-ui/core/TextField";
+import Input from "@material-ui/core/Input";
 import DialogContent from "@material-ui/core/DialogContent";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
@@ -58,7 +58,7 @@ function Login({ classes, onClose, open }) {
         Host Login
       </DialogTitle>
       <DialogContent className={classes.root}>
-        <TextField
+        <Input
           fullWidth={true}
           autoFocus
           margin="dense"
@@ -67,9 +67,10 @@ function Login({ classes, onClose, open }) {
           value={input.userName}
           onChange={updateInput}
           classes={{ input: classes.input }}
+          disableUnderline
         />
         <br />
-        <TextField
+        <Input
           fullWidth={true}
           margin="dense"
           placeholder="Password"
@@ -77,6 +78,7 @@ function Login({ classes, onClose, open }) {
           value={input.password}
           onChange={updateInput}
           classes={{ input: classes.input }}
+          disableUnderline
         />
       </DialogContent>
       <DialogActions>
