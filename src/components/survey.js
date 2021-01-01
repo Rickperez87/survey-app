@@ -66,16 +66,11 @@ function Survey({ classes }) {
   }, []);
 
   useEffect(() => {
-    socket.on("surveyQuestion", function ({ data, surveyTyp }) {
-      const { surveyQuestion } = data;
-      surveyFormData.current = surveyQuestion;
+    socket.on("surveyQuestion", function (incomingData) {
       setData({
         ...data,
-        createQuestion: [...data.createQuestion],
-        surveyQuestion: { ...data.surveyQuestion },
-        surveyResults: [...data.surveyResults],
+        ...incomingData,
       });
-      setSurveyType(surveyTyp);
       toggleQuestionDisplayed();
       toggleAwaitingAnswers();
     });
@@ -168,26 +163,13 @@ function Survey({ classes }) {
           handleCancelSurvey={cancelSurvey}
         />
       )}
-      {/* new implementation for display survey using data from createQuestion array and display. In the future implement survey type with a toggle */}
-      {surveyType === "multiChoice"
-        ? questionDisplayed &&
-          !loggedin && (
-            <DisplaySurveyQuestions
-              formData={surveyFormData.current}
-              handleSubmitAnswer={submitAnswer}
-              userName={userName}
-            />
-          )
-        : questionDisplayed &&
-          !loggedin && (
-            <DisplayFRQuestions
-              // formData={surveyFormData.current}
-              data={data}
-              setData={setData}
-              handleSubmitAnswer={submitAnswer}
-              userName={userName}
-            />
-          )}
+      {questionDisplayed && !loggedin && (
+        <DisplaySurveyQuestions
+          formData={data}
+          handleSubmitAnswer={submitAnswer}
+          userName={userName}
+        />
+      )}
       {data.surveyResults.length ? <SurveyResponses data={data} /> : ""}
       <SurveyResults
         onClose={handleCloseResults}

@@ -29,7 +29,6 @@ const styles = {
     marginTop: "1rem",
   },
 };
-let surveyTyp = "multiChoice";
 const CreateQuestion = function ({
   toggleAwaitingAnswers,
   classes,
@@ -44,21 +43,16 @@ const CreateQuestion = function ({
     }));
   }, []);
 
-  const getSurveyType = (e) => {
-    surveyTyp = e.target.checked ? "freeResponse" : "multiChoice";
-    console.log(e.target.checked, surveyTyp);
-  };
-
   //old implementation hide for now
-  // const updateForm = (e) => {
-  //   setData({
-  //     ...data,
-  //     surveyQuestion: {
-  //       ...data.surveyQuestion,
-  //       [e.target.name]: e.target.value,
-  //     },
-  //   });
-  // };
+  const updateForm = (e) => {
+    setData({
+      ...data,
+      surveyQuestion: {
+        ...data.surveyQuestion,
+        [e.target.name]: e.target.value,
+      },
+    });
+  };
 
   const addQuestion = (question, isFreeResponse) => {
     setData({
@@ -99,7 +93,7 @@ const CreateQuestion = function ({
   //New Implementation work in progress..
   const handleSubmit = function (e) {
     e.preventDefault();
-    socket.emit("sentQuestion", { data, surveyTyp });
+    socket.emit("sentQuestion", data);
     toggleAwaitingAnswers();
   };
 
@@ -107,12 +101,7 @@ const CreateQuestion = function ({
   return (
     <Card id="createQuestion" className={classes.root}>
       <div>
-        <input
-          type="checkbox"
-          onClick={(e) => getSurveyType(e)}
-          id="freeResponse"
-          name="freeResponse"
-        />
+        <input type="checkbox" id="freeResponse" name="freeResponse" />
         <label for="freeResponse">Free Response</label>
       </div>
 
@@ -121,7 +110,7 @@ const CreateQuestion = function ({
         inputProps={{ "aria-label": "Survey Question" }}
         name="surveyTitle"
         value={surveyTitle}
-        // onChange={updateForm}
+        onChange={updateForm}
       />
       <CreateQuestionForm addQuestion={addQuestion} />
 

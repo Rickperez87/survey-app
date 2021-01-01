@@ -27,8 +27,8 @@ function DisplaySurveyQuestions({
 }) {
   const [radio, updateRadio, clearRadio] = useFormState("");
 
-  const questionValues = Object.values(formData);
-  const title = questionValues.shift();
+  const title = formData.surveyQuestion.surveyTitle;
+  const questionsArray = formData.createQuestion;
   const handleSubmit = function () {
     let responseData = { userName, response: radio };
     socket.emit("submitAnswer", responseData);
@@ -46,18 +46,21 @@ function DisplaySurveyQuestions({
           value={radio}
           onChange={updateRadio}
         >
-          {questionValues.map(function (q, index) {
-            return (
-              <FormControlLabel
-                key={index}
-                value={q}
-                control={<Radio />}
-                label={q}
-              />
-            );
+          {questionsArray.map(function (arr) {
+            if (!arr.isFreeResponse) {
+              return (
+                <FormControlLabel
+                  key={arr.id}
+                  value={arr.question}
+                  control={<Radio />}
+                  label={arr.question}
+                />
+              );
+            }
           })}
         </RadioGroup>
       </FormControl>
+
       <Button variant="contained" color="primary" onClick={handleSubmit}>
         Submit
       </Button>
