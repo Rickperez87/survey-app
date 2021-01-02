@@ -1,11 +1,15 @@
 import React, { useEffect } from "react";
+import useToggle from "../custom-react-hooks/useToggle";
 import socket from "../server/socketConfig";
 import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
 import Divider from "@material-ui/core/Divider";
 import QuestionItem from "./questionItem";
 import Card from "@material-ui/core/Card";
+import IconButton from "@material-ui/core/IconButton";
+import AddIcon from "@material-ui/icons/Add";
 import { v4 as uuid } from "uuid";
 import CreateQuestionForm from "./CreateQuestionForm";
 import { withStyles } from "@material-ui/core/styles";
@@ -22,11 +26,36 @@ const styles = {
       padding: "1rem 0",
     },
   },
-  submitButton: {
-    marginTop: "1rem",
-  },
+  submitButton: {},
   list: {
     marginTop: "1rem",
+  },
+  surveyQuestion: {
+    padding: "1rem ",
+    fontSize: "15px",
+    color: "dark-grey",
+  },
+  surveyResponse: {
+    color: "grey",
+  },
+  plusButton: {
+    color: "#3f51b5",
+    border: "none",
+    fontSize: "25px",
+    background: "none",
+    borderRadius: "100%",
+    "&:hover": {
+      color: "#fff",
+      background: "#3f51b5",
+    },
+    response: {
+      "&:hover>*": {
+        "&surveyResponse": { color: "orange" },
+        "&plusButton": {
+          color: "red",
+        },
+      },
+    },
   },
 };
 const CreateQuestion = function ({
@@ -36,6 +65,8 @@ const CreateQuestion = function ({
   data,
   uId,
 }) {
+  const [showForm, toggleShowForm] = useToggle(false);
+
   useEffect(() => {
     setData((data) => ({
       ...data,
@@ -43,7 +74,6 @@ const CreateQuestion = function ({
     }));
   }, []);
 
-  //old implementation hide for now
   const updateForm = (e) => {
     setData({
       ...data,
@@ -84,13 +114,6 @@ const CreateQuestion = function ({
     });
   };
 
-  //old way of just 4 questions hard coded
-  // const handleSubmit = function (e) {
-  //   e.preventDefault();
-  //   socket.emit("sentQuestion", { data, surveyTyp });
-  //   toggleAwaitingAnswers();
-  // };
-  //New Implementation work in progress..
   const handleSubmit = function (e) {
     e.preventDefault();
     socket.emit("sentQuestion", data);
@@ -100,20 +123,15 @@ const CreateQuestion = function ({
   const { createQuestion, surveyTitle } = data;
   return (
     <Card id="createQuestion" className={classes.root}>
-      <div>
-        <input type="checkbox" id="freeResponse" name="freeResponse" />
-        <label for="freeResponse">Free Response</label>
-      </div>
-
       <Input
-        placeholder="Add Your Question"
+        className={classes.surveyQuestion}
+        placeholder="Question: e.g. What's your Favorite Ice Cream Flavor?"
         inputProps={{ "aria-label": "Survey Question" }}
         name="surveyTitle"
         value={surveyTitle}
         onChange={updateForm}
+        disableUnderline
       />
-      <CreateQuestionForm addQuestion={addQuestion} />
-
       <List className={classes.list}>
         {createQuestion.map((question) => {
           return (
@@ -131,6 +149,25 @@ const CreateQuestion = function ({
           );
         })}
       </List>
+      {showForm ? (
+        <CreateQuestionForm
+          addQuestion={addQuestion}
+          toggleShowForm={toggleShowForm}
+        />
+      ) : (
+        <List className={classes.response}>
+          <ListItem className={classes.surveyResponse}>
+            Add Survey Response
+            <button
+              className={classes.plusButton}
+              aria-label="Open Create Survey Response Form"
+              onClick={toggleShowForm}
+            >
+              +
+            </button>
+          </ListItem>
+        </List>
+      )}
 
       <Button
         className={classes.submitButton}

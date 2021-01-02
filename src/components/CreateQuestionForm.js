@@ -2,24 +2,39 @@ import React from "react";
 import useFormState from "../custom-react-hooks/form-state-hook";
 import useToggle from "../custom-react-hooks/useToggle";
 import { makeStyles } from "@material-ui/core/styles";
-import InputBase from "@material-ui/core/InputBase";
-import IconButton from "@material-ui/core/IconButton";
-import AddIcon from "@material-ui/icons/Add";
+import Input from "@material-ui/core/Input";
+import Button from "@material-ui/core/Button";
 import Checkbox from "@material-ui/core/Checkbox";
-import Paper from "@material-ui/core/Paper";
 
 const useStyles = makeStyles((theme) => ({
   input: {
     marginLeft: theme.spacing(1),
     flex: 1,
   },
-  iconButton: {
-    padding: 10,
+  form: {
+    width: "100%",
+    border: "1px solid",
+    borderRadius: "5px",
   },
-  form: { width: "100%", display: "flex", justifyContent: "space-between" },
+  button: {
+    display: "inline-block",
+  },
+  cancel: {
+    cursor: "pointer",
+    padding: "1rem",
+    "&:hover": {
+      textDecoration: "underline",
+    },
+  },
+  buttonGroup: {
+    display: "flex",
+    alignItem: "center",
+    justifyContent: "flex-start",
+    margin: "1rem 0",
+  },
 }));
 
-function CreateQuestionForm({ addQuestion }) {
+function CreateQuestionForm({ addQuestion, toggleShowForm }) {
   const classes = useStyles();
   const [val, setVal, clear] = useFormState("");
   const [isFreeResponse, toggleisFreeResponse] = useToggle(false);
@@ -36,38 +51,50 @@ function CreateQuestionForm({ addQuestion }) {
     if (isFreeResponse) toggleisFreeResponse();
   };
   return (
-    // <Paper>
-    <form
-      className={classes.form}
-      onSubmit={(e) => {
-        handleSubmit(e);
-        clearToggle();
-      }}
-    >
-      <Checkbox
-        onChange={toggleisFreeResponse}
-        checked={checked}
-        onClick={toggleCheck}
+    <>
+      <form
+        className={classes.form}
+        onSubmit={(e) => {
+          handleSubmit(e);
+          clearToggle();
+        }}
       >
-        Free Response{" "}
-      </Checkbox>
-      <InputBase
-        className={classes.input}
-        name="input"
-        placeholder="Add Multi-Choice Response"
-        inputProps={{ "aria-label": "Add Multi-Choice Response " }}
-        value={val}
-        onChange={setVal}
-      />
-      <IconButton
-        className={classes.iconButton}
-        type="submit"
-        onClick={(e) => handleSubmit(e)}
-      >
-        <AddIcon></AddIcon>
-      </IconButton>
-    </form>
-    // </Paper>
+        <Input
+          style={{ display: "block" }}
+          className={classes.input}
+          name="input"
+          placeholder="e.g. Vanilla"
+          inputProps={{ "aria-label": "Add Multi-Choice Response " }}
+          value={val}
+          onChange={setVal}
+          disableUnderline
+        />
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <Checkbox
+            style={{ display: "block" }}
+            onChange={toggleisFreeResponse}
+            checked={checked}
+            onClick={toggleCheck}
+            label="Free Response"
+          ></Checkbox>
+          Free Response
+        </div>
+      </form>
+      <div className={classes.buttonGroup}>
+        <Button
+          variant="contained"
+          color="primary"
+          className={classes.button}
+          type="submit"
+          onClick={(e) => handleSubmit(e)}
+        >
+          Add Response
+        </Button>
+        <span className={classes.cancel} onClick={toggleShowForm}>
+          Cancel
+        </span>
+      </div>
+    </>
   );
 }
 
