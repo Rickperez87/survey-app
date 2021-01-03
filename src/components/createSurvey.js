@@ -125,16 +125,22 @@ const CreateQuestion = function ({
   return (
     <Card id="createQuestion" className={classes.root}>
       {showTitle ? (
-        <Input
-          className={classes.surveyQuestion}
-          placeholder="e.g. What's your Favorite Ice Cream Flavor?"
-          inputProps={{ "aria-label": "Survey Question" }}
-          name="surveyTitle"
-          value={surveyTitle}
-          onChange={updateForm}
-          disableUnderline
-          autoFocus
-        />
+        <>
+          <Input
+            className={classes.surveyQuestion}
+            placeholder="e.g. What's your Favorite Ice Cream Flavor?"
+            inputProps={{ "aria-label": "Survey Question" }}
+            name="surveyTitle"
+            value={surveyTitle}
+            onChange={updateForm}
+            disableUnderline
+            autoFocus
+          />
+
+          <span className={classes.cancel} onClick={toggleShowTitle}>
+            Cancel
+          </span>
+        </>
       ) : (
         <List className={classes.response}>
           <ListItem className={classes.surveyResponse}>

@@ -95,8 +95,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
   },
   divider: {
-    height: "1px",
-    backgroundColor: "rgba(0, 0, 0, 0.12)",
+    width: "100%",
   },
 }));
 
@@ -175,12 +174,11 @@ export default function DrawerData({ userName, setUserName, data }) {
                     );
                   })}
                 </div>
-                <Divider className={classes.divider} />
+                <Divider key={data.surveyId} className={classes.divider} />
               </>
             );
           })}
         </List>
-        <Divider />
       </Drawer>
     </div>
   );
