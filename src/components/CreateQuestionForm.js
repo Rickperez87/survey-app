@@ -68,6 +68,7 @@ function CreateQuestionForm({ addQuestion, toggleShowForm }) {
           value={val}
           onChange={setVal}
           disableUnderline
+          autoFocus
         />
         <div style={{ display: "flex", alignItems: "center" }}>
           <Checkbox

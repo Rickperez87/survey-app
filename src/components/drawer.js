@@ -94,6 +94,10 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "center",
   },
+  divider: {
+    height: "1px",
+    backgroundColor: "rgba(0, 0, 0, 0.12)",
+  },
 }));
 
 export default function DrawerData({ userName, setUserName, data }) {
@@ -154,22 +158,25 @@ export default function DrawerData({ userName, setUserName, data }) {
         <List className={classes.dataRoot}>
           {data.map((data) => {
             return (
-              <div className={classes.surveyBox}>
-                <h3
-                  key={data.surveyId}
-                  className={classes.surveyTitle}
-                >{`${data.surveyQuestion.surveyTitle}`}</h3>
-                {data.surveyResults.map((survey, idx) => {
-                  return (
-                    <ListItem key={idx}>
-                      <ListItemText
-                        className={classes.dataItems}
-                        primary={`${survey.userName}: ${survey.response}`}
-                      />
-                    </ListItem>
-                  );
-                })}
-              </div>
+              <>
+                <div className={classes.surveyBox}>
+                  <h3
+                    key={data.surveyId}
+                    className={classes.surveyTitle}
+                  >{`${data.surveyQuestion.surveyTitle}`}</h3>
+                  {data.surveyResults.map((survey, idx) => {
+                    return (
+                      <ListItem key={idx}>
+                        <ListItemText
+                          className={classes.dataItems}
+                          primary={`${survey.userName}: ${survey.response}`}
+                        />
+                      </ListItem>
+                    );
+                  })}
+                </div>
+                <Divider className={classes.divider} />
+              </>
             );
           })}
         </List>

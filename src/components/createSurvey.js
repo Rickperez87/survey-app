@@ -66,6 +66,7 @@ const CreateQuestion = function ({
   uId,
 }) {
   const [showForm, toggleShowForm] = useToggle(false);
+  const [showTitle, toggleShowTitle] = useToggle(false);
 
   useEffect(() => {
     setData((data) => ({
@@ -123,15 +124,32 @@ const CreateQuestion = function ({
   const { createQuestion, surveyTitle } = data;
   return (
     <Card id="createQuestion" className={classes.root}>
-      <Input
-        className={classes.surveyQuestion}
-        placeholder="Question: e.g. What's your Favorite Ice Cream Flavor?"
-        inputProps={{ "aria-label": "Survey Question" }}
-        name="surveyTitle"
-        value={surveyTitle}
-        onChange={updateForm}
-        disableUnderline
-      />
+      {showTitle ? (
+        <Input
+          className={classes.surveyQuestion}
+          placeholder="e.g. What's your Favorite Ice Cream Flavor?"
+          inputProps={{ "aria-label": "Survey Question" }}
+          name="surveyTitle"
+          value={surveyTitle}
+          onChange={updateForm}
+          disableUnderline
+          autoFocus
+        />
+      ) : (
+        <List className={classes.response}>
+          <ListItem className={classes.surveyResponse}>
+            Add Survey Question
+            <button
+              className={classes.plusButton}
+              aria-label="Open Create Survey Question Input"
+              onClick={toggleShowTitle}
+            >
+              +
+            </button>
+          </ListItem>
+        </List>
+      )}
+
       <List className={classes.list}>
         {createQuestion.map((question) => {
           return (
