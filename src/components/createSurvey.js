@@ -8,8 +8,6 @@ import ListItem from "@material-ui/core/ListItem";
 import Divider from "@material-ui/core/Divider";
 import QuestionItem from "./questionItem";
 import Card from "@material-ui/core/Card";
-import IconButton from "@material-ui/core/IconButton";
-import AddIcon from "@material-ui/icons/Add";
 import { v4 as uuid } from "uuid";
 import CreateQuestionForm from "./CreateQuestionForm";
 import { withStyles } from "@material-ui/core/styles";
@@ -37,25 +35,31 @@ const styles = {
   },
   surveyResponse: {
     color: "grey",
-  },
-  plusButton: {
-    color: "#3f51b5",
-    border: "none",
-    fontSize: "25px",
-    background: "none",
-    borderRadius: "100%",
+    cursor: "pointer",
     "&:hover": {
-      color: "#fff",
-      background: "#3f51b5",
-    },
-    response: {
-      "&:hover>*": {
-        "&surveyResponse": { color: "orange" },
-        "&plusButton": {
-          color: "red",
-        },
+      color: "#3f51b5",
+      "&:hover $plusButton": {
+        color: "#fff",
+        background: "#3f51b5",
+      },
+      "&:hover $plusIcon": {
+        stroke: "#fff",
+        fill: "none",
       },
     },
+  },
+  plusIcon: {
+    fill: "none",
+    stroke: "#3f51b5",
+  },
+  plusButton: {
+    display: "flex",
+    alignItem: "center",
+    justifyContent: "center",
+    color: "#3f51b5",
+    border: "none",
+    borderRadius: "100%",
+    marginRight: "1rem",
   },
 };
 const CreateQuestion = function ({
@@ -67,6 +71,22 @@ const CreateQuestion = function ({
 }) {
   const [showForm, toggleShowForm] = useToggle(false);
   const [showTitle, toggleShowTitle] = useToggle(false);
+
+  const plusIcon = (
+    <svg
+      className={classes.plusIcon}
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 11 11"
+      width="11"
+      height="11"
+      overflow="visible"
+      stroke="black"
+      stroke-width="1"
+    >
+      <line x1="6" y1="0" x2="6" y2="11" />
+      <line x1="0" y1="6" x2="11" y2="6" />
+    </svg>
+  );
 
   useEffect(() => {
     setData((data) => ({
@@ -144,14 +164,14 @@ const CreateQuestion = function ({
       ) : (
         <List className={classes.response}>
           <ListItem className={classes.surveyResponse}>
-            Add Survey Question
-            <button
+            <span
               className={classes.plusButton}
               aria-label="Open Create Survey Question Input"
               onClick={toggleShowTitle}
             >
-              +
-            </button>
+              {plusIcon}
+            </span>
+            Add Survey Question
           </ListItem>
         </List>
       )}
@@ -181,14 +201,26 @@ const CreateQuestion = function ({
       ) : (
         <List className={classes.response}>
           <ListItem className={classes.surveyResponse}>
-            Add Survey Response
-            <button
+            <span
               className={classes.plusButton}
               aria-label="Open Create Survey Response Form"
               onClick={toggleShowForm}
             >
-              +
-            </button>
+              <svg
+                className={classes.plusIcon}
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 11 11"
+                width="11"
+                height="11"
+                overflow="visible"
+                stroke="black"
+                stroke-width="1"
+              >
+                <line x1="6" y1="0" x2="6" y2="11" />
+                <line x1="0" y1="6" x2="11" y2="6" />
+              </svg>
+            </span>
+            Add Survey Response
           </ListItem>
         </List>
       )}
