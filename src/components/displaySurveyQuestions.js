@@ -46,7 +46,7 @@ function DisplaySurveyQuestions({
 
   const handleSubmit = function () {
     let responseData;
-    if (surveyFRQuestion.length !== 0) {
+    if (Object.keys(surveyFRQuestion).length !== 0) {
       let input = Object.values(surveyFRQuestion)[0];
       responseData = { userName, response: `${radio}: ${input}` };
       console.log({ surveyFRQuestion, radio });
