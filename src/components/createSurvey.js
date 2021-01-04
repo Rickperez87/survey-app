@@ -54,11 +54,14 @@ const styles = {
   },
   plusButton: {
     display: "flex",
-    alignItem: "center",
+    alignItems: "center",
     justifyContent: "center",
+    height: "17px",
+    width: "17px",
     color: "#3f51b5",
     border: "none",
-    borderRadius: "100%",
+    verticalAlign: "7px",
+    borderRadius: "50%",
     marginRight: "1rem",
   },
 };
@@ -76,15 +79,15 @@ const CreateQuestion = function ({
     <svg
       className={classes.plusIcon}
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 11 11"
-      width="11"
-      height="11"
+      viewBox="0 0 13 13"
+      width="13"
+      height="13"
       overflow="visible"
       stroke="black"
       stroke-width="1"
     >
-      <line x1="6" y1="0" x2="6" y2="11" />
-      <line x1="0" y1="6" x2="11" y2="6" />
+      <line x1="7" y1="0" x2="7" y2="13" />
+      <line x1="0" y1="7" x2="13" y2="7" />
     </svg>
   );
 
@@ -163,11 +166,13 @@ const CreateQuestion = function ({
         </>
       ) : (
         <List className={classes.response}>
-          <ListItem className={classes.surveyResponse}>
+          <ListItem
+            className={classes.surveyResponse}
+            onClick={toggleShowTitle}
+          >
             <span
               className={classes.plusButton}
               aria-label="Open Create Survey Question Input"
-              onClick={toggleShowTitle}
             >
               {plusIcon}
             </span>
@@ -200,25 +205,12 @@ const CreateQuestion = function ({
         />
       ) : (
         <List className={classes.response}>
-          <ListItem className={classes.surveyResponse}>
+          <ListItem className={classes.surveyResponse} onClick={toggleShowForm}>
             <span
               className={classes.plusButton}
               aria-label="Open Create Survey Response Form"
-              onClick={toggleShowForm}
             >
-              <svg
-                className={classes.plusIcon}
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 11 11"
-                width="11"
-                height="11"
-                overflow="visible"
-                stroke="black"
-                stroke-width="1"
-              >
-                <line x1="6" y1="0" x2="6" y2="11" />
-                <line x1="0" y1="6" x2="11" y2="6" />
-              </svg>
+              {plusIcon}
             </span>
             Add Survey Response
           </ListItem>
