@@ -17,7 +17,7 @@ const styles = {
     maxWidth: "500px",
     display: "flex",
     flexDirection: "column",
-    margin: "5rem auto",
+    margin: "2rem auto",
     padding: "3rem",
 
     "& Input": {
@@ -28,11 +28,7 @@ const styles = {
   list: {
     marginTop: "1rem",
   },
-  surveyQuestion: {
-    padding: "1rem ",
-    fontSize: "15px",
-    color: "dark-grey",
-  },
+  surveyQuestion: {},
   surveyResponse: {
     color: "grey",
     cursor: "pointer",
@@ -63,6 +59,13 @@ const styles = {
     verticalAlign: "7px",
     borderRadius: "50%",
     marginRight: "1rem",
+  },
+  cancel: {
+    cursor: "pointer",
+    padding: "1rem",
+    "&:hover": {
+      textDecoration: "underline",
+    },
   },
 };
 const CreateQuestion = function ({
@@ -147,6 +150,7 @@ const CreateQuestion = function ({
   const { createQuestion, surveyTitle } = data;
   return (
     <Card id="createQuestion" className={classes.root}>
+      <h1>Create Survey</h1>
       {showTitle ? (
         <>
           <Input
@@ -167,6 +171,7 @@ const CreateQuestion = function ({
       ) : (
         <List className={classes.response}>
           <ListItem
+            disableGutters
             className={classes.surveyResponse}
             onClick={toggleShowTitle}
           >
@@ -181,7 +186,7 @@ const CreateQuestion = function ({
         </List>
       )}
 
-      <List className={classes.list}>
+      <List dense className={classes.list}>
         {createQuestion.map((question) => {
           return (
             <>
@@ -205,7 +210,11 @@ const CreateQuestion = function ({
         />
       ) : (
         <List className={classes.response}>
-          <ListItem className={classes.surveyResponse} onClick={toggleShowForm}>
+          <ListItem
+            disableGutters
+            className={classes.surveyResponse}
+            onClick={toggleShowForm}
+          >
             <span
               className={classes.plusButton}
               aria-label="Open Create Survey Response Form"
