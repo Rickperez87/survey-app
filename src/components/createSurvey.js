@@ -10,6 +10,7 @@ import Divider from "@material-ui/core/Divider";
 import QuestionItem from "./questionItem";
 import Card from "@material-ui/core/Card";
 import { v4 as uuid } from "uuid";
+import CreateTitleForm from "./createTitleForm";
 import CreateQuestionForm from "./CreateQuestionForm";
 import { withStyles } from "@material-ui/core/styles";
 
@@ -109,8 +110,11 @@ const CreateQuestion = function ({
     toggleAwaitingAnswers();
   };
 
-  const { createQuestion, surveyTitle } = data;
-
+  const {
+    createQuestion,
+    surveyQuestion: { surveyTitle },
+  } = data;
+  console.log(surveyTitle);
   return (
     <Card id="createQuestion" className={classes.root}>
       <h1>Create Survey</h1>
@@ -128,36 +132,12 @@ const CreateQuestion = function ({
       </List>
 
       {showTitle ? (
-        <>
-          <Input
-            className={classes.surveyQuestion}
-            placeholder="e.g. What's your Favorite Ice Cream Flavor?"
-            inputProps={{ "aria-label": "Survey Question" }}
-            name="surveyTitle"
-            value={surveyTitle}
-            onChange={updateForm}
-            disableUnderline
-            autoFocus
-          />
-          <Button
-            variant="contained"
-            color="primary"
-            className={classes.button}
-            type="submit"
-            onClick={toggleIsActive}
-          >
-            Add Response
-          </Button>
-          <span
-            className={classes.cancel}
-            onClick={() => {
-              toggleShowTitle();
-              toggleIsActive();
-            }}
-          >
-            Cancel
-          </span>
-        </>
+        <CreateTitleForm
+          toggleIsActive={toggleIsActive}
+          surveyTitle={surveyTitle}
+          updateForm={updateForm}
+          toggleShowForm={toggleShowTitle}
+        />
       ) : (
         <ShowForm
           toggleShowForm={toggleShowTitle}
@@ -183,6 +163,7 @@ const CreateQuestion = function ({
           );
         })}
       </List>
+
       {showForm ? (
         <CreateQuestionForm
           addQuestion={addQuestion}
