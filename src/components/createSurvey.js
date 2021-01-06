@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import ShowForm from "./showForm";
 import useToggle from "../custom-react-hooks/useToggle";
 import socket from "../server/socketConfig";
 import Input from "@material-ui/core/Input";
@@ -29,37 +30,7 @@ const styles = {
     marginTop: "1rem",
   },
   surveyQuestion: {},
-  surveyResponse: {
-    color: "grey",
-    cursor: "pointer",
-    "&:hover": {
-      color: "#3f51b5",
-      "&:hover $plusButton": {
-        color: "#fff",
-        background: "#3f51b5",
-      },
-      "&:hover $plusIcon": {
-        stroke: "#fff",
-        fill: "none",
-      },
-    },
-  },
-  plusIcon: {
-    fill: "none",
-    stroke: "#3f51b5",
-  },
-  plusButton: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    height: "17px",
-    width: "17px",
-    color: "#3f51b5",
-    border: "none",
-    verticalAlign: "7px",
-    borderRadius: "50%",
-    marginRight: "1rem",
-  },
+
   cancel: {
     cursor: "pointer",
     padding: "1rem",
@@ -84,21 +55,6 @@ const CreateQuestion = function ({
   const [showForm, toggleShowForm] = useToggle(false);
   const [showTitle, toggleShowTitle] = useToggle(false);
   const [isActive, toggleIsActive] = useToggle(false);
-  const plusIcon = (
-    <svg
-      className={classes.plusIcon}
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 13 13"
-      width="13"
-      height="13"
-      overflow="visible"
-      stroke="black"
-      strokeWidth="1"
-    >
-      <line x1="7" y1="0" x2="7" y2="13" />
-      <line x1="0" y1="7" x2="13" y2="7" />
-    </svg>
-  );
 
   useEffect(() => {
     setData((data) => ({
@@ -154,6 +110,7 @@ const CreateQuestion = function ({
   };
 
   const { createQuestion, surveyTitle } = data;
+
   return (
     <Card id="createQuestion" className={classes.root}>
       <h1>Create Survey</h1>
@@ -202,24 +159,14 @@ const CreateQuestion = function ({
           </span>
         </>
       ) : (
-        <List className={classes.response}>
-          <ListItem
-            disableGutters
-            className={classes.surveyResponse}
-            onClick={toggleShowTitle}
-          >
-            <span
-              className={classes.plusButton}
-              aria-label="Open Create Survey Question Input"
-            >
-              {plusIcon}
-            </span>
-            Add Survey Question
-          </ListItem>
-        </List>
+        <ShowForm
+          toggleShowForm={toggleShowTitle}
+          className={classes.response}
+          renderText={"Add Survey Question"}
+        ></ShowForm>
       )}
 
-      <List dense className={classes.list}>
+      <List className={classes.list}>
         {createQuestion.map((question) => {
           return (
             <>
@@ -242,21 +189,11 @@ const CreateQuestion = function ({
           toggleShowForm={toggleShowForm}
         />
       ) : (
-        <List className={classes.response}>
-          <ListItem
-            disableGutters
-            className={classes.surveyResponse}
-            onClick={toggleShowForm}
-          >
-            <span
-              className={classes.plusButton}
-              aria-label="Open Create Survey Response Form"
-            >
-              {plusIcon}
-            </span>
-            Add Survey Response
-          </ListItem>
-        </List>
+        <ShowForm
+          toggleShowForm={toggleShowForm}
+          className={classes.response}
+          renderText={"Add Survey Response"}
+        ></ShowForm>
       )}
 
       <Button
