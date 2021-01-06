@@ -67,6 +67,12 @@ const styles = {
       textDecoration: "underline",
     },
   },
+  none: {
+    display: "none",
+  },
+  isActive: {
+    display: "block",
+  },
 };
 const CreateQuestion = function ({
   toggleAwaitingAnswers,
@@ -77,7 +83,7 @@ const CreateQuestion = function ({
 }) {
   const [showForm, toggleShowForm] = useToggle(false);
   const [showTitle, toggleShowTitle] = useToggle(false);
-
+  const [isActive, toggleIsActive] = useToggle(false);
   const plusIcon = (
     <svg
       className={classes.plusIcon}
@@ -87,7 +93,7 @@ const CreateQuestion = function ({
       height="13"
       overflow="visible"
       stroke="black"
-      stroke-width="1"
+      strokeWidth="1"
     >
       <line x1="7" y1="0" x2="7" y2="13" />
       <line x1="0" y1="7" x2="13" y2="7" />
@@ -151,6 +157,19 @@ const CreateQuestion = function ({
   return (
     <Card id="createQuestion" className={classes.root}>
       <h1>Create Survey</h1>
+
+      <List className={isActive ? classes.isActive : classes.none}>
+        <ListItem
+          className={classes.listItem}
+          id={surveyTitle}
+          removeQuestion={removeQuestion}
+          editQuestion={editQuestion}
+          key={surveyTitle}
+        >
+          {surveyTitle}
+        </ListItem>
+      </List>
+
       {showTitle ? (
         <>
           <Input
@@ -163,8 +182,22 @@ const CreateQuestion = function ({
             disableUnderline
             autoFocus
           />
-
-          <span className={classes.cancel} onClick={toggleShowTitle}>
+          <Button
+            variant="contained"
+            color="primary"
+            className={classes.button}
+            type="submit"
+            onClick={toggleIsActive}
+          >
+            Add Response
+          </Button>
+          <span
+            className={classes.cancel}
+            onClick={() => {
+              toggleShowTitle();
+              toggleIsActive();
+            }}
+          >
             Cancel
           </span>
         </>

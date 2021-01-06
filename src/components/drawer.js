@@ -77,7 +77,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: " column",
     alignItems: "center",
-    justifyContent: "space-evenly",
+    justifyContent: "flex-start",
   },
   surveyBox: {
     width: "100%",
@@ -92,7 +92,8 @@ const useStyles = makeStyles((theme) => ({
   dataItems: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-start",
+    margin: "0 1rem",
   },
   divider: {
     width: "100%",
