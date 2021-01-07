@@ -101,12 +101,16 @@ function Survey({ classes }) {
   const cancelSurvey = function () {
     socket.emit("cancelSurveyResults");
     toggleAwaitingAnswers();
+    setSurveyResults(false);
+    setData(dataSchema);
   };
   useEffect(() => {
     socket.on("cancelSurveyResults", function () {
-      setSurveyResults(false);
-      toggleAwaitingAnswers();
-      toggleQuestionDisplayed();
+      setData(dataSchema);
+      // toggleAwaitingAnswers();
+      if (questionDisplayed) {
+        toggleQuestionDisplayed();
+      }
     });
   }, [questionDisplayed]);
 

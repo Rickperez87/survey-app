@@ -4,6 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 
 const styles = {
   root: {
+    marginTop: "5rem",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
