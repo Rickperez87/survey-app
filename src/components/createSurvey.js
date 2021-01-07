@@ -15,7 +15,7 @@ import { withStyles } from "@material-ui/core/styles";
 
 const styles = {
   root: {
-    maxWidth: "500px",
+    maxWidth: "800px",
     display: "flex",
     flexDirection: "column",
     margin: "2rem auto",
@@ -25,7 +25,12 @@ const styles = {
       padding: "1rem 0",
     },
   },
-  submitButton: {},
+  submitButton: {
+    marginTop: "1rem",
+  },
+  titleQuestion: {
+    textAlign: "center",
+  },
   list: {
     marginTop: "1rem",
   },
@@ -135,7 +140,7 @@ const CreateQuestion = function ({
 
   return (
     <Card id="createQuestion" className={classes.root}>
-      <h1>Create Survey</h1>
+      <h1 className={classes.titleQuestion}>Create Survey</h1>
       {titleIsActive && (
         <FormItem
           className={classes.listItem}
