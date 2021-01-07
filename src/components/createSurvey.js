@@ -38,12 +38,6 @@ const styles = {
       textDecoration: "underline",
     },
   },
-  isHidden: {
-    display: "none",
-  },
-  isActive: {
-    display: "block",
-  },
 };
 const CreateQuestion = function ({
   toggleAwaitingAnswers,
@@ -54,7 +48,8 @@ const CreateQuestion = function ({
 }) {
   const [showForm, toggleShowForm] = useToggle(false);
   const [showTitle, toggleShowTitle] = useToggle(false);
-  const [isActive, toggleIsActive] = useToggle(false);
+  const [titleIsActive, toggleTitleIsActive] = useToggle(false);
+  const [responseIsActive, toggleResponseIsActive] = useToggle(false);
 
   useEffect(() => {
     setData((data) => ({
@@ -74,6 +69,9 @@ const CreateQuestion = function ({
   };
 
   const addQuestion = (question, isFreeResponse) => {
+    if (data.createQuestion.length === 0) {
+      toggleResponseIsActive();
+    }
     setData({
       ...data,
       createQuestion: [
@@ -83,10 +81,12 @@ const CreateQuestion = function ({
     });
   };
   const removeQuestion = (id) => {
+    if (data.createQuestion.length === 1) {
+      toggleResponseIsActive();
+    }
     const updatedQuestionList = data.createQuestion.filter(
       (question) => question.id !== id
     );
-
     setData({
       ...data,
       createQuestion: updatedQuestionList,
@@ -104,12 +104,20 @@ const CreateQuestion = function ({
     });
   };
 
-  // add remove TItle function and edit title function
   const removeTitle = () => {
     setData({
       ...data,
       surveyQuestion: {
         surveyTitle: "",
+      },
+    });
+  };
+  const editTitle = (val) => {
+    setData({
+      ...data,
+      surveyQuestion: {
+        ...data.surveyQuestion,
+        surveyTitle: val,
       },
     });
   };
@@ -128,26 +136,26 @@ const CreateQuestion = function ({
   return (
     <Card id="createQuestion" className={classes.root}>
       <h1>Create Survey</h1>
-      {isActive && (
+      {titleIsActive && (
         <FormItem
           className={classes.listItem}
           renderText={surveyTitle}
           key={surveyTitle}
-          toggleIsActive={toggleIsActive}
+          toggleIsActive={toggleTitleIsActive}
           remove={removeTitle}
-          handleEdit={updateForm}
+          edit={editTitle}
         />
       )}
 
       {showTitle ? (
         <CreateTitleForm
-          toggleIsActive={toggleIsActive}
+          toggleIsActive={toggleTitleIsActive}
           surveyTitle={surveyTitle}
           updateForm={updateForm}
           toggleShowForm={toggleShowTitle}
         />
       ) : (
-        !isActive && (
+        !titleIsActive && (
           <ShowForm
             toggleShowForm={toggleShowTitle}
             className={classes.response}
@@ -155,29 +163,30 @@ const CreateQuestion = function ({
           ></ShowForm>
         )
       )}
-
-      <List className={classes.list}>
-        {createQuestion.map((question) => {
-          return (
-            <>
-              <Divider />
-              <QuestionItem
-                className={classes.listItem}
-                question={question.question}
-                id={question.id}
-                removeQuestion={removeQuestion}
-                editQuestion={editQuestion}
-                key={question.id}
-              />
-            </>
-          );
-        })}
-      </List>
-
+      {responseIsActive && (
+        <List className={classes.list}>
+          {createQuestion.map((question) => {
+            return (
+              <>
+                <Divider />
+                <QuestionItem
+                  className={classes.listItem}
+                  question={question.question}
+                  id={question.id}
+                  removeQuestion={removeQuestion}
+                  editQuestion={editQuestion}
+                  key={question.id}
+                />
+              </>
+            );
+          })}
+        </List>
+      )}
       {showForm ? (
         <CreateQuestionForm
           addQuestion={addQuestion}
           toggleShowForm={toggleShowForm}
+          toggleIsActive={toggleResponseIsActive}
         />
       ) : (
         <ShowForm
@@ -194,7 +203,7 @@ const CreateQuestion = function ({
         color="primary"
         onClick={handleSubmit}
       >
-        Display Survey
+        Create
       </Button>
     </Card>
   );

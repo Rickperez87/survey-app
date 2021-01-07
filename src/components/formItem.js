@@ -8,7 +8,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import useToggle from "../custom-react-hooks/useToggle";
 
-function FormItem({ renderText, remove, handleEdit, toggleIsActive }) {
+function FormItem({ renderText, remove, edit, toggleIsActive }) {
   const [isEditing, toggle] = useToggle(false);
   const handleRemove = () => {
     toggleIsActive();
@@ -20,7 +20,7 @@ function FormItem({ renderText, remove, handleEdit, toggleIsActive }) {
       {isEditing ? (
         <EditForm
           renderText={renderText}
-          handleEdit={handleEdit}
+          handleEdit={edit}
           toggleEdit={toggle}
         />
       ) : (
