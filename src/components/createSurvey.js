@@ -2,12 +2,11 @@ import React, { useEffect } from "react";
 import ShowForm from "./showForm";
 import useToggle from "../custom-react-hooks/useToggle";
 import socket from "../server/socketConfig";
-import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
 import Divider from "@material-ui/core/Divider";
 import QuestionItem from "./questionItem";
+import FormItem from "./formItem";
 import Card from "@material-ui/core/Card";
 import { v4 as uuid } from "uuid";
 import CreateTitleForm from "./createTitleForm";
@@ -39,7 +38,7 @@ const styles = {
       textDecoration: "underline",
     },
   },
-  none: {
+  isHidden: {
     display: "none",
   },
   isActive: {
@@ -87,6 +86,7 @@ const CreateQuestion = function ({
     const updatedQuestionList = data.createQuestion.filter(
       (question) => question.id !== id
     );
+
     setData({
       ...data,
       createQuestion: updatedQuestionList,
@@ -104,6 +104,16 @@ const CreateQuestion = function ({
     });
   };
 
+  // add remove TItle function and edit title function
+  const removeTitle = () => {
+    setData({
+      ...data,
+      surveyQuestion: {
+        surveyTitle: "",
+      },
+    });
+  };
+
   const handleSubmit = function (e) {
     e.preventDefault();
     socket.emit("sentQuestion", data);
@@ -114,22 +124,20 @@ const CreateQuestion = function ({
     createQuestion,
     surveyQuestion: { surveyTitle },
   } = data;
-  console.log(surveyTitle);
+
   return (
     <Card id="createQuestion" className={classes.root}>
       <h1>Create Survey</h1>
-
-      <List className={isActive ? classes.isActive : classes.none}>
-        <ListItem
+      {isActive && (
+        <FormItem
           className={classes.listItem}
-          id={surveyTitle}
-          removeQuestion={removeQuestion}
-          editQuestion={editQuestion}
+          renderText={surveyTitle}
           key={surveyTitle}
-        >
-          {surveyTitle}
-        </ListItem>
-      </List>
+          toggleIsActive={toggleIsActive}
+          remove={removeTitle}
+          handleEdit={updateForm}
+        />
+      )}
 
       {showTitle ? (
         <CreateTitleForm
@@ -139,11 +147,13 @@ const CreateQuestion = function ({
           toggleShowForm={toggleShowTitle}
         />
       ) : (
-        <ShowForm
-          toggleShowForm={toggleShowTitle}
-          className={classes.response}
-          renderText={"Add Survey Question"}
-        ></ShowForm>
+        !isActive && (
+          <ShowForm
+            toggleShowForm={toggleShowTitle}
+            className={classes.response}
+            renderText={"Add Survey Question"}
+          ></ShowForm>
+        )
       )}
 
       <List className={classes.list}>
@@ -158,7 +168,7 @@ const CreateQuestion = function ({
                 removeQuestion={removeQuestion}
                 editQuestion={editQuestion}
                 key={question.id}
-              ></QuestionItem>
+              />
             </>
           );
         })}
