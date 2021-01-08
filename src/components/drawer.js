@@ -1,5 +1,6 @@
 import React from "react";
 import clsx from "clsx";
+import socket from "../server/socketConfig";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -100,7 +101,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function DrawerData({ userName, setUserName, data }) {
+export default function DrawerData({
+  userName,
+  setUserName,
+  data,
+  toggleAwaitingAnswers,
+}) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -111,6 +117,12 @@ export default function DrawerData({ userName, setUserName, data }) {
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const displaySurvey = (e, data) => {
+    e.preventDefault();
+    socket.emit("sentQuestion", data);
+    toggleAwaitingAnswers();
   };
 
   return (
@@ -174,6 +186,9 @@ export default function DrawerData({ userName, setUserName, data }) {
                       </ListItem>
                     );
                   })}
+                  <button onClick={(e) => displaySurvey(e, data)}>
+                    Display Survey
+                  </button>
                 </div>
                 <Divider key={data.surveyId} className={classes.divider} />
               </>

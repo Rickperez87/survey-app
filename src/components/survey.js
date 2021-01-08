@@ -80,7 +80,6 @@ function Survey({ classes }) {
 
   useEffect(() => {
     socket.on("receiveAnswer", function (ans) {
-      console.log({ ans });
       setData((data) => ({
         ...data,
         // surveyQuestion: { ...data.surveyQuestion },
@@ -132,10 +131,10 @@ function Survey({ classes }) {
   const {
     surveyQuestion: { surveyTitle },
   } = data;
-  console.log(surveyTitle);
   return (
     <div className={classes.root}>
       <DrawerData
+        toggleAwaitingAnswers={toggleAwaitingAnswers}
         userName={userName}
         setUserName={setUserName}
         data={storeData}
