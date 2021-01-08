@@ -79,22 +79,34 @@ function Survey({ classes }) {
   };
 
   useEffect(() => {
-    socket.on("receiveAnswer", function (ans) {
-      setData((data) => ({
-        ...data,
-        // surveyQuestion: { ...data.surveyQuestion },
-        surveyResults: [...data.surveyResults, ans],
-      }));
+    socket.on("receiveAnswer", function (newData) {
+      console.log(newData);
+      if (newData.isStored) {
+        setData(newData);
+      } else {
+        setData((data) => ({
+          ...data,
+          // surveyQuestion: { ...data.surveyQuestion },
+          surveyResults: [...data.surveyResults, newData.surveyResults],
+        }));
+      }
     });
   }, []);
 
   const closeSurvey = function () {
-    const { surveyResults } = data;
-    socket.emit("surveyResults", surveyResults);
-    toggleResultsDialog();
+    if (data.isStored) {
+      console.log(
+        "do something htat updates survey results rather than the usual flow"
+      );
+    } else {
+      const { surveyResults } = data;
+      socket.emit("surveyResults", surveyResults);
+      toggleResultsDialog();
+    }
   };
   const saveData = () => {
-    setStoreData([...storeData, data]);
+    let storedData = Object.assign(data, { isStored: true });
+    setStoreData([...storeData, storedData]);
     setData(dataSchema);
   };
 
@@ -147,6 +159,7 @@ function Survey({ classes }) {
           data={data}
           setData={setData}
           uId={uniqueId}
+          storeSurvey={saveData}
         />
       )}
       {awaitingAnswers && loggedin && (
@@ -164,7 +177,11 @@ function Survey({ classes }) {
           userName={userName}
         />
       )}
-      {data.surveyResults.length ? <SurveyResponses data={data} /> : ""}
+      {loggedin && awaitingAnswers && data.surveyResults.length ? (
+        <SurveyResponses data={data} />
+      ) : (
+        ""
+      )}
       <SurveyResults
         onClose={handleCloseResults}
         open={ResultsDialogOpen}

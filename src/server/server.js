@@ -66,8 +66,8 @@ io.on("connect", function (socket) {
     return user;
   }
 
-  socket.on("submitAnswer", function (ans) {
-    io.to(adminId).emit("receiveAnswer", ans);
+  socket.on("submitAnswer", function (data) {
+    io.to(adminId).emit("receiveAnswer", data);
   });
 
   socket.on("surveyResults", function (results) {

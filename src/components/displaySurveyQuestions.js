@@ -53,7 +53,11 @@ function DisplaySurveyQuestions({
     } else {
       responseData = { userName, response: radio };
     }
-    socket.emit("submitAnswer", responseData);
+    let updateData = {
+      ...data,
+      surveyResults: [...data.surveyResults, responseData],
+    };
+    socket.emit("submitAnswer", updateData);
     handleSubmitAnswer();
     clearRadio();
   };

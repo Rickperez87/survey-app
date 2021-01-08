@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import ShowForm from "./showForm";
 import useToggle from "../custom-react-hooks/useToggle";
 import socket from "../server/socketConfig";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
@@ -50,6 +51,7 @@ const CreateQuestion = function ({
   setData,
   data,
   uId,
+  storeSurvey,
 }) {
   const [showForm, toggleShowForm] = useToggle(false);
   const [showTitle, toggleShowTitle] = useToggle(false);
@@ -132,6 +134,11 @@ const CreateQuestion = function ({
     socket.emit("sentQuestion", data);
     toggleAwaitingAnswers();
   };
+  const handleStoreSurvey = () => {
+    storeSurvey();
+    toggleTitleIsActive();
+    toggleShowForm();
+  };
 
   const {
     createQuestion,
@@ -200,16 +207,26 @@ const CreateQuestion = function ({
           renderText={"Add Survey Response"}
         ></ShowForm>
       )}
-
-      <Button
-        className={classes.submitButton}
-        inputProps={{ "aria-label": "Submit Survey Form Button" }}
-        variant="contained"
-        color="primary"
-        onClick={handleSubmit}
-      >
-        Create
-      </Button>
+      <ButtonGroup size="large" style={{ margin: "1rem, auto" }}>
+        <Button
+          className={classes.submitButton}
+          inputProps={{ "aria-label": "Submit Survey Form to Users Button" }}
+          variant="contained"
+          color="primary"
+          onClick={handleSubmit}
+        >
+          Create
+        </Button>
+        <Button
+          className={classes.submitButton}
+          inputProps={{ "aria-label": "Store Survey for Later Use Button" }}
+          variant="contained"
+          color="secondary"
+          onClick={handleStoreSurvey}
+        >
+          Store
+        </Button>
+      </ButtonGroup>
     </Card>
   );
 };
