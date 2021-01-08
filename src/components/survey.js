@@ -80,24 +80,25 @@ function Survey({ classes }) {
 
   useEffect(() => {
     socket.on("receiveAnswer", function (ans) {
+      console.log({ ans });
       setData((data) => ({
         ...data,
-        surveyQuestion: { ...data.surveyQuestion },
+        // surveyQuestion: { ...data.surveyQuestion },
         surveyResults: [...data.surveyResults, ans],
       }));
     });
   }, []);
 
   const closeSurvey = function () {
-    //save all data and reset values
-    setStoreData([...storeData, data]);
-    setData(dataSchema);
-
     const { surveyResults } = data;
     socket.emit("surveyResults", surveyResults);
-
     toggleResultsDialog();
   };
+  const saveData = () => {
+    setStoreData([...storeData, data]);
+    setData(dataSchema);
+  };
+
   const cancelSurvey = function () {
     socket.emit("cancelSurveyResults");
     toggleAwaitingAnswers();
@@ -117,7 +118,6 @@ function Survey({ classes }) {
   useEffect(() => {
     socket.on("results", function (resp) {
       setSurveyResults(resp);
-
       toggleResultsDialog();
     });
   }, []);
@@ -125,12 +125,14 @@ function Survey({ classes }) {
   const handleCloseResults = function () {
     toggleResultsDialog();
     toggleAwaitingAnswers();
+    //save all data and reset values
+    saveData();
   };
-  useEffect(() => {}, [data]);
 
   const {
     surveyQuestion: { surveyTitle },
   } = data;
+  console.log(surveyTitle);
   return (
     <div className={classes.root}>
       <DrawerData
