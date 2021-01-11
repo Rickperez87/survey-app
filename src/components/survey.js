@@ -80,34 +80,32 @@ function Survey({ classes }) {
 
   useEffect(() => {
     socket.on("receiveAnswer", function (newData) {
-      console.log(newData);
-      if (newData.isStored) {
-        setData(newData);
-      } else {
-        setData((data) => ({
-          ...data,
-          // surveyQuestion: { ...data.surveyQuestion },
-          surveyResults: [...data.surveyResults, newData.surveyResults],
-        }));
-      }
+      setData((data) => ({
+        ...data,
+        surveyResults: [...data.surveyResults, ...newData.surveyResults],
+      }));
     });
   }, []);
 
   const closeSurvey = function () {
-    if (data.isStored) {
-      console.log(
-        "do something htat updates survey results rather than the usual flow"
-      );
-    } else {
-      const { surveyResults } = data;
-      socket.emit("surveyResults", surveyResults);
-      toggleResultsDialog();
-    }
+    const { surveyResults } = data;
+    socket.emit("surveyResults", surveyResults);
+    toggleResultsDialog();
   };
+
   const saveData = () => {
-    let storedData = Object.assign(data, { isStored: true });
-    setStoreData([...storeData, storedData]);
-    setData(dataSchema);
+    if (data.isStored) {
+      let updateStored = storeData.filter(
+        (survey) => survey.surveyId === data.surveyId
+      );
+      updateStored.surveyResults = data.surveyResults;
+      console.log(updateStored);
+      setStoreData(updateStored);
+    } else {
+      let storedData = Object.assign(data, { isStored: true });
+      setStoreData([...storeData, storedData]);
+      setData(dataSchema);
+    }
   };
 
   const cancelSurvey = function () {
@@ -136,6 +134,7 @@ function Survey({ classes }) {
   const handleCloseResults = function () {
     toggleResultsDialog();
     toggleAwaitingAnswers();
+    setSurveyResults(false);
     //save all data and reset values
     saveData();
   };
@@ -150,6 +149,7 @@ function Survey({ classes }) {
         userName={userName}
         setUserName={setUserName}
         data={storeData}
+        setData={setData}
       />
 
       {loggedin && !awaitingAnswers && (

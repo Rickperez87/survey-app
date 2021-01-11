@@ -105,6 +105,7 @@ export default function DrawerData({
   userName,
   setUserName,
   data,
+  setData,
   toggleAwaitingAnswers,
 }) {
   const classes = useStyles();
@@ -120,6 +121,7 @@ export default function DrawerData({
   };
 
   const displaySurvey = (e, data) => {
+    setData(data);
     e.preventDefault();
     socket.emit("sentQuestion", data);
     toggleAwaitingAnswers();

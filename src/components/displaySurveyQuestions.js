@@ -46,16 +46,22 @@ function DisplaySurveyQuestions({
 
   const handleSubmit = function () {
     let responseData;
-    if (Object.keys(surveyFRQuestion).length !== 0) {
-      let input = Object.values(surveyFRQuestion)[0];
-      responseData = { userName, response: `${radio}: ${input}` };
-      console.log({ surveyFRQuestion, radio });
+    //need to finish this.
+    if (data.isStored) {
+      let updateData = { ...data };
     } else {
-      responseData = { userName, response: radio };
+      if (Object.keys(surveyFRQuestion).length !== 0) {
+        let input = Object.values(surveyFRQuestion)[0];
+        responseData = { userName, response: `${radio}: ${input}` };
+        console.log({ surveyFRQuestion, radio });
+      } else {
+        responseData = { userName, response: radio };
+      }
     }
     let updateData = {
       ...data,
-      surveyResults: [...data.surveyResults, responseData],
+      // surveyResults: [...data.surveyResults, responseData], try removing surveyResults spread to see if data overwrites okay
+      surveyResults: [responseData],
     };
     socket.emit("submitAnswer", updateData);
     handleSubmitAnswer();
