@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import socket from "../server/socketConfig";
 import useFormState from "../custom-react-hooks/form-state-hook";
 import Radio from "@material-ui/core/Radio";
@@ -44,11 +44,15 @@ function DisplaySurveyQuestions({
     });
   };
 
-  const handleSubmit = function () {
-    let responseData;
-    //need to finish this.
-    if (data.isStored) {
-      let updateData = { ...data };
+  const handleSubmit = () => {
+    let responseData, updateData;
+    if (data.isStored && data.surveyResults >= 1) {
+      updateData = { ...data };
+      updateData.surveyResults.forEach((storedResult) => {
+        if (storedResult.userName === userName) {
+          storedResult.response = radio;
+        }
+      });
     } else {
       if (Object.keys(surveyFRQuestion).length !== 0) {
         let input = Object.values(surveyFRQuestion)[0];
@@ -57,12 +61,13 @@ function DisplaySurveyQuestions({
       } else {
         responseData = { userName, response: radio };
       }
+
+      updateData = {
+        ...data,
+        // surveyResults: [...data.surveyResults, responseData], try removing surveyResults spread to see if data overwrites okay
+        surveyResults: [responseData],
+      };
     }
-    let updateData = {
-      ...data,
-      // surveyResults: [...data.surveyResults, responseData], try removing surveyResults spread to see if data overwrites okay
-      surveyResults: [responseData],
-    };
     socket.emit("submitAnswer", updateData);
     handleSubmitAnswer();
     clearRadio();

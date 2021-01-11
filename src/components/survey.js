@@ -178,7 +178,7 @@ function Survey({ classes }) {
         />
       )}
       {loggedin && awaitingAnswers && data.surveyResults.length ? (
-        <SurveyResponses data={data} />
+        <SurveyResponses setData={setData} data={data} />
       ) : (
         ""
       )}

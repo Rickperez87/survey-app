@@ -18,10 +18,23 @@ const styles = {
 };
 
 function SurveyResponses({ classes, data }) {
-  const {
+  let {
     surveyResults,
     surveyQuestion: { surveyTitle },
   } = data;
+  let results = [];
+  for (let i = 0; i < surveyResults.length; i++) {
+    for (let j = i + 1; j < surveyResults.length; j++) {
+      if (surveyResults[i].userName === surveyResults[j].userName) {
+        results.push(surveyResults[j]);
+      }
+    }
+  }
+  console.log(results);
+  if (results.length >= 1) {
+    surveyResults = results;
+  }
+
   return (
     <Card className={classes.root}>
       <h3 className={classes.title}>{surveyTitle}</h3>

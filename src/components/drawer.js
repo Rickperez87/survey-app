@@ -121,8 +121,8 @@ export default function DrawerData({
   };
 
   const displaySurvey = (e, data) => {
-    setData(data);
     e.preventDefault();
+    setData(data);
     socket.emit("sentQuestion", data);
     toggleAwaitingAnswers();
   };
