@@ -17,7 +17,7 @@ const styles = {
   },
 };
 
-function SurveyResponses({ classes, data }) {
+function SurveyResponses({ classes, setData, data }) {
   let {
     surveyResults,
     surveyQuestion: { surveyTitle },
@@ -32,9 +32,11 @@ function SurveyResponses({ classes, data }) {
   }
   console.log(results);
   if (results.length >= 1) {
-    surveyResults = results;
-  }
+    let updateData = { ...data };
+    updateData.surveyResults = results;
 
+    setData(updateData);
+  }
   return (
     <Card className={classes.root}>
       <h3 className={classes.title}>{surveyTitle}</h3>
