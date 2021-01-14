@@ -95,17 +95,19 @@ function Survey({ classes }) {
 
   const saveData = () => {
     if (data.isStored) {
-      let updateStored = storeData.filter(
-        (survey) => survey.surveyId === data.surveyId
-      );
-      updateStored.surveyResults = data.surveyResults;
-      console.log(updateStored);
-      setStoreData(updateStored);
+      let updateStoreData = storeData.slice();
+      updateStoreData.map((survey) => {
+        if (survey.surveyId === data.surveyId) {
+          survey.surveyResults = data.surveyResults;
+        }
+      });
+      console.log(updateStoreData);
+      setStoreData(updateStoreData);
     } else {
       let storedData = Object.assign(data, { isStored: true });
       setStoreData([...storeData, storedData]);
-      setData(dataSchema);
     }
+    setData(dataSchema);
   };
 
   const cancelSurvey = function () {

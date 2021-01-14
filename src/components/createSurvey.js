@@ -137,6 +137,8 @@ const CreateQuestion = function ({
   const handleStoreSurvey = () => {
     storeSurvey();
     toggleTitleIsActive();
+    //added this recently is survey Id bening created? on stored data?
+    toggleResponseIsActive();
     toggleShowForm();
   };
 
