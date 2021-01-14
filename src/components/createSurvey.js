@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ShowForm from "./showForm";
 import useToggle from "../custom-react-hooks/useToggle";
 import socket from "../server/socketConfig";
@@ -57,13 +57,14 @@ const CreateQuestion = function ({
   const [showTitle, toggleShowTitle] = useToggle(false);
   const [titleIsActive, toggleTitleIsActive] = useToggle(false);
   const [responseIsActive, toggleResponseIsActive] = useToggle(false);
+  const [isStoring, setIsStoring] = useState(false);
 
   useEffect(() => {
     setData((data) => ({
       ...data,
       surveyId: `aa${uId()}bb`,
     }));
-  }, []);
+  }, [isStoring]);
 
   const updateForm = (e) => {
     setData({
@@ -134,13 +135,13 @@ const CreateQuestion = function ({
     socket.emit("sentQuestion", data);
     toggleAwaitingAnswers();
   };
-  const handleStoreSurvey = () => {
+  function handleStoreSurvey() {
     storeSurvey();
     toggleTitleIsActive();
-    //added this recently is survey Id bening created? on stored data?
     toggleResponseIsActive();
     toggleShowForm();
-  };
+    setIsStoring(!isStoring);
+  }
 
   const {
     createQuestion,
