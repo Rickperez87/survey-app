@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(0, 1),
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
-    justifyContent: "flex-end",
+    justifyContent: "center",
   },
   content: {
     flexGrow: 1,
@@ -99,6 +99,10 @@ const useStyles = makeStyles((theme) => ({
   divider: {
     width: "100%",
   },
+  drawerHeader_Title: {
+    width: "90%",
+    textAlign: "center",
+  },
 }));
 
 export default function DrawerData({
@@ -107,6 +111,7 @@ export default function DrawerData({
   data,
   setData,
   toggleAwaitingAnswers,
+  loggedin,
 }) {
   const classes = useStyles();
   const theme = useTheme();
@@ -137,15 +142,17 @@ export default function DrawerData({
         })}
       >
         <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            className={clsx(classes.menuButton, open && classes.hide)}
-          >
-            <MenuIcon />
-          </IconButton>
+          {loggedin && (
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              edge="start"
+              className={clsx(classes.menuButton, open && classes.hide)}
+            >
+              <MenuIcon />
+            </IconButton>
+          )}
           <Navbar userName={userName} setUserName={setUserName} />
         </Toolbar>
       </AppBar>
@@ -160,6 +167,7 @@ export default function DrawerData({
         }}
       >
         <div className={classes.drawerHeader}>
+          <h3 className={classes.drawerHeader_Title}>Saved Questions</h3>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "ltr" ? (
               <ChevronLeftIcon />
@@ -168,7 +176,6 @@ export default function DrawerData({
             )}
           </IconButton>
         </div>
-        <Divider />
         <List className={classes.dataRoot}>
           {data.map((data) => {
             return (
@@ -192,7 +199,11 @@ export default function DrawerData({
                     Display Survey
                   </button>
                 </div>
-                <Divider key={data.surveyId} className={classes.divider} />
+                <Divider
+                  key={data.surveyId}
+                  variant="inset"
+                  className={classes.divider}
+                />
               </>
             );
           })}

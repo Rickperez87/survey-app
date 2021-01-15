@@ -119,7 +119,6 @@ function Survey({ classes }) {
   useEffect(() => {
     socket.on("cancelSurveyResults", function () {
       setData(dataSchema);
-      // toggleAwaitingAnswers();
       if (questionDisplayed) {
         toggleQuestionDisplayed();
       }
@@ -133,12 +132,14 @@ function Survey({ classes }) {
     });
   }, []);
 
-  const handleCloseResults = function () {
+  const onCloseDialog = function () {
     toggleResultsDialog();
-    toggleAwaitingAnswers();
-    setSurveyResults(false);
-    //save all data and reset values
-    saveData();
+    if (loggedin) {
+      toggleAwaitingAnswers();
+      setSurveyResults(false);
+      //save all data and reset values
+      saveData();
+    }
   };
 
   const {
@@ -147,6 +148,7 @@ function Survey({ classes }) {
   return (
     <div className={classes.root}>
       <DrawerData
+        loggedin={loggedin}
         toggleAwaitingAnswers={toggleAwaitingAnswers}
         userName={userName}
         setUserName={setUserName}
@@ -185,7 +187,7 @@ function Survey({ classes }) {
         ""
       )}
       <SurveyResults
-        onClose={handleCloseResults}
+        onClose={onCloseDialog}
         open={ResultsDialogOpen}
         surveyResults={surveyResults}
         surveyTitle={surveyTitle}
