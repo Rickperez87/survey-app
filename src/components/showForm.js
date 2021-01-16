@@ -7,6 +7,7 @@ const styles = {
   surveyResponse: {
     color: "grey",
     cursor: "pointer",
+    fontSize: "1rem",
     "&:hover": {
       color: "#3f51b5",
       "&:hover $plusButton": {

@@ -14,8 +14,8 @@ const styles = {
     color: "#FAFAFA",
     height: "2rem",
     padding: "1rem",
-    fontWeight: "400",
-    fontSize: "16px",
+    fontWeight: "500",
+    fontSize: "1.2rem",
     fontFamily: "Poppins, sans-serif",
   },
   userIcon: {

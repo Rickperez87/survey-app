@@ -28,9 +28,12 @@ const styles = {
   },
   submitButton: {
     marginTop: "1rem",
+    fontSize: "1rem",
   },
   titleQuestion: {
     textAlign: "center",
+    fontSize: "2rem",
+    fontWeight: 700,
   },
   list: {
     marginTop: "1rem",

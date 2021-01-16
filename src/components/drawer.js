@@ -100,8 +100,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
   },
   drawerHeader_Title: {
-    width: "90%",
-    textAlign: "center",
+    fontSize: "1.2rem",
   },
 }));
 

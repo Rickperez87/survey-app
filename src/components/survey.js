@@ -101,7 +101,6 @@ function Survey({ classes }) {
           survey.surveyResults = data.surveyResults;
         }
       });
-      console.log(updateStoreData);
       setStoreData(updateStoreData);
     } else {
       let storedData = Object.assign(data, { isStored: true });
@@ -145,6 +144,7 @@ function Survey({ classes }) {
   const {
     surveyQuestion: { surveyTitle },
   } = data;
+
   return (
     <div className={classes.root}>
       <DrawerData
