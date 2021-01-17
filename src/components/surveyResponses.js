@@ -8,7 +8,7 @@ const styles = {
   root: {
     width: "500px",
     margin: "1rem auto",
-    padding: "2rem",
+    padding: "1rem",
   },
   title: {
     display: "flex",

@@ -20,15 +20,14 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     margin: "2rem auto",
-    padding: "3rem",
+    padding: "2rem 6rem",
 
     "& Input": {
       padding: "1rem 0",
     },
   },
   submitButton: {
-    marginTop: "1rem",
-    fontSize: "1rem",
+    fontSize: ".8rem",
   },
   titleQuestion: {
     textAlign: "center",

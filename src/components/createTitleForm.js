@@ -15,10 +15,12 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     display: "inline-block",
+    fontSize: ".8rem",
   },
   cancel: {
     cursor: "pointer",
     padding: "1rem",
+    fontSize: "1rem",
     "&:hover": {
       textDecoration: "underline",
     },

@@ -8,6 +8,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
+import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
@@ -89,6 +90,7 @@ const useStyles = makeStyles((theme) => ({
   },
   surveyTitle: {
     textTransform: "capitalize",
+    display: "inline-block",
   },
   dataItems: {
     display: "flex",
@@ -180,6 +182,7 @@ export default function DrawerData({
             return (
               <>
                 <div className={classes.surveyBox}>
+                  Question:{" "}
                   <h3
                     key={data.surveyId}
                     className={classes.surveyTitle}
@@ -187,6 +190,8 @@ export default function DrawerData({
                   {data.surveyResults.map((survey, idx) => {
                     return (
                       <ListItem key={idx}>
+                        {" "}
+                        Responses:
                         <ListItemText
                           className={classes.dataItems}
                           primary={`${survey.userName}: ${survey.response}`}
@@ -194,9 +199,13 @@ export default function DrawerData({
                       </ListItem>
                     );
                   })}
-                  <button onClick={(e) => displaySurvey(e, data)}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={(e) => displaySurvey(e, data)}
+                  >
                     Display Survey
-                  </button>
+                  </Button>
                 </div>
                 <Divider
                   key={data.surveyId}
