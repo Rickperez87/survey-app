@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "./node_modules/react";
-import DialogContentText from "./node_modules/@material-ui/core/DialogContentText";
-import Dialog from "./node_modules/@material-ui/core/Dialog";
+import React, { useState, useEffect } from "react";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import Dialog from "@material-ui/core/Dialog";
 import useFormState from "../../custom-react-hooks/form-state-hook";
-import DialogActions from "./node_modules/@material-ui/core/DialogActions";
-import Button from "./node_modules/@material-ui/core/Button";
-import { withStyles } from "./node_modules/@material-ui/core/styles";
-import DialogContent from "./node_modules/@material-ui/core/DialogContent";
-import Input from "./node_modules/@material-ui/core/Input";
+import DialogActions from "@material-ui/core/DialogActions";
+import Button from "@material-ui/core/Button";
+import { withStyles } from "@material-ui/core/styles";
+import DialogContent from "@material-ui/core/DialogContent";
+import Input from "@material-ui/core/Input";
 import socket from "../../server/socketConfig";
 
 const styles = {
