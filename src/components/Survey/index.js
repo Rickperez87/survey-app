@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import useToggle from "../custom-react-hooks/useToggle";
-import CreateSurvey from "./createSurvey";
-import DisplaySurveyQuestions from "./displaySurveyQuestions";
-import SurveyResponses from "./surveyResponses";
-import SurveyResults from "./surveyResults";
-import DrawerData from "./drawer";
-import socket from "../server/socketConfig";
-import AwaitingAnswers from "./awaitingAnswers";
-import bg from "../styles/bg.svg";
+import useToggle from "../../custom-react-hooks/useToggle";
+import CreateSurvey from "../createSurvey";
+import DisplaySurveyQuestions from "../displaySurveyQuestions";
+import SurveyResponses from "../surveyResponses";
+import SurveyResults from "../surveyResults";
+import DrawerData from "../drawer";
+import socket from "../../server/socketConfig";
+import AwaitingAnswers from "../awaitingAnswers";
+import bg from "./bg.svg";
 
 import { withStyles } from "@material-ui/core/styles";
 

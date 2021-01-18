@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import socket from "../server/socketConfig";
+import socket from "../../../server/socketConfig";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Dialog from "@material-ui/core/Dialog";
 import Input from "@material-ui/core/Input";
@@ -7,7 +7,6 @@ import DialogContent from "@material-ui/core/DialogContent";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import DialogActions from "@material-ui/core/DialogActions";
-import "../styles/survey.css";
 
 const styles = {
   root: {

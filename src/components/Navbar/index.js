@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import Login from "./login";
-import UserNameDialog from "./userNameDialog";
+import Login from "./Login";
+import UserNameDialog from "../UserNameDialog";
 import { withStyles } from "@material-ui/core/styles";
-import userIcon from "../styles/userNameIcon.svg";
+import userIcon from "./userNameIcon.svg";
 
 const styles = {
   root: {
@@ -69,7 +69,7 @@ function Navbar({ classes, userName, setUserName }) {
       <div>
         <div className={classes.userName} onClick={handleInputNameOpen}>
           <img className={classes.userIcon} src={userIcon}></img>
-          {`Name: ${userName}`}
+          {userName}
         </div>
         <UserNameDialog
           setUserName={setUserName}
