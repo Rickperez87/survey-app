@@ -1,11 +1,20 @@
 import React from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Survey from "../Survey";
+import LandingPage from "../LandingPage";
 
 const app = () => {
   return (
-    <div>
-      <Survey />
-    </div>
+    <Router>
+      <Switch>
+        <Route exact path="/">
+          <LandingPage />
+        </Route>
+        <Route exact path="/app">
+          <Survey />
+        </Route>
+      </Switch>
+    </Router>
   );
 };
 export default app;
