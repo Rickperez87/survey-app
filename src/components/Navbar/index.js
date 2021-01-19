@@ -13,16 +13,15 @@ const styles = {
     justifyContent: "space-between",
     color: "#FAFAFA",
     height: "2rem",
-    padding: "1rem",
+    padding: "1rem 4rem",
     fontWeight: "500",
     fontSize: "1.2rem",
     fontFamily: "Poppins, sans-serif",
   },
   userIcon: {
-    marginRight: "1rem",
+    margin: "0 .6rem 0 1.6rem",
   },
   userName: {
-    justifySelf: "flex-end",
     "&:hover": {
       cursor: "pointer",
     },
@@ -33,6 +32,8 @@ const styles = {
     "@media (max-width:575px)": { display: "none" },
   },
   loginContainer: {
+    display: "flex",
+    alignItems: "center",
     "&:hover": {
       cursor: "pointer",
     },
@@ -60,24 +61,26 @@ function Navbar({ classes, userName, setUserName }) {
   };
 
   return (
-    <div className={classes.root}>
-      <div className={classes.logo}>Survey~RP</div>
-      <div className={classes.loginContainer} onClick={handleLoginOpen}>
-        Host Login
+    <>
+      <div className={classes.root}>
+        <div className={classes.logo}>Survey~RP</div>
+        <div className={classes.loginContainer}>
+          <div className={classes.login} onClick={handleLoginOpen}>
+            Host Login
+          </div>
+          <div className={classes.userName} onClick={handleInputNameOpen}>
+            <img className={classes.userIcon} src={userIcon}></img>
+            {userName}
+          </div>
+        </div>
       </div>
       <Login open={openLogin} onClose={handleLoginClose} />
-      <div>
-        <div className={classes.userName} onClick={handleInputNameOpen}>
-          <img className={classes.userIcon} src={userIcon}></img>
-          {userName}
-        </div>
-        <UserNameDialog
-          setUserName={setUserName}
-          open={openNameInput}
-          onClose={handleInputNameClose}
-        />
-      </div>
-    </div>
+      <UserNameDialog
+        setUserName={setUserName}
+        open={openNameInput}
+        onClose={handleInputNameClose}
+      />
+    </>
   );
 }
 

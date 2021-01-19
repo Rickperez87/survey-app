@@ -15,7 +15,7 @@ const styles = {
   root: {
     /* background by SVGBackgrounds.com */
     backgroundColor: "#fcfcfc",
-    backgroundImage: `url(${bg})`,
+    // backgroundImage: `url(${bg})`,
     height: "100vh",
     overflow: "scroll",
   },

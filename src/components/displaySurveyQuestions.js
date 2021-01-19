@@ -17,7 +17,7 @@ const styles = {
     maxWidth: "500px",
     display: "flex",
     flexDirection: "column",
-    margin: "5rem auto",
+    margin: "6rem auto",
     padding: "3rem",
   },
 };

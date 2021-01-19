@@ -16,10 +16,10 @@ import { withStyles } from "@material-ui/core/styles";
 
 const styles = {
   root: {
-    maxWidth: "800px",
+    maxWidth: "42.5rem",
     display: "flex",
     flexDirection: "column",
-    margin: "2rem auto",
+    margin: "4rem auto",
     padding: "2rem 6rem",
 
     "& Input": {
