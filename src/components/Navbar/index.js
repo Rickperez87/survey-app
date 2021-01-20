@@ -13,7 +13,7 @@ const styles = {
     justifyContent: "space-between",
     color: "#FAFAFA",
     height: "2rem",
-    padding: "1rem 4rem",
+    padding: "1rem 4rem 1rem 1rem",
     fontWeight: "500",
     fontSize: "1.2rem",
     fontFamily: "Poppins, sans-serif",

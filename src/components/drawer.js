@@ -8,7 +8,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
-import Button from "@material-ui/core/Button";
+import StyledButton from "../Styled/Button";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     }),
   },
   menuButton: {
-    marginRight: theme.spacing(2),
+    marginLeft: "4rem",
   },
   hide: {
     display: "none",
@@ -199,13 +199,11 @@ export default function DrawerData({
                       </ListItem>
                     );
                   })}
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={(e) => displaySurvey(e, data)}
-                  >
-                    Display Survey
-                  </Button>
+                  <StyledButton
+                    colorType="primary"
+                    handleClick={(e) => displaySurvey(e, data)}
+                    label="Display Survey"
+                  />
                 </div>
                 <Divider
                   key={data.surveyId}

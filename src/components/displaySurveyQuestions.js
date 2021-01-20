@@ -6,10 +6,9 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
-import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
 import Input from "@material-ui/core/Input";
 import Divider from "@material-ui/core/Divider";
+import StyledButton from "../Styled/Button";
 import { withStyles } from "@material-ui/core/styles";
 
 const styles = {
@@ -19,6 +18,13 @@ const styles = {
     flexDirection: "column",
     margin: "6rem auto",
     padding: "3rem",
+  },
+  title: {
+    fontSize: "500",
+    fontWeight: "bold",
+    color: "black",
+    textTransform: "uppercase",
+    textAlign: "center",
   },
 };
 function DisplaySurveyQuestions({
@@ -74,9 +80,11 @@ function DisplaySurveyQuestions({
   };
 
   return (
-    <Card className={classes.root}>
+    <div className={classes.root}>
       <FormControl component="fieldset">
-        <FormLabel component="legend">{title}</FormLabel>
+        <FormLabel className={classes.title} component="legend">
+          {title}
+        </FormLabel>
         <RadioGroup
           aria-label="Answers"
           name="Answers"
@@ -118,11 +126,12 @@ function DisplaySurveyQuestions({
           })}
         </RadioGroup>
       </FormControl>
-
-      <Button variant="contained" color="primary" onClick={handleSubmit}>
-        Submit
-      </Button>
-    </Card>
+      <StyledButton
+        label="submit"
+        colorType="primary"
+        handleClick={handleSubmit}
+      />
+    </div>
   );
 }
 export default withStyles(styles)(DisplaySurveyQuestions);

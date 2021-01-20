@@ -1,7 +1,6 @@
 import React from "react";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import Card from "@material-ui/core/Card";
 import { withStyles } from "@material-ui/core/styles";
 
 const styles = {
@@ -38,7 +37,7 @@ function SurveyResponses({ classes, setData, data }) {
     setData(updateData);
   }
   return (
-    <Card className={classes.root}>
+    <div className={classes.root}>
       <h3 className={classes.title}>{surveyTitle}</h3>
       <List className={classes.list}>
         {surveyResults.map((response, idx) => {
@@ -49,7 +48,7 @@ function SurveyResponses({ classes, setData, data }) {
           );
         })}
       </List>
-    </Card>
+    </div>
   );
 }
 

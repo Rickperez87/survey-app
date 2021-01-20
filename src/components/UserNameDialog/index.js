@@ -4,6 +4,7 @@ import Dialog from "@material-ui/core/Dialog";
 import useFormState from "../../custom-react-hooks/form-state-hook";
 import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
+import StyledButton from "../../Styled/Button";
 import { withStyles } from "@material-ui/core/styles";
 import DialogContent from "@material-ui/core/DialogContent";
 import Input from "@material-ui/core/Input";
@@ -95,14 +96,20 @@ function UserNameDialog({ classes, setUserName, onClose, open }) {
             )}
           </DialogContent>
           <DialogActions>
-            <Button
+            <StyledButton
+              type="submit"
+              colorType="primary"
+              label="Submit"
+              size="wide"
+            />
+            {/* <Button
               className={classes.button}
               type="submit"
               variant="contained"
               color="primary"
             >
               Submit
-            </Button>
+            </Button> */}
           </DialogActions>
         </form>
       </Dialog>

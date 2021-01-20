@@ -6,6 +6,7 @@ import Input from "@material-ui/core/Input";
 import DialogContent from "@material-ui/core/DialogContent";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
+import StyledButton from "../../../Styled/Button";
 import DialogActions from "@material-ui/core/DialogActions";
 
 const styles = {
@@ -81,14 +82,12 @@ function Login({ classes, onClose, open }) {
         />
       </DialogContent>
       <DialogActions>
-        <Button
-          className={classes.button}
-          color="primary"
-          variant="contained"
-          onClick={handleLogin}
-        >
-          Login
-        </Button>
+        <StyledButton
+          size="wide"
+          colorType="primary"
+          handleClick={handleLogin}
+          label="login"
+        />
       </DialogActions>
     </Dialog>
   );

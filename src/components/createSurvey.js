@@ -3,15 +3,14 @@ import ShowForm from "./showForm";
 import useToggle from "../custom-react-hooks/useToggle";
 import socket from "../server/socketConfig";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
-import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import QuestionItem from "./questionItem";
 import FormItem from "./formItem";
-import Card from "@material-ui/core/Card";
 import { v4 as uuid } from "uuid";
 import CreateTitleForm from "./createTitleForm";
 import CreateQuestionForm from "./CreateQuestionForm";
+import StyledButton from "../Styled/Button";
 import { withStyles } from "@material-ui/core/styles";
 
 const styles = {
@@ -28,6 +27,7 @@ const styles = {
   },
   submitButton: {
     fontSize: ".8rem",
+    padding: ".5 1.5rem",
   },
   titleQuestion: {
     textAlign: "center",
@@ -45,6 +45,10 @@ const styles = {
     "&:hover": {
       textDecoration: "underline",
     },
+  },
+  buttonGroup: {
+    margin: "1rem, auto",
+    paddingTop: ".5rem",
   },
 };
 const CreateQuestion = function ({
@@ -151,7 +155,7 @@ const CreateQuestion = function ({
   } = data;
 
   return (
-    <Card id="createQuestion" className={classes.root}>
+    <div id="createQuestion" className={classes.root}>
       <h1 className={classes.titleQuestion}>Create Survey</h1>
       {titleIsActive && (
         <FormItem
@@ -212,27 +216,25 @@ const CreateQuestion = function ({
           renderText={"Add Survey Response"}
         ></ShowForm>
       )}
-      <ButtonGroup size="large" style={{ margin: "1rem, auto" }}>
-        <Button
-          className={classes.submitButton}
-          inputProps={{ "aria-label": "Submit Survey Form to Users Button" }}
+      <ButtonGroup size="large" className={classes.buttonGroup}>
+        <StyledButton
+          // className={classes.submitButton}
+          // inputProps={{ "aria-label": "Submit Survey Form to Users Button" }}
+          label="create"
+          colorType="primary"
+          handleClick={handleSubmit}
+        />
+
+        <StyledButton
+          // className={classes.submitButton}
+          // inputProps={{ "aria-label": "Store Survey for Later Use Button" }}
           variant="contained"
-          color="primary"
-          onClick={handleSubmit}
-        >
-          Create
-        </Button>
-        <Button
-          className={classes.submitButton}
-          inputProps={{ "aria-label": "Store Survey for Later Use Button" }}
-          variant="contained"
-          color="secondary"
-          onClick={handleStoreSurvey}
-        >
-          Store
-        </Button>
+          label="store"
+          colorType="secondary"
+          handleClick={handleStoreSurvey}
+        />
       </ButtonGroup>
-    </Card>
+    </div>
   );
 };
 
