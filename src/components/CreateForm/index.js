@@ -1,9 +1,9 @@
 import React from "react";
-import useFormState from "../custom-react-hooks/form-state-hook";
-import useToggle from "../custom-react-hooks/useToggle";
+import useFormState from "../../custom-react-hooks/form-state-hook";
+import useToggle from "../../custom-react-hooks/useToggle";
 import { makeStyles } from "@material-ui/core/styles";
 import Input from "@material-ui/core/Input";
-import StyledButton from "../Styled/Button";
+import StyledButton from "../../Styled/Button";
 import Checkbox from "@material-ui/core/Checkbox";
 
 const useStyles = makeStyles((theme) => ({
@@ -34,32 +34,32 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function CreateQuestionForm({ addQuestion, toggleShowForm }) {
+function CreateForm({ children, addQuestion, toggleShowForm }) {
   const classes = useStyles();
   const [val, setVal, clear] = useFormState("");
-  const [isFreeResponse, toggleisFreeResponse] = useToggle(false);
-  const [checked, toggleCheck] = useToggle(false);
+  //   const [isFreeResponse, toggleisFreeResponse] = useToggle(false);
+  //   const [checked, toggleCheck] = useToggle(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addQuestion(val, isFreeResponse);
+    // addQuestion(val, isFreeResponse);
     clear();
-    clearToggle();
+    // clearToggle();
   };
-  const clearToggle = () => {
-    if (checked) toggleCheck();
-    if (isFreeResponse) toggleisFreeResponse();
-  };
+  //   const clearToggle = () => {
+  //     if (checked) toggleCheck();
+  //     if (isFreeResponse) toggleisFreeResponse();
+  //   };
   return (
     <>
       <form
         className={classes.form}
         onSubmit={(e) => {
           handleSubmit(e);
-          clearToggle();
+          //   clearToggle();
         }}
       >
-        <Input
+        {/* <Input
           style={{ display: "block" }}
           className={classes.input}
           name="input"
@@ -79,7 +79,8 @@ function CreateQuestionForm({ addQuestion, toggleShowForm }) {
             label="Free Response"
           ></Checkbox>
           Free Response
-        </div>
+        </div> */}
+        {children}
       </form>
       <div className={classes.buttonGroup}>
         <StyledButton
@@ -96,4 +97,4 @@ function CreateQuestionForm({ addQuestion, toggleShowForm }) {
   );
 }
 
-export default CreateQuestionForm;
+export default CreateForm;

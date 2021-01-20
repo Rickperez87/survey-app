@@ -11,6 +11,7 @@ import { v4 as uuid } from "uuid";
 import CreateTitleForm from "./createTitleForm";
 import CreateQuestionForm from "./CreateQuestionForm";
 import StyledButton from "../Styled/Button";
+import CreateForm from "../components/CreateForm";
 import { withStyles } from "@material-ui/core/styles";
 
 const styles = {
@@ -161,10 +162,10 @@ const CreateQuestion = function ({
         <FormItem
           className={classes.listItem}
           renderText={surveyTitle}
-          key={surveyTitle}
           toggleIsActive={toggleTitleIsActive}
           remove={removeTitle}
           edit={editTitle}
+          key={surveyTitle}
         />
       )}
 
@@ -179,7 +180,6 @@ const CreateQuestion = function ({
         !titleIsActive && (
           <ShowForm
             toggleShowForm={toggleShowTitle}
-            className={classes.response}
             renderText={"Add Survey Question"}
           ></ShowForm>
         )
@@ -205,14 +205,13 @@ const CreateQuestion = function ({
       )}
       {showForm ? (
         <CreateQuestionForm
+          toggleIsActive={toggleResponseIsActive}
           addQuestion={addQuestion}
           toggleShowForm={toggleShowForm}
-          toggleIsActive={toggleResponseIsActive}
         />
       ) : (
         <ShowForm
           toggleShowForm={toggleShowForm}
-          className={classes.response}
           renderText={"Add Survey Response"}
         ></ShowForm>
       )}
@@ -234,6 +233,8 @@ const CreateQuestion = function ({
           handleClick={handleStoreSurvey}
         />
       </ButtonGroup>
+
+      {/* <CreateForm></CreateForm> */}
     </div>
   );
 };
