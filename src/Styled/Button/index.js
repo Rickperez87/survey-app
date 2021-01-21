@@ -18,6 +18,9 @@ const styles = {
   wide: {
     width: "98%",
   },
+  half: {
+    width: "50%",
+  },
 };
 
 const StyledButton = ({

@@ -1,7 +1,7 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
-
+import AppDemo from "../AppDemo.mp4";
 const styles = {
   root: {
     background: "#3E50B6",
@@ -46,6 +46,11 @@ const styles = {
     textDecoration: "none",
     color: "black",
   },
+  video: {
+    position: "absolute",
+    top: "249px",
+    right: "50px",
+  },
 };
 
 const LandingPage = ({ classes }) => {
@@ -64,6 +69,12 @@ const LandingPage = ({ classes }) => {
           <p>Create online surveys, get responses in real-time and connect.</p>
         </div>
       </div>
+      <video
+        width="400px"
+        autoPlay
+        src={AppDemo}
+        className={classes.video}
+      ></video>
     </div>
   );
 };

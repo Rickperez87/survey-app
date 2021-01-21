@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import Dialog from "@material-ui/core/Dialog";
+import Divider from "@material-ui/core/Divider";
 import useFormState from "../../custom-react-hooks/form-state-hook";
 import DialogActions from "@material-ui/core/DialogActions";
-import Button from "@material-ui/core/Button";
 import StyledButton from "../../Styled/Button";
 import { withStyles } from "@material-ui/core/styles";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -12,21 +12,36 @@ import socket from "../../server/socketConfig";
 
 const styles = {
   root: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
     width: "100%",
   },
+  content: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    justifyContent: "center",
+    width: "100%",
+    padding: 0,
+  },
+  header: {
+    color: "#2f3542",
+    padding: 0,
+    paddingTop: 0,
+    marginBottom: ".5rem",
+  },
   input: {
-    alignText: "center",
+    margin: "1rem 0",
+    background: "#f5f6fa",
+    padding: ".5rem",
   },
-  button: {
-    width: "98%",
-  },
+  button: {},
   paper: {
     minWidth: "20vw",
-    maxWidth: "40vw",
+    minHeight: "20vh",
+    padding: "2rem",
+  },
+  divider: {
+    color: "black",
+    width: "100%",
   },
 };
 
@@ -64,6 +79,7 @@ function UserNameDialog({ classes, setUserName, onClose, open }) {
   return (
     <div>
       <Dialog
+        className={classes.root}
         onClose={onClose}
         aria-labelledby="Enter-Name-dialog-title"
         open={open}
@@ -75,11 +91,17 @@ function UserNameDialog({ classes, setUserName, onClose, open }) {
             handleSubmit();
           }}
         >
-          <DialogContent className={classes.root}>
-            <DialogContentText id="Enter-Name-dialog-title">
+          <DialogContent style={{ padding: 0 }} className={classes.content}>
+            <DialogContentText
+              className={classes.header}
+              id="Enter-Name-dialog-title"
+            >
               Enter Your Name
             </DialogContentText>
+
+            <Divider className={classes.divider} variant="fullWidth" />
             <Input
+              className={classes.input}
               autoFocus
               fullWidth
               margin="dense"
@@ -95,23 +117,16 @@ function UserNameDialog({ classes, setUserName, onClose, open }) {
               </DialogContentText>
             )}
           </DialogContent>
-          <DialogActions>
-            <StyledButton
-              type="submit"
-              colorType="primary"
-              label="Submit"
-              size="wide"
-            />
-            {/* <Button
-              className={classes.button}
-              type="submit"
-              variant="contained"
-              color="primary"
-            >
-              Submit
-            </Button> */}
-          </DialogActions>
         </form>
+        <DialogActions style={{ padding: 0 }}>
+          <StyledButton
+            className={classes.button}
+            type="submit"
+            colorType="primary"
+            label="Submit"
+            size="wide"
+          />
+        </DialogActions>
       </Dialog>
     </div>
   );
