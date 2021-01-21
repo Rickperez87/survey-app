@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import Dialog from "@material-ui/core/Dialog";
 import Divider from "@material-ui/core/Divider";
+import DialogTitle from "@material-ui/core/DialogTitle";
 import useFormState from "../../custom-react-hooks/form-state-hook";
 import DialogActions from "@material-ui/core/DialogActions";
 import StyledButton from "../../Styled/Button";
@@ -33,7 +34,7 @@ const styles = {
     background: "#f5f6fa",
     padding: ".5rem",
   },
-  button: {},
+
   paper: {
     minWidth: "20vw",
     minHeight: "20vh",
@@ -91,14 +92,11 @@ function UserNameDialog({ classes, setUserName, onClose, open }) {
             handleSubmit();
           }}
         >
-          <DialogContent style={{ padding: 0 }} className={classes.content}>
-            <DialogContentText
-              className={classes.header}
-              id="Enter-Name-dialog-title"
-            >
-              Enter Your Name
-            </DialogContentText>
+          <DialogTitle className={classes.header} id="Enter-Name-dialog-title">
+            Enter Your Name
+          </DialogTitle>
 
+          <DialogContent className={classes.content}>
             <Divider className={classes.divider} variant="fullWidth" />
             <Input
               className={classes.input}

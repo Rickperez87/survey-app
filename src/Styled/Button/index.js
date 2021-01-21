@@ -6,7 +6,7 @@ import { withStyles } from "@material-ui/core/styles";
 const styles = {
   root: {
     color: "white",
-    fontSize: ".8rem",
+    fontSize: "1rem",
     padding: ".5rem 1.5rem",
   },
   primary: {
@@ -16,7 +16,7 @@ const styles = {
     backgroundColor: "#f50057",
   },
   wide: {
-    width: "98%",
+    width: "100%",
   },
   half: {
     width: "50%",

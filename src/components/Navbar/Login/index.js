@@ -5,7 +5,7 @@ import Dialog from "@material-ui/core/Dialog";
 import Input from "@material-ui/core/Input";
 import DialogContent from "@material-ui/core/DialogContent";
 import { withStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
+import Divider from "@material-ui/core/Divider";
 import StyledButton from "../../../Styled/Button";
 import DialogActions from "@material-ui/core/DialogActions";
 
@@ -13,22 +13,30 @@ const styles = {
   root: {
     display: "flex",
     flexDirection: "column",
-    alignItems: "center",
+    alignItems: "flex-start",
     justifyContent: "center",
     width: "100%",
   },
-  input: {
-    alignText: "center",
+  inputTitle: {
+    marginTop: "1rem",
+    marginBottom: 0,
+    background: "#f5f6fa",
+    padding: ".5rem",
   },
-  button: {
-    width: "98%",
+  inputPassword: {
+    margin: "0 0 1rem 0",
+    background: "#f5f6fa",
+    padding: ".5rem",
   },
   title: {
-    textAlign: "center",
+    textAlign: "start",
+    padding: 0,
+    margin: 0,
   },
   paper: {
     minWidth: "20vw",
     maxWidth: "40vw",
+    padding: "2rem",
   },
 };
 
@@ -57,7 +65,8 @@ function Login({ classes, onClose, open }) {
       <DialogTitle className={classes.title} id="login-dialog-title">
         Host Login
       </DialogTitle>
-      <DialogContent className={classes.root}>
+      <Divider className={classes.divider} variant="fullWidth" />
+      <DialogContent style={{ padding: 0 }} className={classes.root}>
         <Input
           fullWidth={true}
           autoFocus
@@ -66,7 +75,7 @@ function Login({ classes, onClose, open }) {
           name="userName"
           value={input.userName}
           onChange={updateInput}
-          classes={{ input: classes.input }}
+          classes={{ input: classes.inputTitle }}
           disableUnderline
         />
         <br />
@@ -77,11 +86,11 @@ function Login({ classes, onClose, open }) {
           name="password"
           value={input.password}
           onChange={updateInput}
-          classes={{ input: classes.input }}
+          classes={{ input: classes.inputPassword }}
           disableUnderline
         />
       </DialogContent>
-      <DialogActions>
+      <DialogActions style={{ padding: 0 }}>
         <StyledButton
           size="wide"
           colorType="primary"
