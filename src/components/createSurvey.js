@@ -16,11 +16,12 @@ import { withStyles } from "@material-ui/core/styles";
 
 const styles = {
   root: {
-    maxWidth: "42.5rem",
+    background: "#fff",
+    maxWidth: "45.5rem",
     display: "flex",
     flexDirection: "column",
     margin: "4rem auto",
-    padding: "2rem 6rem",
+    boxShadow: "0px 1px 2px 0px rgba(0,0,0,0.33)",
 
     "& Input": {
       padding: "1rem 0",
@@ -31,7 +32,7 @@ const styles = {
     padding: ".5 1.5rem",
   },
   titleQuestion: {
-    textAlign: "center",
+    textAlign: "start",
     fontSize: "2rem",
     fontWeight: 700,
   },
@@ -48,8 +49,25 @@ const styles = {
     },
   },
   buttonGroup: {
-    margin: "1rem, auto",
     paddingTop: ".5rem",
+    alignSelf: "flex-end",
+    minWidth: "230px",
+    display: "flex",
+    justifyContent: "flex-end",
+  },
+  header: {
+    padding: "6rem 6rem 2rem 6rem",
+    // border: "1px solid black",
+  },
+  main: {
+    padding: "0 6rem 6rem 6rem",
+    // display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "flex-start",
+  },
+  showFrom: {
+    margin: "2rem 0",
   },
 };
 const CreateQuestion = function ({
@@ -157,83 +175,84 @@ const CreateQuestion = function ({
 
   return (
     <div id="createQuestion" className={classes.root}>
-      <h1 className={classes.titleQuestion}>Create Survey</h1>
-      {titleIsActive && (
-        <FormItem
-          className={classes.listItem}
-          renderText={surveyTitle}
-          toggleIsActive={toggleTitleIsActive}
-          remove={removeTitle}
-          edit={editTitle}
-          key={surveyTitle}
-        />
-      )}
+      <header className={classes.header}>
+        <h1 className={classes.titleQuestion}>Create Survey</h1>
+      </header>
+      <main className={classes.main}>
+        {titleIsActive && (
+          <FormItem
+            className={classes.listItem}
+            renderText={surveyTitle}
+            toggleIsActive={toggleTitleIsActive}
+            remove={removeTitle}
+            edit={editTitle}
+            key={surveyTitle}
+          />
+        )}
 
-      {showTitle ? (
-        <CreateTitleForm
-          toggleIsActive={toggleTitleIsActive}
-          surveyTitle={surveyTitle}
-          updateForm={updateForm}
-          toggleShowForm={toggleShowTitle}
-        />
-      ) : (
-        !titleIsActive && (
-          <ShowForm
+        {showTitle ? (
+          <CreateTitleForm
+            toggleIsActive={toggleTitleIsActive}
+            surveyTitle={surveyTitle}
+            updateForm={updateForm}
             toggleShowForm={toggleShowTitle}
-            renderText={"Add Survey Question"}
+          />
+        ) : (
+          !titleIsActive && (
+            <ShowForm
+              className={classes.showform}
+              toggleShowForm={toggleShowTitle}
+              renderText={"Add Survey Question"}
+            ></ShowForm>
+          )
+        )}
+        {responseIsActive && (
+          <List className={classes.list}>
+            {createQuestion.map((question) => {
+              return (
+                <>
+                  <Divider />
+                  <QuestionItem
+                    className={classes.listItem}
+                    question={question.question}
+                    id={question.id}
+                    removeQuestion={removeQuestion}
+                    editQuestion={editQuestion}
+                    key={question.id}
+                  />
+                </>
+              );
+            })}
+          </List>
+        )}
+        {showForm ? (
+          <CreateQuestionForm
+            toggleIsActive={toggleResponseIsActive}
+            addQuestion={addQuestion}
+            toggleShowForm={toggleShowForm}
+          />
+        ) : (
+          <ShowForm
+            className={classes.showform}
+            toggleShowForm={toggleShowForm}
+            renderText={"Add Survey Responses"}
           ></ShowForm>
-        )
-      )}
-      {responseIsActive && (
-        <List className={classes.list}>
-          {createQuestion.map((question) => {
-            return (
-              <>
-                <Divider />
-                <QuestionItem
-                  className={classes.listItem}
-                  question={question.question}
-                  id={question.id}
-                  removeQuestion={removeQuestion}
-                  editQuestion={editQuestion}
-                  key={question.id}
-                />
-              </>
-            );
-          })}
-        </List>
-      )}
-      {showForm ? (
-        <CreateQuestionForm
-          toggleIsActive={toggleResponseIsActive}
-          addQuestion={addQuestion}
-          toggleShowForm={toggleShowForm}
-        />
-      ) : (
-        <ShowForm
-          toggleShowForm={toggleShowForm}
-          renderText={"Add Survey Response"}
-        ></ShowForm>
-      )}
-      <ButtonGroup size="large" className={classes.buttonGroup}>
-        <StyledButton
-          // className={classes.submitButton}
-          // inputProps={{ "aria-label": "Submit Survey Form to Users Button" }}
-          label="create"
-          colorType="primary"
-          handleClick={handleSubmit}
-        />
+        )}
+        <ButtonGroup size="large" className={classes.buttonGroup}>
+          <StyledButton
+            label="create"
+            colorType="primary"
+            handleClick={handleSubmit}
+          />
 
-        <StyledButton
-          // className={classes.submitButton}
-          // inputProps={{ "aria-label": "Store Survey for Later Use Button" }}
-          variant="contained"
-          label="store"
-          colorType="secondary"
-          handleClick={handleStoreSurvey}
-        />
-      </ButtonGroup>
-
+          <StyledButton
+            variant="contained"
+            label="store"
+            colorType="secondary"
+            handleClick={handleStoreSurvey}
+          />
+        </ButtonGroup>
+      </main>
       {/* <CreateForm></CreateForm> */}
     </div>
   );

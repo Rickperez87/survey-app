@@ -14,7 +14,7 @@ import { withStyles } from "@material-ui/core/styles";
 const styles = {
   root: {
     /* background by SVGBackgrounds.com */
-    backgroundColor: "#fcfcfc",
+    background: "#f5f6fa",
     // backgroundImage: `url(${bg})`,
     height: "100vh",
     overflow: "scroll",
