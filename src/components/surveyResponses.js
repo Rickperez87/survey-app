@@ -2,17 +2,30 @@ import React from "react";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import { withStyles } from "@material-ui/core/styles";
+import Divider from "@material-ui/core/Divider";
+import GridList from "./GridList";
 
 const styles = {
   root: {
-    width: "500px",
+    maxWidth: "45.5rem",
     margin: "1rem auto",
-    padding: "1rem",
   },
   title: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+  },
+  header: {
+    background: "#fff",
+    padding: "4rem 6rem 4rem 6rem",
+    boxShadow: "0px 1px 2px 0px rgba(0,0,0,0.33)",
+  },
+  main: {
+    paddingTop: "1rem",
+    // display: "flex",
+    // flexDirection: "column",
+    // justifyContent: "center",
+    // alignItems: "flex-start",
   },
 };
 
@@ -38,16 +51,22 @@ function SurveyResponses({ classes, setData, data }) {
   }
   return (
     <div className={classes.root}>
-      <h3 className={classes.title}>{surveyTitle}</h3>
-      <List className={classes.list}>
-        {surveyResults.map((response, idx) => {
-          return (
-            <ListItem className={classes.listItem} key={idx}>
-              {`${response.userName} answered -       ${response.response}`}
-            </ListItem>
-          );
-        })}
-      </List>
+      <header className={classes.header}>
+        <h1 className={classes.title}>{surveyTitle}</h1>
+      </header>
+      <Divider fullWidth />
+      <main className={classes.main}>
+        <GridList list={surveyResults} />
+        {/* <List className={classes.list}>
+          {surveyResults.map((response, idx) => {
+            return (
+              <ListItem className={classes.listItem} key={idx}>
+                {`${response.userName} answered -       ${response.response}`}
+              </ListItem>
+            );
+          })}
+        </List> */}
+      </main>
     </div>
   );
 }

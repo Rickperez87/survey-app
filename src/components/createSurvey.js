@@ -79,7 +79,7 @@ const CreateQuestion = function ({
   storeSurvey,
 }) {
   const [showForm, toggleShowForm] = useToggle(false);
-  const [showTitle, toggleShowTitle] = useToggle(false);
+  const [showTitle, toggleShowTitle] = useToggle(true);
   const [titleIsActive, toggleTitleIsActive] = useToggle(false);
   const [responseIsActive, toggleResponseIsActive] = useToggle(false);
   const [isStoring, setIsStoring] = useState(false);
