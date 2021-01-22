@@ -58,7 +58,7 @@ const LandingPage = ({ classes }) => {
     <div className={classes.root}>
       <div className={classes.contentBlock}>
         <div className={classes.logo}>Survey~RP</div>
-        <Button variant="contained" className={classes.button}>
+        <Button variant="contained" color="test" className={classes.button}>
           <a className={classes.link} href="/app">
             Continue
           </a>

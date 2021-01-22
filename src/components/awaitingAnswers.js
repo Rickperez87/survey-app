@@ -1,4 +1,5 @@
 import React from "react";
+import Button from "@material-ui/core/Button";
 import StyledButton from "../Styled/Button";
 import { withStyles } from "@material-ui/core/styles";
 
@@ -48,11 +49,9 @@ function AwaitingAnswers({ classes, handleCloseSurvey, handleCancelSurvey }) {
             label="Show Results"
           />
 
-          <StyledButton
-            colorType="secondary"
-            handleClick={handleCancelSurvey}
-            label="Cancel Results"
-          />
+          <Button variant="contained" onClick={handleCancelSurvey}>
+            Cancel Results
+          </Button>
         </div>
       </header>
     </div>
