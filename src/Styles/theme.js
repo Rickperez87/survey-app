@@ -1,6 +1,14 @@
 import { createMuiTheme } from "@material-ui/core/styles";
 
 const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: "#0984e3",
+    },
+    secondary: {
+      main: "#d64045",
+    },
+  },
   props: {
     MuiButton: {
       disableElevation: true,

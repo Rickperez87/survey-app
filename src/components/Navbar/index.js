@@ -6,7 +6,7 @@ import userIcon from "./userNameIcon.svg";
 
 const styles = {
   root: {
-    background: "rgba(63,81,181,.87)",
+    background: "#0984e3",
     width: "100%",
     display: "flex",
     alignItems: "center",

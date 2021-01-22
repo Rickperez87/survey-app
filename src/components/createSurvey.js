@@ -3,6 +3,7 @@ import ShowForm from "./showForm";
 import useToggle from "../custom-react-hooks/useToggle";
 import socket from "../server/socketConfig";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
+import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import QuestionItem from "./questionItem";
@@ -11,8 +12,9 @@ import { v4 as uuid } from "uuid";
 import CreateTitleForm from "./createTitleForm";
 import CreateQuestionForm from "./CreateQuestionForm";
 import StyledButton from "../Styled/Button";
-import CreateForm from "../components/CreateForm";
 import { withStyles } from "@material-ui/core/styles";
+import SendIcon from "@material-ui/icons/Send";
+import SaveIcon from "@material-ui/icons/Save";
 
 const styles = {
   root: {
@@ -239,18 +241,23 @@ const CreateQuestion = function ({
           ></ShowForm>
         )}
         <ButtonGroup size="large" className={classes.buttonGroup}>
-          <StyledButton
-            label="create"
-            colorType="primary"
-            handleClick={handleSubmit}
-          />
-
-          <StyledButton
+          <Button
             variant="contained"
-            label="store"
-            colorType="secondary"
-            handleClick={handleStoreSurvey}
-          />
+            color="primary"
+            onClick={handleSubmit}
+            endIcon={<SendIcon />}
+          >
+            Send
+          </Button>
+
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={handleStoreSurvey}
+            endIcon={<SaveIcon />}
+          >
+            Save
+          </Button>
         </ButtonGroup>
       </main>
       {/* <CreateForm></CreateForm> */}

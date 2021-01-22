@@ -68,12 +68,14 @@ function CreateTitleForm({
         />
       </form>
       <div className={classes.buttonGroup}>
-        <StyledButton
-          colorType="primary"
+        <Button
+          variant="contained"
+          color="primary"
           type="submit"
-          label="Add Question"
-          handleClick={(e) => handleSubmit(e)}
-        />
+          onClick={(e) => handleSubmit(e)}
+        >
+          Add Question
+        </Button>
         <span className={classes.cancel} onClick={toggleShowForm}>
           Cancel
         </span>
