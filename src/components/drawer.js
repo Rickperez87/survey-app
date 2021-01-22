@@ -137,7 +137,7 @@ export default function DrawerData({
     <div className={classes.root}>
       <CssBaseline />
       <AppBar
-        position="fixed"
+        position="relative"
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}

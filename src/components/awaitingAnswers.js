@@ -5,31 +5,32 @@ import { withStyles } from "@material-ui/core/styles";
 
 const styles = {
   root: {
+    marginTop: "2rem",
     background: "#fff",
-    maxWidth: "45.5rem",
+    // maxWidth: "45.5rem",
     display: "flex",
     flexDirection: "column",
-    margin: "4rem auto 0 auto",
+    // margin: "4rem auto 0 auto",
     alignItems: "center",
     justifyContent: "center",
     boxShadow: "0px 1px 2px 0px rgba(0,0,0,0.33)",
   },
-  buttonGroup: {
-    minWidth: "500px",
-    display: "flex",
-    margin: ".5rem",
-    alignItems: "center",
-    justifyContent: "spaceAround",
-  },
+  buttonGroup: {},
   button: {
     marginRight: "1rem",
   },
   header: {
-    padding: "6rem 6rem 2rem 6rem",
-    // border: "1px solid black",
+    padding: "2rem 4rem 2rem 4rem",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    "& h1": {
+      marginBottom: "1rem",
+    },
   },
   main: {
-    padding: "0 6rem 6rem 6rem",
+    padding: "0 4rem 2rem 4rem",
     // display: "flex",
     flexDirection: "column",
     justifyContent: "center",

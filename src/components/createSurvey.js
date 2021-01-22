@@ -11,7 +11,6 @@ import FormItem from "./formItem";
 import { v4 as uuid } from "uuid";
 import CreateTitleForm from "./createTitleForm";
 import CreateQuestionForm from "./CreateQuestionForm";
-import StyledButton from "../Styled/Button";
 import { withStyles } from "@material-ui/core/styles";
 import SendIcon from "@material-ui/icons/Send";
 import SaveIcon from "@material-ui/icons/Save";
@@ -22,7 +21,7 @@ const styles = {
     maxWidth: "45.5rem",
     display: "flex",
     flexDirection: "column",
-    margin: "4rem auto",
+    marginTop: "2rem",
     boxShadow: "0px 1px 2px 0px rgba(0,0,0,0.33)",
 
     "& Input": {
@@ -51,18 +50,17 @@ const styles = {
     },
   },
   buttonGroup: {
-    paddingTop: ".5rem",
     alignSelf: "flex-end",
     minWidth: "230px",
     display: "flex",
     justifyContent: "flex-end",
   },
   header: {
-    padding: "6rem 6rem 2rem 6rem",
+    padding: "2rem 4rem 1rem 4rem",
     // border: "1px solid black",
   },
   main: {
-    padding: "0 6rem 6rem 6rem",
+    padding: "0 4rem 2rem 4rem",
     // display: "flex",
     flexDirection: "column",
     justifyContent: "center",

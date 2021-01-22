@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     border: "1px solid",
     borderRadius: "5px",
+    marginTop: "1rem",
   },
   button: {
     display: "inline-block",

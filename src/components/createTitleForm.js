@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItem: "center",
     justifyContent: "flex-start",
-    margin: "1rem 0",
+    margin: "1rem 0 .5rem",
   },
 }));
 

@@ -1,21 +1,18 @@
 import React, { useState, useEffect } from "react";
+import socket from "../../server/socketConfig";
+import Grid from "@material-ui/core/Grid";
+import { withStyles } from "@material-ui/core/styles";
 import useToggle from "../../custom-react-hooks/useToggle";
 import CreateSurvey from "../createSurvey";
 import DisplaySurveyQuestions from "../displaySurveyQuestions";
 import SurveyResponses from "../surveyResponses";
 import SurveyResults from "../surveyResults";
 import DrawerData from "../drawer";
-import socket from "../../server/socketConfig";
 import AwaitingAnswers from "../awaitingAnswers";
-import bg from "./bg.svg";
-
-import { withStyles } from "@material-ui/core/styles";
 
 const styles = {
   root: {
-    /* background by SVGBackgrounds.com */
     background: "#f5f6fa",
-    // backgroundImage: `url(${bg})`,
     height: "100vh",
     overflow: "scroll",
   },
@@ -30,6 +27,7 @@ function Survey({ classes }) {
   const [ResultsDialogOpen, toggleResultsDialog] = useToggle(false);
   const [surveyResults, setSurveyResults] = useState(false);
   const [storeData, setStoreData] = useState([]);
+
   function uniqueId() {
     return Math.floor(Math.random() * 1000);
   }
@@ -55,7 +53,6 @@ function Survey({ classes }) {
     socket.on("confirmLogin", function () {
       toggleLoggedin();
     });
-
     return () => {
       socket.off("confirmLogin");
     };
@@ -115,6 +112,7 @@ function Survey({ classes }) {
     setSurveyResults(false);
     setData(dataSchema);
   };
+
   useEffect(() => {
     socket.on("cancelSurveyResults", function () {
       setData(dataSchema);
@@ -146,7 +144,13 @@ function Survey({ classes }) {
   } = data;
 
   return (
-    <div className={classes.root}>
+    <Grid
+      container
+      alignItems="flex-start"
+      alignContent="flex-start"
+      justify="center"
+      className={classes.root}
+    >
       <DrawerData
         loggedin={loggedin}
         toggleAwaitingAnswers={toggleAwaitingAnswers}
@@ -155,44 +159,44 @@ function Survey({ classes }) {
         data={storeData}
         setData={setData}
       />
-
-      {loggedin && !awaitingAnswers && (
-        <CreateSurvey
-          className="createQuestionContainer"
-          toggleAwaitingAnswers={toggleAwaitingAnswers}
-          data={data}
-          setData={setData}
-          uId={uniqueId}
-          storeSurvey={saveData}
+      <Grid item xs={6} zeroMinWidth>
+        {loggedin && !awaitingAnswers && (
+          <CreateSurvey
+            toggleAwaitingAnswers={toggleAwaitingAnswers}
+            data={data}
+            setData={setData}
+            uId={uniqueId}
+            storeSurvey={saveData}
+          />
+        )}
+        {awaitingAnswers && loggedin && (
+          <AwaitingAnswers
+            handleCloseSurvey={closeSurvey}
+            handleCancelSurvey={cancelSurvey}
+          />
+        )}
+        {questionDisplayed && !loggedin && (
+          <DisplaySurveyQuestions
+            data={data}
+            setData={setData}
+            handleSubmitAnswer={submitAnswer}
+            userName={userName}
+          />
+        )}
+        {loggedin && awaitingAnswers && data.surveyResults.length ? (
+          <SurveyResponses setData={setData} data={data} />
+        ) : (
+          ""
+        )}
+        <SurveyResults
+          onClose={onCloseDialog}
+          open={ResultsDialogOpen}
+          surveyResults={surveyResults}
+          surveyTitle={surveyTitle}
         />
-      )}
-      {awaitingAnswers && loggedin && (
-        <AwaitingAnswers
-          className="awaitingAnswers"
-          handleCloseSurvey={closeSurvey}
-          handleCancelSurvey={cancelSurvey}
-        />
-      )}
-      {questionDisplayed && !loggedin && (
-        <DisplaySurveyQuestions
-          data={data}
-          setData={setData}
-          handleSubmitAnswer={submitAnswer}
-          userName={userName}
-        />
-      )}
-      {loggedin && awaitingAnswers && data.surveyResults.length ? (
-        <SurveyResponses setData={setData} data={data} />
-      ) : (
-        ""
-      )}
-      <SurveyResults
-        onClose={onCloseDialog}
-        open={ResultsDialogOpen}
-        surveyResults={surveyResults}
-        surveyTitle={surveyTitle}
-      />
-    </div>
+      </Grid>
+    </Grid>
   );
 }
+
 export default withStyles(styles)(Survey);
