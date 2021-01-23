@@ -8,14 +8,17 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
-import StyledButton from "../Styled/Button";
+import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
+import Grid from "@material-ui/core/Grid";
 import Navbar from "./Navbar";
+import DrawerCard from "./drawerCard";
+import DrawerCircle from "./drawerCircle";
+import Typography from "@material-ui/core/Typography";
+import SendIcon from "@material-ui/icons/Send";
 
 const drawerWidth = 400;
 
@@ -87,6 +90,8 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
+    border: "1px solid black",
+    margin: "0 1rem",
   },
   surveyTitle: {
     textTransform: "capitalize",
@@ -168,7 +173,13 @@ export default function DrawerData({
         }}
       >
         <div className={classes.drawerHeader}>
-          <h3 className={classes.drawerHeader_Title}>Saved Questions</h3>
+          <Typography
+            variant="h4"
+            display="inline"
+            className={classes.drawerHeader_Title}
+          >
+            Saved Questions
+          </Typography>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "ltr" ? (
               <ChevronLeftIcon />
@@ -181,30 +192,53 @@ export default function DrawerData({
           {data.map((data) => {
             return (
               <>
-                <div className={classes.surveyBox}>
-                  Question:{" "}
-                  <h3
-                    key={data.surveyId}
-                    className={classes.surveyTitle}
-                  >{`${data.surveyQuestion.surveyTitle}`}</h3>
-                  {data.surveyResults.map((survey, idx) => {
-                    return (
-                      <ListItem key={idx}>
-                        {" "}
-                        Responses:
-                        <ListItemText
-                          className={classes.dataItems}
-                          primary={`${survey.userName}: ${survey.response}`}
-                        />
-                      </ListItem>
-                    );
-                  })}
-                  <StyledButton
-                    colorType="primary"
-                    handleClick={(e) => displaySurvey(e, data)}
-                    label="Display Survey"
-                  />
-                </div>
+                <Grid
+                  container
+                  justify="center"
+                  alignItems="center"
+                  alignContent="center"
+                  className={classes.surveyBox}
+                >
+                  <Grid item xs={2}>
+                    <DrawerCircle circleColor="#34495e" />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Typography
+                      variant="subtitle2"
+                      display="inline"
+                      key={data.surveyId}
+                      className={classes.surveyTitle}
+                    >{`${data.surveyQuestion.surveyTitle}`}</Typography>
+                  </Grid>
+                  <Grid item xs={2}>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={(e) => displaySurvey(e, data)}
+                      endIcon={<SendIcon />}
+                    >
+                      Send
+                    </Button>
+                  </Grid>
+                </Grid>
+                {data.surveyResults.map((survey, idx) => {
+                  return (
+                    <DrawerCard
+                      key={idx}
+                      name={survey.userName}
+                      text={survey.response}
+                    />
+                    // <ListItem key={idx}>
+                    //   {" "}
+                    //   Responses:
+                    //   <ListItemText
+                    //     className={classes.dataItems}
+                    //     primary={`${survey.userName}: ${survey.response}`}
+                    //   />
+                    // </ListItem>
+                  );
+                })}
+
                 <Divider
                   key={data.surveyId}
                   variant="inset"
