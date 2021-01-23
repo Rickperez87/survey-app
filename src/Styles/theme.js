@@ -25,6 +25,11 @@ const theme = createMuiTheme({
       },
       contained: {},
     },
+    MuiDialog: {
+      paper: {
+        padding: "2rem",
+      },
+    },
   },
   typography: {
     // fontFamily: '',
