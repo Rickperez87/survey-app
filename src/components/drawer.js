@@ -13,7 +13,6 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import Grid from "@material-ui/core/Grid";
 import Navbar from "./Navbar";
 import DrawerCard from "./drawerCard";
 import DrawerCircle from "./drawerCircle";
@@ -53,6 +52,7 @@ const useStyles = makeStyles((theme) => ({
   },
   drawerPaper: {
     width: drawerWidth,
+    padding: "0 1rem",
   },
   drawerHeader: {
     display: "flex",
@@ -87,15 +87,16 @@ const useStyles = makeStyles((theme) => ({
   surveyBox: {
     width: "100%",
     display: "flex",
-    flexDirection: "column",
     alignItems: "center",
-    justifyContent: "center",
-    border: "1px solid black",
-    margin: "0 1rem",
+    justifyContent: "space-between",
+    // border: "1px solid black",
+    // margin: "0 1rem",
+    padding: ".5rem 0",
   },
   surveyTitle: {
     textTransform: "capitalize",
     display: "inline-block",
+    fontSize: ".88rem",
   },
   dataItems: {
     display: "flex",
@@ -108,6 +109,11 @@ const useStyles = makeStyles((theme) => ({
   },
   drawerHeader_Title: {
     fontSize: "1.2rem",
+  },
+  dot: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
 }));
 
@@ -173,11 +179,7 @@ export default function DrawerData({
         }}
       >
         <div className={classes.drawerHeader}>
-          <Typography
-            variant="h4"
-            display="inline"
-            className={classes.drawerHeader_Title}
-          >
+          <Typography variant="h4" className={classes.drawerHeader_Title}>
             Saved Questions
           </Typography>
           <IconButton onClick={handleDrawerClose}>
@@ -188,39 +190,26 @@ export default function DrawerData({
             )}
           </IconButton>
         </div>
-        <List className={classes.dataRoot}>
+        <div className={classes.dataRoot}>
           {data.map((data) => {
             return (
               <>
-                <Grid
-                  container
-                  justify="center"
-                  alignItems="center"
-                  alignContent="center"
-                  className={classes.surveyBox}
-                >
-                  <Grid item xs={2}>
+                <div className={classes.surveyBox}>
+                  <div className={classes.dot}>
                     <DrawerCircle circleColor="#34495e" />
-                  </Grid>
-                  <Grid item xs={6}>
                     <Typography
                       variant="subtitle2"
-                      display="inline"
                       key={data.surveyId}
                       className={classes.surveyTitle}
                     >{`${data.surveyQuestion.surveyTitle}`}</Typography>
-                  </Grid>
-                  <Grid item xs={2}>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={(e) => displaySurvey(e, data)}
-                      endIcon={<SendIcon />}
-                    >
-                      Send
-                    </Button>
-                  </Grid>
-                </Grid>
+                  </div>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={(e) => displaySurvey(e, data)}
+                    endIcon={<SendIcon />}
+                  ></Button>
+                </div>
                 {data.surveyResults.map((survey, idx) => {
                   return (
                     <DrawerCard
@@ -247,7 +236,7 @@ export default function DrawerData({
               </>
             );
           })}
-        </List>
+        </div>
       </Drawer>
     </div>
   );

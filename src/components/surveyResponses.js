@@ -17,7 +17,7 @@ const styles = {
   },
   header: {
     background: "#fff",
-    padding: "4rem 6rem 4rem 6rem",
+    padding: "2rem 4rem",
     boxShadow: "0px 1px 2px 0px rgba(0,0,0,0.33)",
   },
   main: {

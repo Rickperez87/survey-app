@@ -4,7 +4,7 @@ import Button from "@material-ui/core/Button";
 import AppDemo from "../AppDemo.mp4";
 const styles = {
   root: {
-    background: "#3E50B6",
+    background: "#0984e3",
     color: "#FAFAFA",
     height: "100vh",
     overflow: "scroll",

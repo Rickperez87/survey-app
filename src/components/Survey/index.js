@@ -146,7 +146,7 @@ function Survey({ classes }) {
   return (
     <Grid
       container
-      alignItems="flex-start"
+      alignItems="center"
       alignContent="flex-start"
       justify="center"
       className={classes.root}
@@ -159,7 +159,7 @@ function Survey({ classes }) {
         data={storeData}
         setData={setData}
       />
-      <Grid item xs={6} zeroMinWidth>
+      <Grid item xs="auto" sm="auto" md={4}>
         {loggedin && !awaitingAnswers && (
           <CreateSurvey
             toggleAwaitingAnswers={toggleAwaitingAnswers}
