@@ -21,7 +21,8 @@ const theme = createMuiTheme({
       root: {
         textTransform: "none",
         fontSize: "1rem",
-        padding: ".5rem 1.5rem",
+        padding: ".25rem .5rem",
+        margin: "0 .25rem",
       },
       contained: {},
     },

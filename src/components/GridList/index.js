@@ -13,17 +13,18 @@ const styles = {
     color: "black",
   },
   nameText: {
-    fontWeight: "500",
+    fontWeight: "400",
+    fontSize: ".88rem",
   },
   responseText: {
-    fontSize: "1.5rem",
+    fontSize: "1rem",
   },
 };
 
 function GridList({ classes, list }) {
   return (
     <div className={classes.root}>
-      <Grid container spacing={2}>
+      <Grid container spacing={1}>
         {list.map((item) => {
           return (
             <Grid item xs={6}>

@@ -3,7 +3,7 @@ import useFormState from "../custom-react-hooks/form-state-hook";
 import useToggle from "../custom-react-hooks/useToggle";
 import { makeStyles } from "@material-ui/core/styles";
 import Input from "@material-ui/core/Input";
-import StyledButton from "../Styled/Button";
+import Button from "@material-ui/core/Button";
 import Checkbox from "@material-ui/core/Checkbox";
 
 const useStyles = makeStyles((theme) => ({
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
   cancel: {
     cursor: "pointer",
-    padding: ".5rem 1rem",
+    padding: ".25rem .5rem",
     "&:hover": {
       textDecoration: "underline",
     },
@@ -83,12 +83,14 @@ function CreateQuestionForm({ addQuestion, toggleShowForm }) {
         </div>
       </form>
       <div className={classes.buttonGroup}>
-        <StyledButton
-          colorType="primary"
+        <Button
+          variant="contained"
+          color="primary"
           type="submit"
-          handleClick={(e) => handleSubmit(e)}
-          label="Add Response"
-        />
+          onClick={(e) => handleSubmit(e)}
+        >
+          Add
+        </Button>
         <span className={classes.cancel} onClick={toggleShowForm}>
           Cancel
         </span>

@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import Dialog from "@material-ui/core/Dialog";
-import Divider from "@material-ui/core/Divider";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import useFormState from "../../custom-react-hooks/form-state-hook";
 import DialogActions from "@material-ui/core/DialogActions";
-import StyledButton from "../../Styled/Button";
 import { withStyles } from "@material-ui/core/styles";
 import DialogContent from "@material-ui/core/DialogContent";
 import Input from "@material-ui/core/Input";
+import Button from "@material-ui/core/Button";
 import socket from "../../server/socketConfig";
 
 const styles = {
@@ -16,10 +15,6 @@ const styles = {
     width: "100%",
   },
   content: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "flex-start",
-    justifyContent: "center",
     width: "100%",
     padding: 0,
   },
@@ -27,22 +22,19 @@ const styles = {
     color: "#2f3542",
     padding: 0,
     paddingTop: 0,
-    marginBottom: ".5rem",
+    marginBottom: ".25rem",
+    fontSize: "1rem",
   },
   input: {
-    margin: "1rem 0",
+    margin: ".5rem 0",
     background: "#f5f6fa",
-    padding: ".5rem",
+    padding: ".25rem",
   },
 
   paper: {
     minWidth: "20vw",
     minHeight: "20vh",
-    padding: "2rem",
-  },
-  divider: {
-    color: "black",
-    width: "100%",
+    padding: "1rem",
   },
 };
 
@@ -97,7 +89,6 @@ function UserNameDialog({ classes, setUserName, onClose, open }) {
           </DialogTitle>
 
           <DialogContent className={classes.content}>
-            <Divider className={classes.divider} variant="fullWidth" />
             <Input
               className={classes.input}
               autoFocus
@@ -117,13 +108,15 @@ function UserNameDialog({ classes, setUserName, onClose, open }) {
           </DialogContent>
         </form>
         <DialogActions style={{ padding: 0 }}>
-          <StyledButton
+          <Button
             className={classes.button}
             type="submit"
-            colorType="primary"
-            label="Submit"
-            size="wide"
-          />
+            color="primary"
+            variant="contained"
+            onClick={handleSubmit}
+          >
+            Submit
+          </Button>
         </DialogActions>
       </Dialog>
     </div>

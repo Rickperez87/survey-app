@@ -8,20 +8,21 @@ import GridList from "./GridList";
 const styles = {
   root: {
     maxWidth: "45.5rem",
-    margin: "1rem auto",
+    margin: ".5rem auto",
   },
   title: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    fontSize: "1rem",
   },
   header: {
     background: "#fff",
-    padding: "2rem 4rem",
+    padding: "2rem 2rem",
     boxShadow: "0px 1px 2px 0px rgba(0,0,0,0.33)",
   },
   main: {
-    paddingTop: "1rem",
+    paddingTop: ".5rem",
     // display: "flex",
     // flexDirection: "column",
     // justifyContent: "center",

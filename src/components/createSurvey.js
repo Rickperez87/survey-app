@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import ShowForm from "./showForm";
 import useToggle from "../custom-react-hooks/useToggle";
 import socket from "../server/socketConfig";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
@@ -51,7 +50,6 @@ const styles = {
   },
   buttonGroup: {
     alignSelf: "flex-end",
-    minWidth: "230px",
     display: "flex",
     justifyContent: "flex-end",
   },
@@ -238,7 +236,7 @@ const CreateQuestion = function ({
             renderText={"Add Survey Responses"}
           ></ShowForm>
         )}
-        <ButtonGroup size="large" className={classes.buttonGroup}>
+        <div className={classes.buttonGroup}>
           <Button
             variant="contained"
             color="primary"
@@ -256,7 +254,7 @@ const CreateQuestion = function ({
           >
             Save
           </Button>
-        </ButtonGroup>
+        </div>
       </main>
       {/* <CreateForm></CreateForm> */}
     </div>

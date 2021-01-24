@@ -5,28 +5,23 @@ import Dialog from "@material-ui/core/Dialog";
 import Input from "@material-ui/core/Input";
 import DialogContent from "@material-ui/core/DialogContent";
 import { withStyles } from "@material-ui/core/styles";
-import Divider from "@material-ui/core/Divider";
-import StyledButton from "../../../Styled/Button";
 import DialogActions from "@material-ui/core/DialogActions";
+import Button from "@material-ui/core/Button";
 
 const styles = {
   root: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "flex-start",
-    justifyContent: "center",
     width: "100%",
   },
   inputTitle: {
-    marginTop: "1rem",
+    marginTop: ".25rem",
     marginBottom: 0,
     background: "#f5f6fa",
-    padding: ".5rem",
+    padding: ".25rem",
   },
   inputPassword: {
-    margin: "0 0 1rem 0",
+    margin: ".5rem 0 .5rem 0",
     background: "#f5f6fa",
-    padding: ".5rem",
+    padding: ".25rem",
   },
   title: {
     textAlign: "start",
@@ -35,8 +30,8 @@ const styles = {
   },
   paper: {
     minWidth: "20vw",
-    maxWidth: "40vw",
-    padding: "2rem",
+    maxWidth: "70vw",
+    padding: "1rem",
   },
 };
 
@@ -65,7 +60,6 @@ function Login({ classes, onClose, open }) {
       <DialogTitle className={classes.title} id="login-dialog-title">
         Host Login
       </DialogTitle>
-      <Divider className={classes.divider} variant="fullWidth" />
       <DialogContent style={{ padding: 0 }} className={classes.root}>
         <Input
           fullWidth={true}
@@ -91,12 +85,9 @@ function Login({ classes, onClose, open }) {
         />
       </DialogContent>
       <DialogActions style={{ padding: 0 }}>
-        <StyledButton
-          size="wide"
-          colorType="primary"
-          handleClick={handleLogin}
-          label="login"
-        />
+        <Button variant="contained" color="primary" onClick={handleLogin}>
+          Login
+        </Button>
       </DialogActions>
     </Dialog>
   );

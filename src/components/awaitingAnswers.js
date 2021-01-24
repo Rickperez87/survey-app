@@ -5,7 +5,7 @@ import { withStyles } from "@material-ui/core/styles";
 
 const styles = {
   root: {
-    marginTop: "2rem",
+    marginTop: "1rem",
     background: "#fff",
     // maxWidth: "45.5rem",
     display: "flex",
@@ -20,13 +20,14 @@ const styles = {
     marginRight: "1rem",
   },
   header: {
-    padding: "2rem 4rem 2rem 4rem",
+    padding: "2rem 2rem 2rem 2rem",
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
     "& h1": {
       marginBottom: "1rem",
+      fontSize: "1.5rem",
     },
   },
   main: {
@@ -44,14 +45,16 @@ function AwaitingAnswers({ classes, handleCloseSurvey, handleCancelSurvey }) {
       <header className={classes.header}>
         <h1>Awaiting Answers...</h1>
         <div className={classes.buttonGroup}>
-          <StyledButton
-            colorType="primary"
-            handleClick={handleCloseSurvey}
-            label="Show Results"
-          />
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleCloseSurvey}
+          >
+            Show
+          </Button>
 
           <Button variant="contained" onClick={handleCancelSurvey}>
-            Cancel Results
+            Cancel
           </Button>
         </div>
       </header>

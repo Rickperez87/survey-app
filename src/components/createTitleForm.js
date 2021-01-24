@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
   cancel: {
     cursor: "pointer",
-    padding: ".5rem 1rem",
+    padding: ".25rem .5rem",
     "&:hover": {
       textDecoration: "underline",
     },
@@ -74,7 +74,7 @@ function CreateTitleForm({
           type="submit"
           onClick={(e) => handleSubmit(e)}
         >
-          Add Question
+          Add
         </Button>
         <span className={classes.cancel} onClick={toggleShowForm}>
           Cancel
