@@ -9,6 +9,7 @@ import SurveyResponses from "../surveyResponses";
 import SurveyResults from "../surveyResults";
 import DrawerData from "../drawer";
 import AwaitingAnswers from "../awaitingAnswers";
+import AwaitingSurvey from "../awaitingSurvey";
 
 const styles = {
   root: {
@@ -175,6 +176,7 @@ function Survey({ classes }) {
             handleCancelSurvey={cancelSurvey}
           />
         )}
+        {!questionDisplayed && !loggedin && <AwaitingSurvey />}
         {questionDisplayed && !loggedin && (
           <DisplaySurveyQuestions
             data={data}

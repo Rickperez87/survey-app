@@ -8,7 +8,7 @@ import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 import Input from "@material-ui/core/Input";
 import Divider from "@material-ui/core/Divider";
-import StyledButton from "../Styled/Button";
+import Button from "@material-ui/core/Button";
 import { withStyles } from "@material-ui/core/styles";
 
 const styles = {
@@ -16,8 +16,8 @@ const styles = {
     maxWidth: "500px",
     display: "flex",
     flexDirection: "column",
-    margin: "6rem auto",
-    padding: "3rem",
+    margin: "2rem auto",
+    padding: "1rem",
   },
   title: {
     fontSize: "500",
@@ -70,7 +70,6 @@ function DisplaySurveyQuestions({
 
       updateData = {
         ...data,
-        // surveyResults: [...data.surveyResults, responseData], try removing surveyResults spread to see if data overwrites okay
         surveyResults: [responseData],
       };
     }
@@ -90,6 +89,7 @@ function DisplaySurveyQuestions({
           name="Answers"
           value={radio}
           onChange={updateRadio}
+          style={{ marginTop: "1rem" }}
         >
           {questionsArray.map(function (arr) {
             if (!arr.isFreeResponse) {
@@ -126,11 +126,9 @@ function DisplaySurveyQuestions({
           })}
         </RadioGroup>
       </FormControl>
-      <StyledButton
-        label="submit"
-        colorType="primary"
-        handleClick={handleSubmit}
-      />
+      <Button variant="contained" color="primary" onClick={handleSubmit}>
+        submit
+      </Button>
     </div>
   );
 }

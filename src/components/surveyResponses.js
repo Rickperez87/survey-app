@@ -1,6 +1,4 @@
 import React from "react";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
 import { withStyles } from "@material-ui/core/styles";
 import Divider from "@material-ui/core/Divider";
 import GridList from "./GridList";
@@ -23,10 +21,6 @@ const styles = {
   },
   main: {
     paddingTop: ".5rem",
-    // display: "flex",
-    // flexDirection: "column",
-    // justifyContent: "center",
-    // alignItems: "flex-start",
   },
 };
 
@@ -58,15 +52,6 @@ function SurveyResponses({ classes, setData, data }) {
       <Divider fullWidth />
       <main className={classes.main}>
         <GridList list={surveyResults} />
-        {/* <List className={classes.list}>
-          {surveyResults.map((response, idx) => {
-            return (
-              <ListItem className={classes.listItem} key={idx}>
-                {`${response.userName} answered -       ${response.response}`}
-              </ListItem>
-            );
-          })}
-        </List> */}
       </main>
     </div>
   );

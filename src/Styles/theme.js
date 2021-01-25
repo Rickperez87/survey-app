@@ -31,6 +31,11 @@ const theme = createMuiTheme({
         padding: "2rem",
       },
     },
+    MuiCard: {
+      root: {
+        padding: "1rem 2rem",
+      },
+    },
   },
   typography: {
     // fontFamily: '',
