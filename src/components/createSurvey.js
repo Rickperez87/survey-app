@@ -8,7 +8,7 @@ import Divider from "@material-ui/core/Divider";
 import QuestionItem from "./questionItem";
 import FormItem from "./formItem";
 import { v4 as uuid } from "uuid";
-import CreateTitleForm from "./createTitleForm";
+import CreateForm from "./createForm";
 import CreateQuestionForm from "./CreateQuestionForm";
 import { withStyles } from "@material-ui/core/styles";
 import SendIcon from "@material-ui/icons/Send";
@@ -189,11 +189,13 @@ const CreateQuestion = function ({
         )}
 
         {showTitle ? (
-          <CreateTitleForm
+          <CreateForm
             toggleIsActive={toggleTitleIsActive}
-            surveyTitle={surveyTitle}
+            formValue={surveyTitle}
             updateForm={updateForm}
             toggleShowForm={toggleShowTitle}
+            inputName="surveyTitle"
+            placeHolder="e.g. What's your Favorite Ice Cream Flavor?"
           />
         ) : (
           !titleIsActive && (

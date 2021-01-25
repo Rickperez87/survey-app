@@ -1,10 +1,7 @@
 import React from "react";
-import useFormState from "../custom-react-hooks/form-state-hook";
-import useToggle from "../custom-react-hooks/useToggle";
 import { makeStyles } from "@material-ui/core/styles";
 import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
-import Checkbox from "@material-ui/core/Checkbox";
 
 const useStyles = makeStyles((theme) => ({
   input: {
@@ -15,10 +12,10 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     border: "1px solid",
     borderRadius: "5px",
-    marginTop: "1rem",
   },
   button: {
     display: "inline-block",
+    fontSize: ".8rem",
   },
   cancel: {
     cursor: "pointer",
@@ -31,55 +28,44 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItem: "center",
     justifyContent: "flex-start",
-    margin: "1rem 0",
+    margin: "1rem 0 .5rem",
   },
 }));
 
-function CreateQuestionForm({ addQuestion, toggleShowForm }) {
+function CreateForm({
+  formValue,
+  updateForm,
+  toggleIsActive,
+  toggleShowForm,
+  inputName,
+  placeHolder,
+}) {
   const classes = useStyles();
-  const [val, setVal, clear] = useFormState("");
-  const [isFreeResponse, toggleisFreeResponse] = useToggle(false);
-  const [checked, toggleCheck] = useToggle(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addQuestion(val, isFreeResponse);
-    clear();
-    clearToggle();
+    toggleIsActive();
+    toggleShowForm();
   };
-  const clearToggle = () => {
-    if (checked) toggleCheck();
-    if (isFreeResponse) toggleisFreeResponse();
-  };
+
   return (
     <>
       <form
         className={classes.form}
         onSubmit={(e) => {
           handleSubmit(e);
-          clearToggle();
         }}
       >
         <Input
           style={{ display: "block" }}
           className={classes.input}
-          name="input"
-          placeholder="e.g. Vanilla"
-          value={val}
-          onChange={setVal}
+          name={inputName}
+          placeholder={placeHolder}
+          value={formValue}
+          onChange={(e) => updateForm(e)}
           disableUnderline
           autoFocus
         />
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <Checkbox
-            style={{ display: "block" }}
-            onChange={toggleisFreeResponse}
-            checked={checked}
-            onClick={toggleCheck}
-            label="Free Response"
-          ></Checkbox>
-          Free Response
-        </div>
       </form>
       <div className={classes.buttonGroup}>
         <Button
@@ -98,4 +84,4 @@ function CreateQuestionForm({ addQuestion, toggleShowForm }) {
   );
 }
 
-export default CreateQuestionForm;
+export default CreateForm;
