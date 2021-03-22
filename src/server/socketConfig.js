@@ -6,7 +6,7 @@ if (process.env.NODE_ENV === "development") {
     transports: ["websocket", "polling"],
   });
 } else {
-  socket = io();
+  socket = io("https://apps.rickperez.dev");
 }
 
 export default socket;
