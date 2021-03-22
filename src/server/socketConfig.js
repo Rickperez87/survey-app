@@ -1,11 +1,12 @@
 import io from "socket.io-client";
 
-//dev
-const socket = io("http://localhost:4000", {
-  transports: ["websocket", "polling"],
-});
-
-// // deploy
-// const socket = io();
+let socket;
+if (process.env.NODE_ENV === "development") {
+  socket = io("http://localhost:4000", {
+    transports: ["websocket", "polling"],
+  });
+} else {
+  socket = io();
+}
 
 export default socket;
