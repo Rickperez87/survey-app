@@ -1,14 +1,34 @@
 const express = require("express");
 const path = require("path");
 const app = express();
-const server = require("http").createServer(app);
-const io = (module.exports.io = require("socket.io")(server));
 require("dotenv").config();
+
+const PORT = process.env.PORT || 4000;
+
+if (process.env.NODE_ENV === "development") {
+  const server = require("http").createServer(app);
+  server.listen(PORT, function () {
+    console.log(`Listening on ${PORT}`);
+    const io = (module.exports.io = require("socket.io")(server));
+  });
+}
+//setup https for deployment on server
+else {
+  var fs = require("fs");
+  var path_root = "/etc/letsencrypt/live/www.example.com/";
+  var options = {
+    cert: fs.readFileSync(`${path_root}cert.pem`),
+    key: fs.readFileSync(`${path_root}privkey.pem`),
+  };
+  var https = require("https").createServer(options, app);
+  https.listen(PORT, () => {
+    console.log(`https- listening on ${PORT}`);
+  });
+  const io = (module.exports.io = require("socket.io").listen(https));
+}
 
 let adminId = "";
 let userList = new Set();
-
-const PORT = process.env.PORT || 4000;
 
 app.use(express.static(path.join(__dirname + "build")));
 app.get("/", function (req, res) {
@@ -82,8 +102,4 @@ io.on("connect", function (socket) {
   socket.on("cancelSurveyResults", function () {
     socket.broadcast.emit("cancelSurveyResults");
   });
-});
-
-server.listen(PORT, function () {
-  console.log(`Listening on ${PORT}`);
 });
