@@ -3,19 +3,20 @@ const path = require("path");
 const app = express();
 require("dotenv").config();
 
+let io;
 const PORT = process.env.PORT || 4000;
 
 if (process.env.NODE_ENV === "development") {
   const server = require("http").createServer(app);
   server.listen(PORT, function () {
     console.log(`Listening on ${PORT}`);
-    const io = (module.exports.io = require("socket.io")(server));
+    io = module.exports.io = require("socket.io")(server);
   });
 }
 //setup https for deployment on server
 else {
   var fs = require("fs");
-  var path_root = "/etc/letsencrypt/live/www.example.com/";
+  var path_root = "/etc/letsencrypt/live/apps.rickperez.dev/";
   var options = {
     cert: fs.readFileSync(`${path_root}cert.pem`),
     key: fs.readFileSync(`${path_root}privkey.pem`),
@@ -24,13 +25,13 @@ else {
   https.listen(PORT, () => {
     console.log(`https- listening on ${PORT}`);
   });
-  const io = (module.exports.io = require("socket.io").listen(https));
+  io = module.exports.io = require("socket.io").listen(https);
 }
 
 let adminId = "";
 let userList = new Set();
 
-app.use(express.static(path.join(__dirname + "build")));
+app.use(express.static(path.join(__dirname, "build")));
 app.get("/", function (req, res) {
   res.sendFile(path.join(__dirname, "build", "index.html"));
 });
