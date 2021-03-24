@@ -3,6 +3,8 @@ const path = require("path");
 const app = express();
 require("dotenv").config();
 
+app.use(helmet());
+
 let io;
 const PORT = process.env.PORT || 4000;
 
@@ -13,7 +15,7 @@ if (process.env.NODE_ENV === "development") {
     io = module.exports.io = require("socket.io")(server);
   });
 }
-//setup https for deployment on server
+// setup https for deployment on server
 else {
   var fs = require("fs");
   var path_root = "/etc/letsencrypt/live/apps.rickperez.dev/";
