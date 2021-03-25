@@ -22,7 +22,7 @@
     "uuid": "^8.3.2"
   },
   "scripts": {
-    "server": "nodemon server.js",
+    "server": "export NODE_ENV=development&& nodemon server.js",
     "start": "node server.js",
     "react": "react-scripts start",
     "build": "react-scripts build",

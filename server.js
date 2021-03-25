@@ -9,14 +9,15 @@ app.use(helmet());
 let io;
 const PORT = process.env.PORT || 4000;
 
-if (process.env.NODE_ENV === "development") {
+//development server
+if (process.env.NODE_ENV == "development") {
   const server = require("http").createServer(app);
   server.listen(PORT, function () {
     console.log(`Listening on ${PORT}`);
-    io = module.exports.io = require("socket.io")(server);
   });
+  io = module.exports.io = require("socket.io")(server);
 }
-// setup https for deployment on server
+// https for deployment on server
 else {
   var fs = require("fs");
   var path_root = "/etc/letsencrypt/live/apps.rickperez.dev/";
