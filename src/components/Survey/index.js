@@ -160,7 +160,7 @@ function Survey({ classes }) {
         data={storeData}
         setData={setData}
       />
-      <Grid item xs={12} sm={10} md={8} xl={6}>
+      <Grid item xs={12} sm={10} md={8} lg={6} xl={4}>
         {loggedin && !awaitingAnswers && (
           <CreateSurvey
             toggleAwaitingAnswers={toggleAwaitingAnswers}
