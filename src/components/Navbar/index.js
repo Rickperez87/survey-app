@@ -17,23 +17,36 @@ const styles = {
     fontWeight: "500",
     fontSize: "1.9rem",
     fontFamily: "Poppins, sans-serif",
+    "@media (max-width:600px)": { padding: 0 },
   },
   userIcon: {
     margin: "0 1rem 0 2.6rem",
+    width: "100%",
+    height: "100%",
+    "@media (max-width:600px)": { margin: "0 .4rem 0 1rem" },
   },
   userName: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    height: "2.4rem",
     "&:hover": {
       cursor: "pointer",
     },
   },
+  nameText: {
+    whiteSpace: "nowrap",
+  },
   logo: {
     fontWeight: "bold",
+    marginRight: "auto",
 
-    "@media (max-width:575px)": { display: "none" },
+    // "@media (max-width:575px)": { display: "none" },
   },
   loginContainer: {
     display: "flex",
     alignItems: "center",
+    justifyContent: "center",
     "&:hover": {
       cursor: "pointer",
     },
@@ -70,7 +83,7 @@ function Navbar({ classes, userName, setUserName }) {
           </div>
           <div className={classes.userName} onClick={handleInputNameOpen}>
             <img className={classes.userIcon} src={userIcon}></img>
-            {userName}
+            <span className={classes.nameText}>{userName}</span>
           </div>
         </div>
       </div>

@@ -26,6 +26,13 @@ const theme = createMuiTheme({
       },
       contained: {},
     },
+    MuiSvgIcon: {
+      root: {
+        width: "2.5rem",
+        height: "2.5rem",
+      },
+    },
+
     MuiDialog: {
       paper: {
         padding: "3.2rem",
