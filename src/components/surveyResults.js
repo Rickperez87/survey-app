@@ -7,8 +7,8 @@ import { withStyles } from "@material-ui/core/styles";
 
 const styles = {
   root: {
-    margin: "1rem auto",
-    padding: "2rem",
+    margin: "1.6rem auto",
+    padding: "3.2rem",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -21,7 +21,7 @@ function SurveyResults({ classes, surveyResults, surveyTitle, open, onClose }) {
   return (
     surveyResults && (
       <Dialog
-        style={{ margin: "1rem" }}
+        style={{ margin: "1.6rem" }}
         maxWidth={false}
         className={classes.root}
         open={open}

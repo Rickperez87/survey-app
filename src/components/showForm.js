@@ -7,7 +7,7 @@ const styles = {
   surveyResponse: {
     color: "grey",
     cursor: "pointer",
-    fontSize: "1rem",
+    fontSize: "1.6rem",
     "&:hover": {
       color: "#3f51b5",
       "&:hover $plusButton": {
@@ -34,7 +34,7 @@ const styles = {
     border: "none",
     verticalAlign: "7px",
     borderRadius: "50%",
-    marginRight: "1rem",
+    marginRight: "1.6rem",
   },
 };
 

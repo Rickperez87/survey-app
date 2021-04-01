@@ -15,11 +15,11 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     display: "inline-block",
-    fontSize: ".8rem",
+    fontSize: "1.3rem",
   },
   cancel: {
     cursor: "pointer",
-    padding: ".25rem .5rem",
+    padding: ".4rem .8rem",
     "&:hover": {
       textDecoration: "underline",
     },
@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItem: "center",
     justifyContent: "flex-start",
-    margin: "1rem 0 .5rem",
+    margin: "1.6rem 0 .8rem",
   },
 }));
 

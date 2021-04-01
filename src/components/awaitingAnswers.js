@@ -5,7 +5,7 @@ import { withStyles } from "@material-ui/core/styles";
 
 const styles = {
   root: {
-    marginTop: "2rem",
+    marginTop: "3.2rem",
     background: "#fff",
     // maxWidth: "45.5rem",
     display: "flex",
@@ -17,21 +17,21 @@ const styles = {
   },
   buttonGroup: {},
   button: {
-    marginRight: "1rem",
+    marginRight: "1.6rem",
   },
   header: {
-    padding: "2rem 2rem 2rem 2rem",
+    padding: "3.2rem 3.2rem 3.2rem 3.2rem",
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
     "& h1": {
-      marginBottom: "1rem",
-      fontSize: "1.5rem",
+      marginBottom: "1.6rem",
+      fontSize: "2.4rem",
     },
   },
   main: {
-    padding: "0 4rem 2rem 4rem",
+    padding: "0 6.4rem 3.2rem 6.4rem",
     // display: "flex",
     flexDirection: "column",
     justifyContent: "center",

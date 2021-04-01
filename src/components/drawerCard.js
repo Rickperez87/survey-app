@@ -7,17 +7,17 @@ const styles = {
   container: {
     width: "100%",
     background: "#fafafa",
-    padding: ".5rem 1rem",
+    padding: ".8rem 1.6rem",
     display: "flex",
     alignContent: "center",
     justifyContent: "space-between",
   },
   name: {
     background: "#e8c547",
-    padding: ".5rem",
+    padding: ".8rem",
   },
-  text: { padding: ".5rem" },
-  bodyText: { fontSize: ".88rem" },
+  text: { padding: ".8rem" },
+  bodyText: { fontSize: "1.4rem" },
   dot: {
     display: "flex",
     alignItems: "center",

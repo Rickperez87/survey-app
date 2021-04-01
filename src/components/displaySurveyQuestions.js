@@ -13,11 +13,11 @@ import { withStyles } from "@material-ui/core/styles";
 
 const styles = {
   root: {
-    maxWidth: "500px",
+    maxWidth: "50rem",
     display: "flex",
     flexDirection: "column",
-    margin: "2rem auto",
-    padding: "1rem",
+    margin: "3.2rem auto",
+    padding: "1.6rem",
   },
   title: {
     fontSize: "500",

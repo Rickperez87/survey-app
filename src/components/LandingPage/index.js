@@ -15,7 +15,7 @@ const styles = {
   },
   contentBlock: {
     position: "relative",
-    maxWidth: "1000px",
+    maxWidth: "100rem",
     margin: "0 auto",
     "@media (max-width:1100px)": { maxWidth: "850px" },
     "@media (max-width:875px)": { maxWidth: "550px" },
@@ -23,16 +23,16 @@ const styles = {
   },
   blurbContainer: {
     position: "absolute",
-    top: "249px",
+    top: "24.9rem",
     left: "0",
-    maxWidth: "600px",
+    maxWidth: "60rem",
   },
   largeFont: {
     letterSpacing: ".025em",
   },
   logo: {
     position: "absolute",
-    top: "49px",
+    top: "4.9rem",
     left: "0",
     "@media (max-width:575px)": {},
   },

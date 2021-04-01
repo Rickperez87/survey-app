@@ -22,19 +22,21 @@ const styles = {
     color: "#2f3542",
     padding: 0,
     paddingTop: 0,
-    marginBottom: ".25rem",
-    fontSize: "1rem",
+    marginBottom: ".4rem",
+    fontSize: "1.6rem",
+    textAlign: "center",
   },
   input: {
-    margin: ".5rem 0",
+    margin: ".8rem 0",
     background: "#f5f6fa",
-    padding: ".25rem",
+    padding: ".4rem",
+    fontSize: "1.6rem",
   },
 
   paper: {
     minWidth: "20vw",
     minHeight: "20vh",
-    padding: "1rem",
+    padding: "1.6rem 3.2rem",
   },
 };
 

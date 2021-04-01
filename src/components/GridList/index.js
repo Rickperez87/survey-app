@@ -8,7 +8,7 @@ const styles = {
     flexGrow: 1,
   },
   paper: {
-    padding: "1rem",
+    padding: "1.6rem",
     textAlign: "center",
     color: "black",
   },
@@ -17,7 +17,7 @@ const styles = {
     fontSize: ".88rem",
   },
   responseText: {
-    fontSize: "1rem",
+    fontSize: "1.6rem",
   },
 };
 

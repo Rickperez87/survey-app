@@ -13,15 +13,15 @@ const styles = {
     width: "100%",
   },
   inputTitle: {
-    marginTop: ".25rem",
+    marginTop: ".4rem",
     marginBottom: 0,
     background: "#f5f6fa",
-    padding: ".25rem",
+    padding: ".4rem",
   },
   inputPassword: {
-    margin: ".5rem 0 .5rem 0",
+    margin: ".8rem 0 .8rem 0",
     background: "#f5f6fa",
-    padding: ".25rem",
+    padding: ".4rem",
   },
   title: {
     textAlign: "start",
@@ -31,7 +31,7 @@ const styles = {
   paper: {
     minWidth: "20vw",
     maxWidth: "70vw",
-    padding: "1rem",
+    padding: "1.6rem",
   },
 };
 

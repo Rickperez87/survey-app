@@ -16,7 +16,7 @@ function FormItem({ renderText, remove, edit, toggleIsActive }) {
   };
 
   return (
-    <ListItem style={{ height: "64px" }}>
+    <ListItem style={{ height: "6.4rem" }}>
       {isEditing ? (
         <EditForm
           renderText={renderText}

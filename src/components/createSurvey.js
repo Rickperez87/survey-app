@@ -17,33 +17,33 @@ import SaveIcon from "@material-ui/icons/Save";
 const styles = {
   root: {
     background: "#fff",
-    maxWidth: "45.5rem",
     display: "flex",
     flexDirection: "column",
-    marginTop: "2rem",
+    flex: "1 1 40%",
+    marginTop: "3.2rem",
     boxShadow: "0px 1px 2px 0px rgba(0,0,0,0.33)",
 
     "& Input": {
-      padding: "1rem 0",
+      padding: "1.6rem 0",
     },
   },
   submitButton: {
-    fontSize: ".8rem",
-    padding: ".5 1.5rem",
+    fontSize: "1.3rem",
+    padding: ".8rem 2.4rem",
   },
   titleQuestion: {
     textAlign: "start",
-    fontSize: "2rem",
+    fontSize: "3.2rem",
     fontWeight: 700,
   },
   list: {
-    marginTop: "1rem",
+    marginTop: "1.6rem",
   },
   surveyQuestion: {},
 
   cancel: {
     cursor: "pointer",
-    padding: "1rem",
+    padding: "1.6rem",
     "&:hover": {
       textDecoration: "underline",
     },
@@ -54,18 +54,18 @@ const styles = {
     justifyContent: "flex-end",
   },
   header: {
-    padding: "2rem 4rem 1rem 4rem",
+    padding: "3.2rem 6.4rem 1.6rem 6.4rem",
     // border: "1px solid black",
   },
   main: {
-    padding: "0 4rem 2rem 4rem",
+    padding: "0 6.4rem 3.2rem 6.4rem",
     // display: "flex",
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "flex-start",
   },
   showFrom: {
-    margin: "2rem 0",
+    margin: "3.2rem 0",
   },
 };
 const CreateQuestion = function ({

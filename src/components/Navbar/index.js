@@ -12,14 +12,14 @@ const styles = {
     alignItems: "center",
     justifyContent: "space-between",
     color: "#FAFAFA",
-    height: "2rem",
-    padding: "1rem 4rem 1rem 1rem",
+    height: "3.2rem",
+    padding: "1.6rem 6.4rem 1.6rem 1.6rem",
     fontWeight: "500",
-    fontSize: "1.2rem",
+    fontSize: "1.9rem",
     fontFamily: "Poppins, sans-serif",
   },
   userIcon: {
-    margin: "0 .6rem 0 1.6rem",
+    margin: "0 1rem 0 2.6rem",
   },
   userName: {
     "&:hover": {

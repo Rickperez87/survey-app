@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     }),
   },
   menuButton: {
-    marginLeft: "4rem",
+    marginLeft: "6.4rem",
   },
   hide: {
     display: "none",
@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
   },
   drawerPaper: {
     width: drawerWidth,
-    padding: "0 1rem",
+    padding: "0 1.6rem",
   },
   drawerHeader: {
     display: "flex",
@@ -91,7 +91,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
     // border: "1px solid black",
     // margin: "0 1rem",
-    padding: ".5rem 0",
+    padding: ".8rem 0",
   },
   surveyTitle: {
     textTransform: "capitalize",
@@ -102,13 +102,13 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "flex-start",
-    margin: "0 1rem",
+    margin: "0 1.6rem",
   },
   divider: {
     width: "100%",
   },
   drawerHeader_Title: {
-    fontSize: "1.2rem",
+    fontSize: "1.9rem",
   },
   dot: {
     display: "flex",

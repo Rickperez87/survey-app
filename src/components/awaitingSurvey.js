@@ -12,7 +12,7 @@ const styles = {
     boxShadow: "0px 1px 2px 0px rgba(0,0,0,0.33)",
   },
   card: {
-    padding: "2rem",
+    padding: "3.2rem",
   },
   header: {
     "& span": {
@@ -29,15 +29,23 @@ const AwaitingSurvey = (classes) => {
           className={classes.header}
           style={{
             textAlign: "center",
-            fontSize: "1.25rem",
+            fontSize: "2rem",
             fontWeight: "500",
           }}
         >
           Survey Will begin Shortly
         </div>
-        <CardContent style={{ margin: "1rem 0" }}>
-          <div className={classes.timeIcon} style={{ textAlign: "center" }}>
-            <AccessTimeIcon />
+        <CardContent>
+          <div
+            className={classes.timeIcon}
+            style={{
+              height: "5rem",
+              marginBottom: "1.6rem",
+            }}
+          >
+            <AccessTimeIcon
+              style={{ width: "100%", height: "100%", textAlign: "center" }}
+            />
           </div>
           The survey has not started yet. Once activated, this area will display
           a question

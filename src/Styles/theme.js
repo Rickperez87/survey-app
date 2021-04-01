@@ -20,26 +20,26 @@ const theme = createMuiTheme({
     MuiButton: {
       root: {
         textTransform: "none",
-        fontSize: "1rem",
-        padding: ".25rem .5rem",
-        margin: "0 .25rem",
+        fontSize: "1.6rem",
+        padding: ".4rem .8rem",
+        margin: "0 .4rem",
       },
       contained: {},
     },
     MuiDialog: {
       paper: {
-        padding: "2rem",
+        padding: "3.2rem",
       },
     },
     MuiCard: {
       root: {
-        padding: "1rem 2rem",
+        padding: "1.6rem 3.2rem",
       },
     },
   },
   typography: {
     // fontFamily: '',
-    fontSize: 16,
+    fontSize: "1.6rem",
   },
 });
 

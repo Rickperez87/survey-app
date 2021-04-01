@@ -5,22 +5,22 @@ import GridList from "./GridList";
 
 const styles = {
   root: {
-    maxWidth: "45.5rem",
-    margin: ".5rem auto",
+    maxWidth: "72.8rem",
+    margin: ".8rem auto",
   },
   title: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    fontSize: "1rem",
+    fontSize: "1.6rem",
   },
   header: {
     background: "#fff",
-    padding: "2rem 2rem",
+    padding: "3.2rem 3.2rem",
     boxShadow: "0px 1px 2px 0px rgba(0,0,0,0.33)",
   },
   main: {
-    paddingTop: ".5rem",
+    paddingTop: ".8rem",
   },
 };
 

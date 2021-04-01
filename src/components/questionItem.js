@@ -11,7 +11,7 @@ import useToggle from "../custom-react-hooks/useToggle";
 function QuestionItem({ id, question, removeQuestion, editQuestion }) {
   const [isEditing, toggle] = useToggle(false);
   return (
-    <ListItem style={{ height: "64px" }}>
+    <ListItem style={{ height: "6.4rem" }}>
       {isEditing ? (
         <EditQuestionForm
           id={id}
